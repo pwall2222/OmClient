@@ -7,7 +7,7 @@ interface domObject {
 	tag: string;
 	args?: args;
 	child?: domObject;
-};
+}
 
 interface args {
 	accessKey?: string;
@@ -36,7 +36,7 @@ interface args {
 	nodeValue?: string | null;
 	textContent?: string | null;
 	/* [key: string]: unknown */
-};
+}
 
 type dStatus = "stop" | "rlly" | "new";
 type author = "you" | "stranger";
@@ -61,11 +61,11 @@ const WEB_RTC_PEER_CONSTRAINTS = {
 	}]
 };
 
-const clearArray = function (array:any[]) {
+const clearArray = function (array: any[]) {
 	return array.splice(0, array.length);
 };
 
-const createElement = function (domObject:domObject) {
+const createElement = function (domObject: domObject) {
 	const element = document.createElement(domObject.tag);
 	if (domObject.args) {
 		for (const [key, value] of Object.entries(domObject.args)) {
@@ -78,20 +78,20 @@ const createElement = function (domObject:domObject) {
 	return element;
 };
 
-const createChild = function (parent:string, domObject:domObject) {
+const createChild = function (parent: string, domObject: domObject) {
 	const child = createElement(domObject);
 	document.querySelector(parent).appendChild(child);
 };
 
-const clearChilds = function (nodeName:string) {
+const clearChilds = function (nodeName: string) {
 	const node = document.querySelector(nodeName);
 	node.textContent = "";
 };
 
-const encodeObjectAndAddID = function (data?:object) {
+const encodeObjectAndAddID = function (data?: object) {
 	const form = {
 		data: [],
-		append(key:string,value:string) {
+		append(key: string, value: string) {
 			this.data.push(key + "=" + encodeURIComponent(value));
 		}
 	}
@@ -113,7 +113,7 @@ const chatNode = {
 	logbox: document.querySelector(".logbox"),
 	typebox: (document.querySelector(".chatmsg") as HTMLTextAreaElement),
 	add: {
-		message(message:string, sender:author) {
+		message(message: string, sender: author) {
 			const pclass = `${sender}msg`;
 			const user = sender == "you" ? "You" : "Stranger";
 			createChild(".logbox", {
@@ -134,8 +134,8 @@ const chatNode = {
 			});
 		},
 		status: {
-			default(text:string) {
-				createChild(".logbox",{
+			default(text: string) {
+				createChild(".logbox", {
 					tag: "div",
 					args: {
 						className: "logitem"
@@ -154,7 +154,7 @@ const chatNode = {
 				chatNode.add.status.default("You're now chatting with a random stranger.");
 			},
 			typing() {
-				createChild(".logbox",{
+				createChild(".logbox", {
 					tag: "div",
 					args: {
 						className: "logitem typing"
@@ -170,8 +170,8 @@ const chatNode = {
 				stats.typing = true;
 				chatNode.scroll();
 			},
-			likes(likes:string[]) {
-				let display:string;
+			likes(likes: string[]) {
+				let display: string;
 				if (likes.length < 0) {
 					display = "Couldn't find a stranger with same interests.";
 				}
@@ -182,8 +182,8 @@ const chatNode = {
 					const body = likes.join(", ");
 					const last = likes.pop();
 					display = `You both like ${body} and ${last}.`;
-					
-				} 
+
+				}
 				chatNode.add.status.default(display);
 			},
 		},
@@ -199,7 +199,7 @@ const chatNode = {
 		if (contents[0] == "/") {
 			chatNode.typebox.value = "";
 		} else if (stats.connected && contents != "") {
-			backend.sendEncodedPOST("send", {msg: chatNode.typebox.value})
+			backend.sendEncodedPOST("send", { msg: chatNode.typebox.value })
 			chatNode.add.message(chatNode.typebox.value, "you");
 			chatNode.typebox.value = "";
 		}
@@ -209,18 +209,18 @@ const chatNode = {
 const disconnectNode = {
 	txt: document.querySelector(".dscnttxt"),
 	btn: document.querySelector(".dscntbtn"),
-	set(text:dStatus) {
+	set(text: dStatus) {
 		switch (text) {
 			case "stop":
 				disconnectNode.btn.className = "dscntbtn stop";
 				disconnectNode.txt.textContent = "Stop";
 				break;
-			
+
 			case "rlly":
 				disconnectNode.btn.className = "dscntbtn rlly";
 				disconnectNode.txt.textContent = "Really?";
 				break;
-			
+
 			case "new":
 				disconnectNode.btn.className = "dscntbtn new";
 				disconnectNode.txt.textContent = "New";
@@ -232,7 +232,7 @@ const disconnectNode = {
 			case "stop":
 				disconnectNode.set("rlly")
 				break;
-			
+
 			case "rlly":
 				disconnectNode.set("new");
 				backend.disconnect();
@@ -253,7 +253,7 @@ const videoNode = {
 
 const spinnerNode = {
 	add() {
-		createChild("#videowrapper", {tag: "div", args:{className:"spinner"}});
+		createChild("#videowrapper", { tag: "div", args: { className: "spinner" } });
 	},
 	remove() {
 		document.querySelector(".spinner")?.remove();
@@ -268,7 +268,7 @@ const stats = {
 	rtc: {
 		call: false,
 		peer: false,
-		candidates:[]
+		candidates: []
 	},
 	reset() {
 		stats.id = "";
@@ -278,7 +278,7 @@ const stats = {
 		stats.rtc = {
 			call: false,
 			peer: false,
-			candidates:[]
+			candidates: []
 		}
 	}
 };
@@ -295,7 +295,7 @@ const settings = {
 	get() {
 		const item = JSON.parse(localStorage.getItem('settings'));
 		if (item) {
-			settings.data = item; 
+			settings.data = item;
 		}
 	},
 	save() {
@@ -306,7 +306,7 @@ const settings = {
 	}
 };
 
-const disconnectHandler = function (user:string) {
+const disconnectHandler = function (user: string) {
 	if (stats.connected) {
 		chatNode.add.status.default(`${user} Disconnected`);
 		disconnectNode.set("new");
@@ -322,11 +322,11 @@ const disconnectHandler = function (user:string) {
 
 const keyboard = {
 	init() {
-		document.querySelector(".chatmsg").addEventListener("keydown",keyboard.handler.chatbox);
-		document.body.addEventListener("keydown",keyboard.handler.doc);
+		document.querySelector(".chatmsg").addEventListener("keydown", keyboard.handler.chatbox);
+		document.body.addEventListener("keydown", keyboard.handler.doc);
 	},
 	handler: {
-		doc(key:KeyboardEvent) {
+		doc(key: KeyboardEvent) {
 			if (key.code == "Escape") {
 				if (key.shiftKey && stats.connected) {
 					key.preventDefault();
@@ -338,7 +338,7 @@ const keyboard = {
 				}
 			}
 		},
-		chatbox(key:KeyboardEvent) {
+		chatbox(key: KeyboardEvent) {
 			if (key.code == "Enter" && !key.shiftKey) {
 				key.preventDefault();
 				chatNode.handleInput();
@@ -348,7 +348,7 @@ const keyboard = {
 };
 
 const backend = {
-	async sendPOST(path:string, data:string) {
+	async sendPOST(path: string, data: string) {
 		return fetch(`https://${stats.server}.omegle.com/${path}`, {
 			method: 'POST',
 			body: data,
@@ -358,10 +358,10 @@ const backend = {
 			referrerPolicy: "no-referrer"
 		});
 	},
-	sendEncodedPOST(path:string, data:object) {
+	sendEncodedPOST(path: string, data: object) {
 		return backend.sendPOST(path, encodeObjectAndAddID(data))
 	},
-	connect: (args:string[]) => fetch(`https://${stats.server}.omegle.com/start?${args.join("&")}`, { method: 'POST', referrerPolicy: "no-referrer" }).then(response => response.json()),
+	connect: (args: string[]) => fetch(`https://${stats.server}.omegle.com/start?${args.join("&")}`, { method: 'POST', referrerPolicy: "no-referrer" }).then(response => response.json()),
 	disconnect: () => backend.sendPOST("disconnect", "id=" + encodeURIComponent(stats.id))
 };
 
@@ -369,7 +369,7 @@ keyboard.init();
 
 const newChat = async function () {
 	const eventHandler = {
-		executer: async function (event:backendEvent) {
+		executer: async function (event: backendEvent) {
 			switch (event.name) {
 				case "rtccall":
 					stats.rtc.call = true;
@@ -418,7 +418,7 @@ const newChat = async function () {
 					break;
 			}
 		},
-		parser(events:object[]) {
+		parser(events: object[]) {
 			for (let i = 0; i < events?.length; i++) {
 				const event = {
 					name: events[i][0],
@@ -429,10 +429,10 @@ const newChat = async function () {
 		}
 	};
 
-	const descriptionHandler = async function (option:pcOption) {
+	const descriptionHandler = async function (option: pcOption) {
 		const session = await pc[`create${option}`](WEB_RTC_MEDIA_CONSTRAINTS);
 		await pc.setLocalDescription(session)
-		backend.sendPOST("rtcpeerdescription", encodeObjectAndAddID({desc: session}));
+		backend.sendPOST("rtcpeerdescription", encodeObjectAndAddID({ desc: session }));
 	};
 
 	stats.reset();
@@ -448,10 +448,10 @@ const newChat = async function () {
 	videoNode.selfvideo.srcObject ??= media;
 	videoNode.selfvideo.muted = true;
 	videoNode.othervideo.srcObject = null;
-	
+
 	const pc = new RTCPeerConnection(WEB_RTC_CONFIG);
 
-	media.getTracks().forEach(function(track) {
+	media.getTracks().forEach(function (track) {
 		pc.addTrack(track, media);
 	});
 
@@ -461,7 +461,7 @@ const newChat = async function () {
 	}
 	pc.onicecandidate = async function (event) {
 		if (pc.iceGatheringState != "complete") {
-			await backend.sendEncodedPOST("icecandidate", {candidate: event.candidate});
+			await backend.sendEncodedPOST("icecandidate", { candidate: event.candidate });
 			clearArray(stats.rtc.candidates);
 		}
 	}
@@ -470,15 +470,15 @@ const newChat = async function () {
 		"caps=recaptcha2",
 		"firstevents=0",
 		"spid=",
-		"randid=4ALLVR8L", 
+		"randid=4ALLVR8L",
 		`lang=${settings.data.lang}`,
 		`webrtc=${Number(settings.data.video)}`
 	];
-	
+
 	if (settings.data.likes_enabled) {
 		args.push(`topics=${encodeURIComponent(JSON.stringify(settings.data.likes))}`)
 	}
-	
+
 	const start = await backend.connect(args);
 	eventHandler.parser(start.events);
 	stats.id = start.clientID;
