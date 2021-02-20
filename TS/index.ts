@@ -107,7 +107,7 @@ const encodeObjectAndAddID = function (data?: object) {
 		}
 	}
 	return form.data.join("&");
-}
+};
 
 const disconnect = function () {
 	backend.disconnect();
@@ -289,7 +289,7 @@ const disconnectNode = {
 	handler() {
 		switch (disconnectNode.btn.classList[1]) {
 			case "stop":
-				disconnectNode.set("rlly")
+				disconnectNode.set("rlly");
 				break;
 
 			case "rlly":
@@ -313,7 +313,7 @@ const videoNode = {
 const spinnerNode = {
 	add: () => createChild("#videowrapper", { tag: "div", args: { className: "spinner" } }),
 	remove: () => document.querySelector(".spinner")?.remove()
-}
+};
 
 const current_session = {
 	id: "",
@@ -541,7 +541,7 @@ const newChat = async function () {
 		const events = JSON.parse(rawevents.data);
 		eventHandler.parser(events);
 	};
-}
+};
 
 keyboard.init();
 settings.load();
