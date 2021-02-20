@@ -292,7 +292,7 @@ const settings = {
 		lang: "en",
 		video: true
 	},
-	get() {
+	load() {
 		const item = JSON.parse(localStorage.getItem('settings'));
 		if (item) {
 			settings.data = item;
@@ -364,8 +364,6 @@ const backend = {
 	connect: (args: string[]) => fetch(`https://${stats.server}.omegle.com/start?${args.join("&")}`, { method: 'POST', referrerPolicy: "no-referrer" }).then(response => response.json()),
 	disconnect: () => backend.sendPOST("disconnect", "id=" + encodeURIComponent(stats.id))
 };
-
-keyboard.init();
 
 const newChat = async function () {
 	const eventHandler = {
@@ -489,3 +487,6 @@ const newChat = async function () {
 		eventHandler.parser(events);
 	};
 }
+
+keyboard.init();
+settings.load();
