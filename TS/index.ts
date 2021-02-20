@@ -109,6 +109,12 @@ const encodeObjectAndAddID = function (data?: object) {
 	return form.data.join("&");
 }
 
+const disconnect = function () {
+	backend.disconnect();
+	videoNode.othervideo.srcObject = null;
+	disconnectHandler("You");
+};
+
 const chatNode = {
 	logbox: document.querySelector(".logbox"),
 	typebox: (document.querySelector(".chatmsg") as HTMLTextAreaElement),
@@ -195,10 +201,63 @@ const chatNode = {
 		chatNode.logbox.scroll(0, chatNode.logbox.scrollHeight);
 	},
 	handleInput() {
-		const contents = chatNode.typebox.value;
-		if (contents[0] == "/") {
+		const chat_contents = chatNode.typebox.value;
+		if (chat_contents[0] == "/") {
+			const full_command = chat_contents.slice(1).split(" ");
+			const command_name = full_command[0];
+			const arguments = full_command.slice(1, full_command.length - 0);
+			switch (command_name) {
+				case "help":
+					// TODO: Adding help response
+					const commands = [
+						{
+							name: "help",
+							description: "Shows the help information"
+						},
+						{
+							name: "set",
+							description: "Sets one of the avaliable settings"
+						},
+						{
+							name: "skip",
+							description: "Skips current person starting a new chat"
+						},
+						{
+							name: "disconnect",
+							description: "Disconnects from the current stranger"
+						}
+					]
+					let instructions = "";
+					for (let i = 0; i < commands.length; i++) {
+						const elements = commands[i];
+						instructions += `${elements.name}:${elements.description}`
+					}
+					createChild(".logwrapper", {
+						tag: "p",
+						args: {
+							innerText: instructions
+						}
+					})
+					break;
+
+				case "set":
+					// TODO: Checking user input
+					if (settings.data[arguments[0]] != undefined) {
+						settings.data[arguments[0]] = JSON.parse(arguments[1]);
+					}
+					break;
+
+				case "skip":
+					backend.disconnect();
+					newChat();
+					break;
+
+				case "disconnect":
+					disconnect();
+					break;
+			}
 			chatNode.typebox.value = "";
-		} else if (current_session.connected && contents != "") {
+		} else if (current_session.connected && chat_contents != "") {
 			backend.sendEncodedPOST("send", { msg: chatNode.typebox.value })
 			chatNode.add.message(chatNode.typebox.value, "you");
 			chatNode.typebox.value = "";
@@ -235,7 +294,7 @@ const disconnectNode = {
 
 			case "rlly":
 				disconnectNode.set("new");
-				backend.disconnect();
+				disconnect();
 				break;
 
 			case "new":
@@ -252,12 +311,8 @@ const videoNode = {
 };
 
 const spinnerNode = {
-	add() {
-		createChild("#videowrapper", { tag: "div", args: { className: "spinner" } });
-	},
-	remove() {
-		document.querySelector(".spinner")?.remove();
-	}
+	add: () => createChild("#videowrapper", { tag: "div", args: { className: "spinner" } }),
+	remove: () => document.querySelector(".spinner")?.remove()
 }
 
 const current_session = {
