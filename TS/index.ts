@@ -88,14 +88,13 @@ const clearChilds = function (nodeName: string) {
 	node.textContent = "";
 };
 
-const encodeObjectAndAddID = function (data?: object) {
+const encodeObject = function (data?: object) {
 	const form = {
 		data: [],
 		append(key: string, value: string) {
 			this.data.push(key + "=" + encodeURIComponent(value));
 		}
 	}
-	form.append("id", current_session.id);
 	if (data) {
 		for (const key in data) {
 			const value = data[key];
@@ -413,13 +412,13 @@ const backend = {
 			referrerPolicy: "no-referrer"
 		});
 	},
-	sendEncodedPOST: (path: string, data: object) => backend.sendPOST(path, encodeObjectAndAddID(data)),
+	sendEncodedPOST: (path: string, data = {}) => backend.sendPOST(path, encodeObject({id: current_session.id, ...data})),
 	async connect(args: string[]) {
 		const url = `https://${current_session.server}.omegle.com/start?${args.join("&")}`
 		const response = await fetch(url, { method: "POST", referrerPolicy: "no-referrer" })
 		return response.json();
 	},
-	disconnect: () => backend.sendPOST("disconnect", "id=" + encodeURIComponent(current_session.id))
+	disconnect: () => backend.sendEncodedPOST("disconnect")
 };
 
 const newChat = async function () {
@@ -487,7 +486,7 @@ const newChat = async function () {
 	const descriptionHandler = async function (option: pcOption) {
 		const session = await pc[`create${option}`](WEB_RTC_MEDIA_CONSTRAINTS);
 		await pc.setLocalDescription(session)
-		backend.sendPOST("rtcpeerdescription", encodeObjectAndAddID({ desc: session }));
+		backend.sendEncodedPOST("rtcpeerdescription", { desc: session });
 	};
 
 	current_session.reset();
