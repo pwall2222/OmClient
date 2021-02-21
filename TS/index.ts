@@ -412,8 +412,18 @@ const backend = {
 			referrerPolicy: "no-referrer"
 		});
 	},
-	sendEncodedPOST: (path: string, data = {}) => backend.sendPOST(path, encodeObject({id: current_session.id, ...data})),
-	async connect(args: string[]) {
+	sendEncodedPOST: (path: string, data = {}) => backend.sendPOST(path, encodeObject({ id: current_session.id, ...data })),
+	async connect() {
+		const args = [
+			"firstevents=0",
+			`lang=${settings.data.lang}`,
+			`webrtc=${Number(settings.data.video)}`
+		];
+
+		if (settings.data.likes_enabled) {
+			args.push(`topics=${encodeURIComponent(JSON.stringify(settings.data.likes))}`)
+		}
+
 		const url = `https://${current_session.server}.omegle.com/start?${args.join("&")}`
 		const response = await fetch(url, { method: "POST", referrerPolicy: "no-referrer" })
 		return response.json();
@@ -511,7 +521,6 @@ const newChat = async function () {
 
 	pc.ontrack = function (event) {
 		videoNode.othervideo.srcObject = event.streams[0];
-		spinnerNode.remove();
 	}
 	pc.onicecandidate = async function (event) {
 		if (pc.iceGatheringState != "complete") {
@@ -520,20 +529,7 @@ const newChat = async function () {
 		}
 	}
 
-	const args = [
-		"caps=recaptcha2",
-		"firstevents=0",
-		"spid=",
-		"randid=4ALLVR8L",
-		`lang=${settings.data.lang}`,
-		`webrtc=${Number(settings.data.video)}`
-	];
-
-	if (settings.data.likes_enabled) {
-		args.push(`topics=${encodeURIComponent(JSON.stringify(settings.data.likes))}`)
-	}
-
-	const start = await backend.connect(args);
+	const start = await backend.connect();
 	eventHandler.parser(start.events);
 	current_session.id = start.clientID;
 
