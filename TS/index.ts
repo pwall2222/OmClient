@@ -260,6 +260,7 @@ const chatNode = {
 			backend.sendEncodedPOST("send", { msg: chatNode.typebox.value })
 			chatNode.add.message(chatNode.typebox.value, "you");
 			chatNode.typebox.value = "";
+			disconnectNode.set("stop");
 		}
 	}
 };
