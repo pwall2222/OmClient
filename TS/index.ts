@@ -366,13 +366,13 @@ const disconnectHandler = function (user: string) {
 		chatNode.add.status.default(`${user} Disconnected`);
 		disconnectNode.set("new");
 		current_session.connected = false;
-		spinnerNode.remove();
 	}
 	if (settings.data.autoskip) {
 		setTimeout(() => {
 			newChat();
 		}, settings.data.autoskip_delay);
 	}
+	spinnerNode.remove();
 };
 
 const keyboard = {
