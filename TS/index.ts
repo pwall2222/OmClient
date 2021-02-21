@@ -413,10 +413,12 @@ const backend = {
 			referrerPolicy: "no-referrer"
 		});
 	},
-	sendEncodedPOST(path: string, data: object) {
-		return backend.sendPOST(path, encodeObjectAndAddID(data))
+	sendEncodedPOST: (path: string, data: object) => backend.sendPOST(path, encodeObjectAndAddID(data)),
+	async connect(args: string[]) {
+		const url = `https://${current_session.server}.omegle.com/start?${args.join("&")}`
+		const response = await fetch(url, { method: "POST", referrerPolicy: "no-referrer" })
+		return response.json();
 	},
-	connect: (args: string[]) => fetch(`https://${current_session.server}.omegle.com/start?${args.join("&")}`, { method: 'POST', referrerPolicy: "no-referrer" }).then(response => response.json()),
 	disconnect: () => backend.sendPOST("disconnect", "id=" + encodeURIComponent(current_session.id))
 };
 
