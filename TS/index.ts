@@ -236,7 +236,8 @@ const chatNode = {
 					let instructions = "";
 					for (let i = 0; i < commands.length; i++) {
 						const elements = commands[i];
-						instructions += `${elements.name}:<br>${elements.description}<br>`
+						const nameCapitalized = elements.name.charAt(0).toUpperCase() + elements.name.slice(1)
+						instructions += `<b>${nameCapitalized}</b>:<br>${elements.description}<br>`
 					}
 					createChild(".logbox", {
 						tag: "p",
