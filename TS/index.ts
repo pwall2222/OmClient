@@ -83,6 +83,13 @@ const createChild = function (parent: string, domObject: domObject) {
 	document.querySelector(parent).appendChild(child);
 };
 
+const createChildBefore = function (parent: string, reference:string , domObject: domObject) {
+	const child = createElement(domObject);
+	const parentNode = document.querySelector(parent);
+	const referenceNode = parentNode.querySelector(reference);
+	parentNode.insertBefore(child, referenceNode);
+};
+
 const clearChilds = function (nodeName: string) {
 	const node = document.querySelector(nodeName);
 	node.textContent = "";
@@ -121,7 +128,7 @@ const chatNode = {
 		message(message: string, sender: author) {
 			const pclass = `${sender}msg`;
 			const user = sender == "you" ? "You" : "Stranger";
-			createChild(".logbox", {
+			createChildBefore(".logbox", ".typing", {
 				tag: "div",
 				child: {
 					tag: "p",
@@ -140,17 +147,11 @@ const chatNode = {
 		},
 		status: {
 			default(text: string) {
-				createChild(".logbox", {
-					tag: "div",
+				createChildBefore(".logbox", ".typing", {
+					tag: "p",
 					args: {
-						className: "logitem"
-					},
-					child: {
-						tag: "p",
-						args: {
-							className: "statuslog",
-							textContent: text
-						}
+						className: "statuslog",
+						textContent: text
 					}
 				});
 				chatNode.scroll();
@@ -183,8 +184,8 @@ const chatNode = {
 					display = `You both like ${likes[0]}.`;
 				}
 				else if (likes.length > 1) {
-					const body = likes.join(", ");
 					const last = likes.pop();
+					const body = likes.join(", ");
 					display = `You both like ${body} and ${last}.`;
 
 				}
@@ -379,6 +380,7 @@ const disconnectHandler = function (user: string) {
 		chatNode.add.status.default(`${user} Disconnected`);
 		disconnectNode.set("new");
 		current_session.connected = false;
+		document.querySelector(".typing")?.remove();
 	}
 	if (settings.data.autoskip) {
 		setTimeout(() => {
@@ -501,8 +503,9 @@ const newChat = async function () {
 					chatNode.add.status.likes(event.data);
 					break;
 				case "connected":
-					current_session.connected = true;
+					chatNode.clear();
 					chatNode.add.status.connected();
+					current_session.connected = true;
 					break;
 				case "strangerDisconnected":
 					socket.close();
@@ -510,6 +513,7 @@ const newChat = async function () {
 					disconnectHandler("Stranger");
 					break;
 				case "waiting":
+					chatNode.clear();
 					chatNode.add.status.default("Waiting");
 					break;
 				default:
@@ -540,7 +544,7 @@ const newChat = async function () {
 
 	chatNode.clear();
 	chatNode.typebox.value = "";
-	chatNode.add.status.default("Conneting to server");
+	chatNode.add.status.default("Conneting to server...");
 	spinnerNode.add();
 
 	const media = await navigator.mediaDevices.getUserMedia({ video: true, audio: { echoCancellation: true } });
