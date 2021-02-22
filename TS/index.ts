@@ -172,7 +172,6 @@ const chatNode = {
 						}
 					}
 				});
-				current_session.typing = true;
 				chatNode.scroll();
 			},
 			likes(likes: string[]) {
@@ -192,6 +191,14 @@ const chatNode = {
 				chatNode.add.status.default(display);
 			},
 		},
+	},
+	typing(state:boolean) {
+		current_session.typing = state;
+		if (state) {
+			chatNode.add.status.typing();
+		} else {
+			document.querySelector(".typing")?.remove();
+		}
 	},
 	clear() {
 		clearChilds(".logbox");
@@ -465,7 +472,14 @@ const newChat = async function () {
 					}
 					break;
 				case "gotMessage":
+					chatNode.typing(false);
 					chatNode.add.message(event.data, "stranger");
+					break;
+				case "typing":
+					chatNode.typing(true);
+					break;
+				case "stoppedTyping":
+					chatNode.typing(false);
 					break;
 				case "commonLikes":
 					chatNode.add.status.likes(event.data);
