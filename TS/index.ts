@@ -394,15 +394,26 @@ const keyboard = {
 	},
 	handler: {
 		doc(key: KeyboardEvent) {
-			if (key.code == "Escape") {
-				if (key.shiftKey && current_session.connected) {
-					key.preventDefault();
-					backend.disconnect();
-					newChat();
-				} else {
-					key.preventDefault();
-					disconnectNode.handler();
-				}
+			switch (key.code) {
+				case "Escape":
+					if (key.shiftKey && current_session.connected) {
+						key.preventDefault();
+						backend.disconnect();
+						newChat();
+					} else {
+						key.preventDefault();
+						disconnectNode.handler();
+					}
+					break;
+
+				case "Slash":
+					if (chatNode.typebox.value == "") {
+						chatNode.typebox.focus();
+					}
+					break;
+
+				default:
+					break;
 			}
 		},
 		chatbox(key: KeyboardEvent) {
