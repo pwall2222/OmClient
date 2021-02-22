@@ -254,6 +254,10 @@ const chatNode = {
 				case "disconnect":
 					disconnect();
 					break;
+				
+				case "save":
+					settings.save();
+					break;
 			}
 			chatNode.typebox.value = "";
 		} else if (current_session.connected && chat_contents != "") {
