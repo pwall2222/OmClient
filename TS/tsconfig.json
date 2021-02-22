@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
 		"target": "ESNext",
+		"lib": ["DOM","ESNext"],
 		"outDir": "../output",
 		"incremental": true,
 		"alwaysStrict": true
