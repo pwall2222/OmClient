@@ -508,7 +508,6 @@ const newChat = async function () {
 					current_session.connected = true;
 					break;
 				case "strangerDisconnected":
-					socket.close();
 					videoNode.othervideo.srcObject = null;
 					disconnectHandler("Stranger");
 					break;
@@ -528,6 +527,21 @@ const newChat = async function () {
 					data: events[i][1]
 				};
 				eventHandler.executer(event);
+			}
+		},
+		async subscribe() {
+			const response = await backend.sendEncodedPOST("events");
+			if (response.status == 502) {
+				await eventHandler.subscribe();
+			} else if (response.status != 200) {
+				console.log(response.statusText)
+				await eventHandler.subscribe();
+			} else {
+				const events = await response.json();
+				if (events != null) {
+					eventHandler.parser(events);
+					await eventHandler.subscribe();
+				}
 			}
 		}
 	};
@@ -572,11 +586,7 @@ const newChat = async function () {
 	eventHandler.parser(start.events);
 	current_session.id = start.clientID;
 
-	const socket = new WebSocket(`wss://${current_session.server}.omegle.com/wsevents?id=${encodeURIComponent(start.clientID)}`);
-	socket.onmessage = function (rawevents) {
-		const events = JSON.parse(rawevents.data);
-		eventHandler.parser(events);
-	};
+	eventHandler.subscribe();
 };
 
 keyboard.init();
