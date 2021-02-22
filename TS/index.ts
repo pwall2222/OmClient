@@ -116,7 +116,7 @@ const disconnect = function () {
 
 const chatNode = {
 	logbox: document.querySelector(".logbox"),
-	typebox: (document.querySelector(".chatmsg") as HTMLTextAreaElement),
+	typebox: document.querySelector<HTMLTextAreaElement>(".chatmsg"),
 	add: {
 		message(message: string, sender: author) {
 			const pclass = `${sender}msg`;
@@ -192,7 +192,7 @@ const chatNode = {
 			},
 		},
 	},
-	typing(state:boolean) {
+	typing(state: boolean) {
 		current_session.typing = state;
 		if (state) {
 			chatNode.add.status.typing();
@@ -236,12 +236,13 @@ const chatNode = {
 					let instructions = "";
 					for (let i = 0; i < commands.length; i++) {
 						const elements = commands[i];
-						instructions += `${elements.name}:${elements.description}`
+						instructions += `${elements.name}:<br>${elements.description}<br>`
 					}
-					createChild(".logwrapper", {
+					createChild(".logbox", {
 						tag: "p",
 						args: {
-							innerText: instructions
+							innerHTML: instructions,
+							className: "command"
 						}
 					})
 					break;
@@ -261,7 +262,7 @@ const chatNode = {
 				case "disconnect":
 					disconnect();
 					break;
-				
+
 				case "save":
 					settings.save();
 					break;
@@ -317,8 +318,8 @@ const disconnectNode = {
 };
 
 const videoNode = {
-	othervideo: (document.querySelector("#othervideo") as HTMLVideoElement),
-	selfvideo: (document.querySelector("#selfvideo") as HTMLVideoElement)
+	othervideo: document.querySelector<HTMLVideoElement>("#othervideo"),
+	selfvideo: document.querySelector<HTMLVideoElement>("#selfvideo")
 };
 
 const spinnerNode = {
