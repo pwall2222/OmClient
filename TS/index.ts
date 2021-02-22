@@ -211,7 +211,7 @@ const chatNode = {
 		if (chat_contents[0] == "/") {
 			const full_command = chat_contents.slice(1).split(" ");
 			const command_name = full_command[0];
-			const arguments = full_command.slice(1, full_command.length - 0);
+			const args = full_command.slice(1, full_command.length - 0);
 			switch (command_name) {
 				case "help":
 					// TODO: Adding help response
@@ -248,8 +248,8 @@ const chatNode = {
 
 				case "set":
 					// TODO: Checking user input
-					if (settings.data[arguments[0]] != undefined) {
-						settings.data[arguments[0]] = JSON.parse(arguments[1]);
+					if (settings.data[args[0]] != undefined) {
+						settings.data[args[0]] = JSON.parse(args[1]);
 					}
 					break;
 

@@ -2,7 +2,8 @@
 	"compilerOptions": {
 		"target": "ESNext",
 		"outDir": "../output",
-		"incremental": true
+		"incremental": true,
+		"alwaysStrict": true
 	},
 	"files": ["index.ts"]
 }
