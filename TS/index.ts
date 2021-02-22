@@ -268,6 +268,13 @@ const chatNode = {
 				case "save":
 					settings.save();
 					break;
+
+				case "text":
+					if (current_session.connected == false) {
+						settings.data.video = false;
+						newChat();
+					}
+					break;
 			}
 			chatNode.typebox.value = "";
 		} else if (current_session.connected && chat_contents != "") {
