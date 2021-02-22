@@ -428,12 +428,15 @@ const backend = {
 	async connect() {
 		const args = [
 			"firstevents=0",
-			`lang=${settings.data.lang}`,
-			`webrtc=${Number(settings.data.video)}`
+			`lang=${settings.data.lang}`
 		];
 
 		if (settings.data.likes_enabled) {
 			args.push(`topics=${encodeURIComponent(JSON.stringify(settings.data.likes))}`)
+		}
+
+		if (settings.data.video) {
+			args.push("webrtc=1")
 		}
 
 		const url = `https://${current_session.server}.omegle.com/start?${args.join("&")}`
