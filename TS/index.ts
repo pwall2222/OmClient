@@ -534,7 +534,7 @@ const newChat = async function () {
 			if (response.status == 502) {
 				await eventHandler.subscribe();
 			} else if (response.status != 200) {
-				console.log(response.statusText)
+				console.log("Server barked:" + response.statusText)
 				await eventHandler.subscribe();
 			} else {
 				const events = await response.json();
