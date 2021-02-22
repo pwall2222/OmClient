@@ -538,17 +538,20 @@ const newChat = async function () {
 		},
 		async subscribe() {
 			const response = await backend.sendEncodedPOST("events");
-			if (response.status == 502) {
-				await eventHandler.subscribe();
-			} else if (response.status != 200) {
-				console.log("Server barked:" + response.statusText)
-				await eventHandler.subscribe();
-			} else {
+			if (response.status == 200) {
 				const events = await response.json();
 				if (events != null) {
 					eventHandler.parser(events);
 					await eventHandler.subscribe();
 				}
+			} else if (response.status == 502) {
+				await eventHandler.subscribe();
+			} else if (response.status == 400) {
+				console.log("Server barked:" + response.statusText);
+			} else {
+				console.log("Server barked:" + response.statusText);
+				await new Promise(resolve => setTimeout(resolve, 1000));
+				await eventHandler.subscribe();
 			}
 		}
 	};
