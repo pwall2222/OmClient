@@ -96,23 +96,21 @@ const clearChilds = function (nodeName: string) {
 };
 
 const encodeObject = function (data?: object) {
-	const form = {
-		data: [],
-		append(key: string, value: string) {
-			this.data.push(key + "=" + encodeURIComponent(value));
-		}
+	const form_data:string[] = [];
+	const append = function (key: string, value: string) {
+		form_data.push(key + "=" + encodeURIComponent(value));
 	}
 	if (data) {
 		for (const key in data) {
 			const value = data[key];
 			if (typeof value == "string") {
-				form.append(key, value);
+				append(key, value);
 			} else if (typeof value == "object") (
-				form.append(key, JSON.stringify(value))
+				append(key, JSON.stringify(value))
 			)
 		}
 	}
-	return form.data.join("&");
+	return form_data.join("&");
 };
 
 const disconnect = function () {
@@ -339,7 +337,7 @@ const current_session = {
 	rtc: {
 		call: false,
 		peer: false,
-		candidates: []
+		candidates: <RTCIceCandidate[]>[]
 	},
 	reset() {
 		current_session.id = "";
@@ -358,7 +356,7 @@ const settings = {
 	data: {
 		autoskip: false,
 		autoskip_delay: 500,
-		likes: [],
+		likes: <string[]>[],
 		likes_enabled: false,
 		lang: "en",
 		video: true
