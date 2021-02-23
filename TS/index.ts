@@ -331,11 +331,6 @@ const videoNode = {
 	selfvideo: document.querySelector<HTMLVideoElement>("#selfvideo")
 };
 
-const spinnerNode = {
-	add: () => createChild("#videowrapper", { tag: "div", args: { className: "spinner" } }),
-	remove: () => document.querySelector(".spinner")?.remove()
-};
-
 const current_session = {
 	id: "",
 	server: "front26",
@@ -394,7 +389,7 @@ const disconnectHandler = function (user: string) {
 			newChat();
 		}, settings.data.autoskip_delay);
 	}
-	spinnerNode.remove();
+	document.querySelector(".spinner")?.remove();
 };
 
 const keyboard = {
@@ -569,7 +564,8 @@ const newChat = async function () {
 	chatNode.clear();
 	chatNode.typebox.value = "";
 	chatNode.add.status.default("Conneting to server...");
-	spinnerNode.add();
+
+	createChild("#videowrapper", { tag: "div", args: { className: "spinner" } })
 
 	const media = await navigator.mediaDevices.getUserMedia({ video: true, audio: { echoCancellation: true } });
 	videoNode.selfvideo.srcObject ??= media;
