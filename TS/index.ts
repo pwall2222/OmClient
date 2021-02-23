@@ -278,7 +278,7 @@ const chatNode = {
 			}
 			chatNode.typebox.value = "";
 		} else if (current_session.connected && chat_contents != "") {
-			backend.sendEncodedPOST("send", { msg: chatNode.typebox.value })
+			backend.sendIdentifiedPOST("send", { msg: chatNode.typebox.value })
 			chatNode.add.message(chatNode.typebox.value, "you");
 			chatNode.typebox.value = "";
 			disconnectNode.set("stop");
@@ -446,7 +446,7 @@ const backend = {
 			referrerPolicy: "no-referrer"
 		});
 	},
-	sendEncodedPOST: (path: string, data = {}) => backend.sendPOST(path, encodeObject({ id: current_session.id, ...data })),
+	sendIdentifiedPOST: (path: string, data = {}) => backend.sendPOST(path, encodeObject({ id: current_session.id, ...data })),
 	async connect() {
 		const args = [
 			"firstevents=0",
@@ -465,7 +465,7 @@ const backend = {
 		const response = await fetch(url, { method: "POST", referrerPolicy: "no-referrer" })
 		return response.json();
 	},
-	disconnect: () => backend.sendEncodedPOST("disconnect")
+	disconnect: () => backend.sendIdentifiedPOST("disconnect")
 };
 
 const newChat = async function () {
@@ -537,7 +537,7 @@ const newChat = async function () {
 			}
 		},
 		async subscribe() {
-			const response = await backend.sendEncodedPOST("events");
+			const response = await backend.sendIdentifiedPOST("events");
 			if (response.status == 200) {
 				const events = await response.json();
 				if (events != null) {
@@ -559,7 +559,7 @@ const newChat = async function () {
 	const descriptionHandler = async function (option: pcOption) {
 		const session = await pc[`create${option}`](WEB_RTC_MEDIA_CONSTRAINTS);
 		await pc.setLocalDescription(session)
-		backend.sendEncodedPOST("rtcpeerdescription", { desc: session });
+		backend.sendIdentifiedPOST("rtcpeerdescription", { desc: session });
 	};
 
 	current_session.reset();
@@ -587,7 +587,7 @@ const newChat = async function () {
 	}
 	pc.onicecandidate = async function (event) {
 		if (pc.iceGatheringState != "complete") {
-			await backend.sendEncodedPOST("icecandidate", { candidate: event.candidate });
+			await backend.sendIdentifiedPOST("icecandidate", { candidate: event.candidate });
 			clearArray(current_session.rtc.candidates);
 		}
 	}
