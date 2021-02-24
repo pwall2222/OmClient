@@ -68,8 +68,8 @@ const clearArray = function (array: any[]) {
 const createElement = function (domObject: domObject) {
 	const element = document.createElement(domObject.tag);
 	if (domObject.args) {
-		for (const [key, value] of Object.entries(domObject.args)) {
-			element[key] = value;
+		for (const key in domObject.args) {
+			element[key] = domObject.args[key];
 		}
 	}
 	if (domObject.child) {
