@@ -44,6 +44,6 @@ interface args {
 	/* [key: string]: unknown */
 }
 
-type dStatus = "stop" | "rlly" | "new";
+type disconnectStatus = "stop" | "rlly" | "new";
 type author = "you" | "stranger";
 type pcOption = "Offer" | "Answer";

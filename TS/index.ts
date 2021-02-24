@@ -245,7 +245,7 @@ const chatNode = {
 const disconnectNode = {
 	txt: document.querySelector(".dscnttxt"),
 	btn: document.querySelector(".dscntbtn"),
-	set(text: dStatus) {
+	set(text: disconnectStatus) {
 		switch (text) {
 			case "stop":
 				disconnectNode.btn.className = "dscntbtn stop";
