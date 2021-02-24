@@ -167,69 +167,71 @@ const chatNode = {
 			const full_command = chat_contents.slice(1).split(" ");
 			const command_name = full_command[0];
 			const args = full_command.slice(1, full_command.length - 0);
-			switch (command_name) {
-				case "help":
-					// TODO: Adding help response
-					const commands = [
-						{
-							name: "help",
-							description: "Shows the help information"
-						},
-						{
-							name: "set",
-							description: "Sets one of the avaliable settings"
-						},
-						{
-							name: "skip",
-							description: "Skips current person starting a new chat"
-						},
-						{
-							name: "disconnect",
-							description: "Disconnects from the current stranger"
+			const commands:command[] = [
+				{
+					name: "help",
+					description: "Shows the help information",
+					exec() {
+						// TODO: Adding help response
+						let instructions = "";
+						for (let i = 0; i < commands.length; i++) {
+							const elements = commands[i];
+							const nameCapitalized = elements.name.charAt(0).toUpperCase() + elements.name.slice(1)
+							instructions += `<b>${nameCapitalized}</b>:<br>${elements.description}<br>`
 						}
-					]
-					let instructions = "";
-					for (let i = 0; i < commands.length; i++) {
-						const elements = commands[i];
-						const nameCapitalized = elements.name.charAt(0).toUpperCase() + elements.name.slice(1)
-						instructions += `<b>${nameCapitalized}</b>:<br>${elements.description}<br>`
+						createChild(".logbox", {
+							tag: "p",
+							args: {
+								innerHTML: instructions,
+								className: "command"
+							}
+						})
 					}
-					createChild(".logbox", {
-						tag: "p",
-						args: {
-							innerHTML: instructions,
-							className: "command"
+				},
+				{
+					name: "set",
+					description: "Sets one of the avaliable settings",
+					exec() {
+						// TODO: Checking user input
+						if (settings.data[args[0]] != undefined) {
+							settings.data[args[0]] = JSON.parse(args[1]);
 						}
-					})
-					break;
-
-				case "set":
-					// TODO: Checking user input
-					if (settings.data[args[0]] != undefined) {
-						settings.data[args[0]] = JSON.parse(args[1]);
 					}
-					break;
-
-				case "skip":
-					backend.disconnect();
-					newChat();
-					break;
-
-				case "disconnect":
-					disconnect();
-					break;
-
-				case "save":
-					settings.save();
-					break;
-
-				case "text":
-					if (current_session.connected == false) {
-						settings.data.video = false;
+				},
+				{
+					name: "skip",
+					description: "Skips current person starting a new chat",
+					exec() {
+						backend.disconnect();
 						newChat();
 					}
-					break;
-			}
+				},
+				{
+					name: "disconnect",
+					description: "Disconnects from the current stranger",
+					exec() {
+						disconnect();
+					}
+				},
+				{
+					name: "save",
+					description: "Saves settings to localStorage",
+					exec() {
+						settings.save();
+					}
+				},
+				{
+					name: "text",
+					description: "Passes mode to text and makes a new chat",
+					exec() {
+						if (current_session.connected == false) {
+							settings.data.video = false;
+							newChat();
+						}
+					}
+				}
+			]
+			commands.find(obj => obj.name == command_name)?.exec();
 			chatNode.typebox.value = "";
 		} else if (current_session.connected && chat_contents != "") {
 			backend.sendIdentifiedPOST("send", { msg: chatNode.typebox.value })
