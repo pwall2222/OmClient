@@ -39,7 +39,7 @@ const createChild = function (parent: string, domObject: domObject) {
 	document.querySelector(parent).appendChild(child);
 };
 
-const createChildBefore = function (parent: string, reference:string , domObject: domObject) {
+const createChildBefore = function (parent: string, reference: string, domObject: domObject) {
 	const child = createElement(domObject);
 	const parentNode = document.querySelector(parent);
 	const referenceNode = parentNode.querySelector(reference);
@@ -52,7 +52,7 @@ const clearChilds = function (nodeName: string) {
 };
 
 const encodeObject = function (data?: object) {
-	const form_data:string[] = [];
+	const form_data: string[] = [];
 	const append = function (key: string, value: string) {
 		form_data.push(key + "=" + encodeURIComponent(value));
 	}
@@ -167,7 +167,7 @@ const chatNode = {
 			const full_command = chat_contents.slice(1).split(" ");
 			const command_name = full_command[0];
 			const args = full_command.slice(1, full_command.length - 0);
-			const commands:command[] = [
+			const commands: command[] = [
 				{
 					name: "help",
 					description: "Shows the help information",
@@ -502,7 +502,7 @@ const newChat = async function () {
 					await eventHandler.subscribe();
 					break;
 
-				case 400: 
+				case 400:
 					console.log("Server barked:" + response.statusText);
 					break;
 
