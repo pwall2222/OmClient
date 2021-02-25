@@ -192,9 +192,11 @@ const chatNode = {
 					name: "set",
 					description: "Sets one of the avaliable settings",
 					exec() {
-						// TODO: Checking user input
-						if (settings.data[args[0]] != undefined) {
-							settings.data[args[0]] = JSON.parse(args[1]);
+						const parsed_arg = JSON.parse(args[1]);
+						if (typeof settings.data[args[0]] == typeof parsed_arg) {
+							settings.data[args[0]] = parsed_arg;
+						} else {
+							console.log("Wrong type")
 						}
 					}
 				},
