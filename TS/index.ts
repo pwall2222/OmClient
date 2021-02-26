@@ -163,76 +163,7 @@ const chatNode = {
 	handleInput() {
 		const chat_contents = chatNode.typebox.value;
 		if (chat_contents[0] == "/") {
-			const full_command = chat_contents.slice(1).split(" ");
-			const command_name = full_command[0];
-			const args = full_command.slice(1, full_command.length - 0);
-			const commands: command[] = [
-				{
-					name: "help",
-					description: "Shows the help information",
-					exec() {
-						// TODO: Adding help response
-						let instructions = "";
-						for (let i = 0; i < commands.length; i++) {
-							const elements = commands[i];
-							const nameCapitalized = elements.name.charAt(0).toUpperCase() + elements.name.slice(1)
-							instructions += `<b>${nameCapitalized}</b>:<br>${elements.description}<br>`
-						}
-						createChild(".logbox", {
-							tag: "p",
-							args: {
-								innerHTML: instructions,
-								className: "command"
-							}
-						})
-					}
-				},
-				{
-					name: "set",
-					description: "Sets one of the avaliable settings",
-					exec() {
-						const parsed_arg = JSON.parse(args[1]);
-						if (typeof settings.data[args[0]] == typeof parsed_arg) {
-							settings.data[args[0]] = parsed_arg;
-						} else {
-							console.log("Wrong type")
-						}
-					}
-				},
-				{
-					name: "skip",
-					description: "Skips current person starting a new chat",
-					exec() {
-						backend.disconnect();
-						newChat();
-					}
-				},
-				{
-					name: "disconnect",
-					description: "Disconnects from the current stranger",
-					exec() {
-						disconnect();
-					}
-				},
-				{
-					name: "save",
-					description: "Saves settings to localStorage",
-					exec() {
-						settings.save();
-					}
-				},
-				{
-					name: "text",
-					description: "Passes mode to text and makes a new chat",
-					exec() {
-						if (current_session.connected == false) {
-							settings.data.video = false;
-							newChat();
-						}
-					}
-				}
-			];
-			commands.find(obj => obj.name == command_name)?.exec();
+			cmd.handler(chat_contents);
 			chatNode.typebox.value = "";
 		} else if (current_session.connected && chat_contents != "") {
 			backend.sendIdentifiedPOST("send", { msg: chatNode.typebox.value })
@@ -315,6 +246,7 @@ const settings = {
 	data: {
 		autoskip: false,
 		autoskip_delay: 500,
+		cmd_history: 25,
 		likes: <string[]>[],
 		likes_enabled: false,
 		lang: "en",
@@ -332,6 +264,106 @@ const settings = {
 	clear() {
 		localStorage.clear();
 	}
+};
+
+const cmd = {
+	handler(contents:string) {
+		const full_command = contents.slice(1).split(" ");
+		const command_name = full_command[0];
+		const args = full_command.slice(1, full_command.length - 0);
+		const commands: command[] = [
+			{
+				name: "help",
+				description: "Shows the help information",
+				exec() {
+					// TODO: Adding help response
+					let instructions = "";
+					for (let i = 0; i < commands.length; i++) {
+						const elements = commands[i];
+						const nameCapitalized = elements.name.charAt(0).toUpperCase() + elements.name.slice(1)
+						instructions += `<b>${nameCapitalized}</b>:<br>${elements.description}<br>`
+					}
+					createChild(".logbox", {
+						tag: "p",
+						args: {
+							innerHTML: instructions,
+							className: "command"
+						}
+					})
+				}
+			},
+			{
+				name: "set",
+				description: "Sets one of the avaliable settings",
+				exec() {
+					const parsed_arg = JSON.parse(args[1]);
+					if (typeof settings.data[args[0]] == typeof parsed_arg) {
+						settings.data[args[0]] = parsed_arg;
+					} else {
+						console.log("Wrong type")
+					}
+				}
+			},
+			{
+				name: "skip",
+				description: "Skips current person starting a new chat",
+				exec() {
+					backend.disconnect();
+					newChat();
+				}
+			},
+			{
+				name: "disconnect",
+				description: "Disconnects from the current stranger",
+				exec() {
+					disconnect();
+				}
+			},
+			{
+				name: "save",
+				description: "Saves settings to localStorage",
+				exec() {
+					settings.save();
+				}
+			},
+			{
+				name: "text",
+				description: "Passes mode to text and makes a new chat",
+				exec() {
+					if (current_session.connected == false) {
+						settings.data.video = false;
+						newChat();
+					}
+				}
+			}
+		];
+		commands.find(obj => obj.name == command_name)?.exec();
+		cmd.command_history.unshift(contents);
+		cmd.command_history.splice(settings.data.cmd_history, 1);
+	},
+	command_history: [],
+	position: -1,
+	current: "",
+	next() {
+		const new_position = cmd.position + 1;
+		if (cmd.position == -1) {
+			cmd.current = chatNode.typebox.value;
+		}
+		cmd.change_val(new_position);
+	},
+	previous() {
+		const new_position = cmd.position - 1;
+		if (new_position <= -1) {
+			chatNode.typebox.value = cmd.current;
+			cmd.position = -1;
+		} else cmd.change_val(new_position);
+	},
+	change_val(new_position:number) {
+		if (cmd.command_history.length > 0&&cmd.command_history.length > new_position) {
+			cmd.position = new_position;
+			chatNode.typebox.value = cmd.command_history[new_position];
+		}
+	},
 };
 
 const disconnectHandler = function (user: string) {
@@ -382,6 +414,12 @@ const keyboard = {
 			if (key.code == "Enter" && !key.shiftKey) {
 				key.preventDefault();
 				chatNode.handleInput();
+			} else if (key.code == "ArrowUp") {
+				cmd.next();
+				key.preventDefault();
+			} else if (key.code == "ArrowDown") {
+				cmd.previous();
+				key.preventDefault();
 			}
 		}
 	}
