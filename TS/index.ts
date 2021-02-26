@@ -56,7 +56,7 @@ const encodeObject = function (data: object) {
 	const append = function (key: string, value: string) {
 		form_data.push(key + "=" + encodeURIComponent(value));
 	}
-	
+
 	for (const key in data) {
 		const value = data[key];
 		if (typeof value == "string") {
@@ -231,7 +231,7 @@ const chatNode = {
 						}
 					}
 				}
-			]
+			];
 			commands.find(obj => obj.name == command_name)?.exec();
 			chatNode.typebox.value = "";
 		} else if (current_session.connected && chat_contents != "") {
