@@ -51,20 +51,19 @@ const clearChilds = function (nodeName: string) {
 	node.textContent = "";
 };
 
-const encodeObject = function (data?: object) {
+const encodeObject = function (data: object) {
 	const form_data: string[] = [];
 	const append = function (key: string, value: string) {
 		form_data.push(key + "=" + encodeURIComponent(value));
 	}
-	if (data) {
-		for (const key in data) {
-			const value = data[key];
-			if (typeof value == "string") {
-				append(key, value);
-			} else if (typeof value == "object") (
-				append(key, JSON.stringify(value))
-			)
-		}
+	
+	for (const key in data) {
+		const value = data[key];
+		if (typeof value == "string") {
+			append(key, value);
+		} else if (typeof value == "object") (
+			append(key, JSON.stringify(value))
+		)
 	}
 	return form_data.join("&");
 };
