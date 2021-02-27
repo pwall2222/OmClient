@@ -250,6 +250,7 @@ const settings = {
 	data: {
 		autoskip: false,
 		autoskip_delay: 500,
+		autoclearchat: true,
 		cmd_history: 25,
 		likes: <string[]>[],
 		likes_enabled: false,
@@ -258,8 +259,8 @@ const settings = {
 	},
 	load() {
 		const item = JSON.parse(localStorage.getItem('settings'));
-		if (item) {
-			settings.data = item;
+		for (const key in item) {
+			settings.data[key] = item[key];
 		}
 	},
 	save() {
@@ -572,8 +573,11 @@ const newChat = async function () {
 	disconnectNode.set("stop");
 
 	chatNode.clear();
-	chatNode.typebox.value = "";
 	chatNode.add.status.default("Conneting to server...");
+
+	if (settings.data.autoclearchat) {
+		chatNode.typebox.value = "";
+	}
 
 	createChild("#videowrapper", { tag: "div", args: { className: "spinner" } })
 
