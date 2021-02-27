@@ -273,7 +273,7 @@ const setting_manager = {
 };
 
 const cmd = {
-	handler(contents:string) {
+	handler(contents: string) {
 		const full_command = contents.slice(1).split(" ");
 		const command_name = full_command[0];
 		const args = full_command.slice(1, full_command.length - 0);
@@ -368,8 +368,8 @@ const cmd = {
 			cmd.position = -1;
 		} else cmd.change_val(new_position);
 	},
-	change_val(new_position:number) {
-		if (cmd.command_history.length > 0&&cmd.command_history.length > new_position) {
+	change_val(new_position: number) {
+		if (cmd.command_history.length > 0 && cmd.command_history.length > new_position) {
 			cmd.position = new_position;
 			chatNode.typebox.value = cmd.command_history[new_position];
 		}
