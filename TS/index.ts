@@ -342,8 +342,11 @@ const cmd = {
 			}
 		];
 		commands.find(obj => obj.name == command_name)?.exec();
-		cmd.command_history.unshift(contents);
-		cmd.command_history.splice(settings.data.cmd_history, 1);
+		if (contents != cmd.command_history[0]) {
+			cmd.command_history.unshift(contents);
+			cmd.command_history.splice(settings.data.cmd_history, 1);
+		}
+		cmd.position = -1;
 	},
 	command_history: [],
 	position: -1,
