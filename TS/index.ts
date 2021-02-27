@@ -147,7 +147,7 @@ const chatNode = {
 		},
 	},
 	typing(state: boolean) {
-		current_session.typing = state;
+		session.current.typing = state;
 		if (state) {
 			chatNode.add.status.typing();
 		} else {
@@ -165,7 +165,7 @@ const chatNode = {
 		if (chat_contents[0] == "/") {
 			cmd.handler(chat_contents);
 			chatNode.typebox.value = "";
-		} else if (current_session.connected && chat_contents != "") {
+		} else if (session.current.connected && chat_contents != "") {
 			backend.sendIdentifiedPOST("send", { msg: chatNode.typebox.value })
 			chatNode.add.message(chatNode.typebox.value, "you");
 			chatNode.typebox.value = "";
@@ -219,25 +219,29 @@ const videoNode = {
 	selfvideo: document.querySelector<HTMLVideoElement>("#selfvideo")
 };
 
-const current_session = {
-	id: "",
-	server: "front26",
-	connected: false,
-	typing: false,
-	rtc: {
-		call: false,
-		peer: false,
-		candidates: <RTCIceCandidate[]>[]
-	},
-	reset() {
-		current_session.id = "";
-		current_session.typing = false;
-		current_session.connected = false;
-		/* current_session.server = ""; */
-		current_session.rtc = {
+const session = {
+	current: {
+		id: "",
+		server: "front26",
+		connected: false,
+		typing: false,
+		rtc: {
 			call: false,
 			peer: false,
-			candidates: []
+			candidates: <RTCIceCandidate[]>[]
+		}
+	},
+	reset() {
+		this.current = {
+			id: "",
+			server: "front26",
+			connected: false,
+			typing: false,
+			rtc: {
+				call: false,
+				peer: false,
+				candidates: []
+			}
 		}
 	}
 };
@@ -330,7 +334,7 @@ const cmd = {
 				name: "text",
 				description: "Passes mode to text and makes a new chat",
 				exec() {
-					if (current_session.connected == false) {
+					if (session.current.connected == false) {
 						settings.data.video = false;
 						newChat();
 					}
@@ -367,10 +371,10 @@ const cmd = {
 };
 
 const disconnectHandler = function (user: string) {
-	if (current_session.connected) {
+	if (session.current.connected) {
 		chatNode.add.status.default(`${user} Disconnected`);
 		disconnectNode.set("new");
-		current_session.connected = false;
+		session.current.connected = false;
 		document.querySelector(".typing")?.remove();
 	}
 	if (settings.data.autoskip) {
@@ -390,7 +394,7 @@ const keyboard = {
 		doc(key: KeyboardEvent) {
 			switch (key.code) {
 				case "Escape":
-					if (key.shiftKey && current_session.connected) {
+					if (key.shiftKey && session.current.connected) {
 						key.preventDefault();
 						backend.disconnect();
 						newChat();
@@ -427,7 +431,7 @@ const keyboard = {
 
 const backend = {
 	async sendPOST(path: string, data: string) {
-		return fetch(`https://${current_session.server}.omegle.com/${path}`, {
+		return fetch(`https://${session.current.server}.omegle.com/${path}`, {
 			method: 'POST',
 			body: data,
 			headers: {
@@ -436,7 +440,7 @@ const backend = {
 			referrerPolicy: "no-referrer"
 		});
 	},
-	sendIdentifiedPOST: (path: string, data = {}) => backend.sendPOST(path, encodeObject({ id: current_session.id, ...data })),
+	sendIdentifiedPOST: (path: string, data = {}) => backend.sendPOST(path, encodeObject({ id: session.current.id, ...data })),
 	async connect() {
 		const args = [
 			"firstevents=0",
@@ -451,7 +455,7 @@ const backend = {
 			args.push("webrtc=1")
 		}
 
-		const url = `https://${current_session.server}.omegle.com/start?${args.join("&")}`
+		const url = `https://${session.current.server}.omegle.com/start?${args.join("&")}`
 		const response = await fetch(url, { method: "POST", referrerPolicy: "no-referrer" })
 		return response.json();
 	},
@@ -463,25 +467,25 @@ const newChat = async function () {
 		executer: async function (event: backendEvent) {
 			switch (event.name) {
 				case "rtccall":
-					current_session.rtc.call = true;
+					session.current.rtc.call = true;
 					descriptionHandler("Offer");
 					break;
 				case "rtcpeerdescription":
 					const answer = new RTCSessionDescription(event.data);
 					await pc.setRemoteDescription(answer)
-					current_session.rtc.peer = true;
-					for (let i = 0; i < current_session.rtc.candidates.length; i++) {
-						const signal = current_session.rtc.candidates[i];
+					session.current.rtc.peer = true;
+					for (let i = 0; i < session.current.rtc.candidates.length; i++) {
+						const signal = session.current.rtc.candidates[i];
 						await pc.addIceCandidate(new RTCIceCandidate(signal));
 					}
-					current_session.rtc.candidates.splice(0, current_session.rtc.candidates.length)
-					if (!current_session.rtc.call) {
+					session.current.rtc.candidates.splice(0, session.current.rtc.candidates.length)
+					if (!session.current.rtc.call) {
 						descriptionHandler("Answer");
 					}
 					break;
 				case "icecandidate":
-					if (!current_session.rtc.peer) {
-						current_session.rtc.candidates.push(event.data);
+					if (!session.current.rtc.peer) {
+						session.current.rtc.candidates.push(event.data);
 					} else {
 						pc.addIceCandidate(new RTCIceCandidate(event.data));
 					}
@@ -502,7 +506,7 @@ const newChat = async function () {
 				case "connected":
 					chatNode.clear();
 					chatNode.add.status.connected();
-					current_session.connected = true;
+					session.current.connected = true;
 					break;
 				case "strangerDisconnected":
 					videoNode.othervideo.srcObject = null;
@@ -560,7 +564,7 @@ const newChat = async function () {
 		backend.sendIdentifiedPOST("rtcpeerdescription", { desc: session });
 	};
 
-	current_session.reset();
+	session.reset();
 
 	disconnectNode.set("stop");
 
@@ -587,13 +591,13 @@ const newChat = async function () {
 	pc.onicecandidate = async function (event) {
 		if (pc.iceGatheringState != "complete") {
 			await backend.sendIdentifiedPOST("icecandidate", { candidate: event.candidate });
-			clearArray(current_session.rtc.candidates);
+			clearArray(session.current.rtc.candidates);
 		}
 	}
 
 	const start = await backend.connect();
 	eventHandler.parser(start.events);
-	current_session.id = start.clientID;
+	session.current.id = start.clientID;
 
 	eventHandler.subscribe();
 };
