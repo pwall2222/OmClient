@@ -259,13 +259,13 @@ const settings = {
 
 const setting_manager = {
 	load() {
-		const item = JSON.parse(localStorage.getItem('settings'));
+		const item = JSON.parse(localStorage.getItem("settings"));
 		for (const key in item) {
 			settings[key] = item[key];
 		}
 	},
 	save() {
-		localStorage.setItem('settings', JSON.stringify(settings));
+		localStorage.setItem("settings", JSON.stringify(settings));
 	},
 	clear() {
 		localStorage.clear();
