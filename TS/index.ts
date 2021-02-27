@@ -247,24 +247,25 @@ const session = {
 };
 
 const settings = {
-	data: {
-		autoskip: false,
-		autoskip_delay: 500,
-		autoclearchat: true,
-		cmd_history: 25,
-		likes: <string[]>[],
-		likes_enabled: false,
-		lang: "en",
-		video: true
-	},
+	autoskip: false,
+	autoskip_delay: 500,
+	autoclearchat: true,
+	cmd_history: 25,
+	likes: <string[]>[],
+	likes_enabled: false,
+	lang: "en",
+	video: true
+};
+
+const setting_manager = {
 	load() {
 		const item = JSON.parse(localStorage.getItem('settings'));
 		for (const key in item) {
-			settings.data[key] = item[key];
+			settings[key] = item[key];
 		}
 	},
 	save() {
-		localStorage.setItem('settings', JSON.stringify(settings.data));
+		localStorage.setItem('settings', JSON.stringify(settings));
 	},
 	clear() {
 		localStorage.clear();
@@ -302,8 +303,8 @@ const cmd = {
 				description: "Sets one of the avaliable settings",
 				exec() {
 					const parsed_arg = JSON.parse(args[1]);
-					if (typeof settings.data[args[0]] == typeof parsed_arg) {
-						settings.data[args[0]] = parsed_arg;
+					if (typeof settings[args[0]] == typeof parsed_arg) {
+						settings[args[0]] = parsed_arg;
 					} else {
 						console.log("Wrong type")
 					}
@@ -328,7 +329,7 @@ const cmd = {
 				name: "save",
 				description: "Saves settings to localStorage",
 				exec() {
-					settings.save();
+					setting_manager.save();
 				}
 			},
 			{
@@ -336,7 +337,7 @@ const cmd = {
 				description: "Passes mode to text and makes a new chat",
 				exec() {
 					if (session.current.connected == false) {
-						settings.data.video = false;
+						settings.video = false;
 						newChat();
 					}
 				}
@@ -345,7 +346,7 @@ const cmd = {
 		commands.find(obj => obj.name == command_name)?.exec();
 		if (contents != cmd.command_history[0]) {
 			cmd.command_history.unshift(contents);
-			cmd.command_history.splice(settings.data.cmd_history, 1);
+			cmd.command_history.splice(settings.cmd_history, 1);
 		}
 		cmd.position = -1;
 	},
@@ -381,10 +382,10 @@ const disconnectHandler = function (user: string) {
 		session.current.connected = false;
 		document.querySelector(".typing")?.remove();
 	}
-	if (settings.data.autoskip) {
+	if (settings.autoskip) {
 		setTimeout(() => {
 			newChat();
-		}, settings.data.autoskip_delay);
+		}, settings.autoskip_delay);
 	}
 	document.querySelector(".spinner")?.remove();
 };
@@ -448,14 +449,14 @@ const backend = {
 	async connect() {
 		const args = [
 			"firstevents=0",
-			`lang=${settings.data.lang}`
+			`lang=${settings.lang}`
 		];
 
-		if (settings.data.likes_enabled) {
-			args.push(`topics=${encodeURIComponent(JSON.stringify(settings.data.likes))}`)
+		if (settings.likes_enabled) {
+			args.push(`topics=${encodeURIComponent(JSON.stringify(settings.likes))}`)
 		}
 
-		if (settings.data.video) {
+		if (settings.video) {
 			args.push("webrtc=1")
 		}
 
@@ -575,7 +576,7 @@ const newChat = async function () {
 	chatNode.clear();
 	chatNode.add.status.default("Conneting to server...");
 
-	if (settings.data.autoclearchat) {
+	if (settings.autoclearchat) {
 		chatNode.typebox.value = "";
 	}
 
@@ -610,4 +611,4 @@ const newChat = async function () {
 };
 
 keyboard.init();
-settings.load();
+setting_manager.load();
