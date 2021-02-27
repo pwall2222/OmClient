@@ -347,6 +347,7 @@ const cmd = {
 		if (contents != cmd.command_history[0]) {
 			cmd.command_history.unshift(contents);
 			cmd.command_history.splice(settings.cmd_history, 1);
+			cmd.save();
 		}
 		cmd.position = -1;
 	},
@@ -372,6 +373,15 @@ const cmd = {
 			cmd.position = new_position;
 			chatNode.typebox.value = cmd.command_history[new_position];
 		}
+	},
+	load() {
+		const item = JSON.parse(localStorage.getItem("history"));
+		if (item) {
+			cmd.command_history = item;
+		}
+	},
+	save() {
+		localStorage.setItem("history", JSON.stringify(cmd.command_history));
 	},
 };
 
@@ -612,3 +622,4 @@ const newChat = async function () {
 
 keyboard.init();
 setting_manager.load();
+cmd.load();
