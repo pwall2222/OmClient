@@ -254,7 +254,8 @@ const settings = {
 	likes: <string[]>[],
 	likes_enabled: false,
 	lang: "en",
-	video: true
+	video: true,
+	socials: {}
 };
 
 const setting_manager = {
@@ -339,6 +340,20 @@ const cmd = {
 					if (session.current.connected == false) {
 						settings.video = false;
 						newChat();
+					}
+				}
+			},
+			{
+				name: "socials",
+				description: "Sends socials to stranger",
+				exec() {
+					if (session.current.connected) {
+						let msg = "";
+						for (const key in settings.socials) {
+							msg += `${key}: ${settings.socials[key]}\n` 
+						}
+						backend.sendIdentifiedPOST("send", { msg });
+						chatNode.add.message(chatNode.typebox.value, "you");					
 					}
 				}
 			}
