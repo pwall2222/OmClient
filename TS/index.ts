@@ -356,6 +356,13 @@ const cmd = {
 						chatNode.add.message(chatNode.typebox.value, "you");					
 					}
 				}
+			},
+			{
+				name: "autoskip",
+				description:"Switches autoskip",
+				exec() {
+					settings.autoskip = !settings.autoskip;
+				}
 			}
 		];
 		commands.find(obj => obj.name == command_name)?.exec();
