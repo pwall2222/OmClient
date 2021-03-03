@@ -11,11 +11,6 @@ const WEB_RTC_MEDIA_CONSTRAINTS = {
 		OfferToReceiveVideo: true
 	}
 };
-const WEB_RTC_PEER_CONSTRAINTS = {
-	optional: [{
-		DtlsSrtpKeyAgreement: true
-	}]
-};
 
 const clearArray = function (array: any[]) {
 	return array.splice(0, array.length);
