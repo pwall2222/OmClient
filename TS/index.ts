@@ -567,7 +567,7 @@ const newChat = async function () {
 			switch (response.status) {
 				case 200:
 					const events = await response.json();
-					if (events != null) {
+					if (session.current.connected || events != null) {
 						eventHandler.parser(events);
 						await eventHandler.subscribe();
 					}
