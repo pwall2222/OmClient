@@ -47,9 +47,9 @@ const clearChilds = function (nodeName: string) {
 };
 
 const encodeObject = function (data: object) {
-	const form_data: string[] = [];
+	const formData: string[] = [];
 	const append = function (key: string, value: string) {
-		form_data.push(key + "=" + encodeURIComponent(value));
+		formData.push(key + "=" + encodeURIComponent(value));
 	}
 
 	for (const key in data) {
@@ -60,7 +60,7 @@ const encodeObject = function (data: object) {
 			append(key, JSON.stringify(value))
 		)
 	}
-	return form_data.join("&");
+	return formData.join("&");
 };
 
 const disconnect = function () {
@@ -156,11 +156,11 @@ const chatNode = {
 		chatNode.logbox.scroll(0, chatNode.logbox.scrollHeight);
 	},
 	handleInput() {
-		const chat_contents = chatNode.typebox.value;
-		if (chat_contents[0] == "/") {
-			cmd.handler(chat_contents);
+		const chatContents = chatNode.typebox.value;
+		if (chatContents[0] == "/") {
+			cmd.handler(chatContents);
 			chatNode.typebox.value = "";
-		} else if (session.current.connected && chat_contents != "") {
+		} else if (session.current.connected && chatContents != "") {
 			backend.sendIdentifiedPOST("send", { msg: chatNode.typebox.value })
 			chatNode.add.message(chatNode.typebox.value, "you");
 			chatNode.typebox.value = "";
@@ -253,7 +253,7 @@ const settings = {
 	socials: {}
 };
 
-const setting_manager = {
+const settingManager = {
 	load() {
 		const item = JSON.parse(localStorage.getItem("settings"));
 		for (const key in item) {
@@ -270,9 +270,9 @@ const setting_manager = {
 
 const cmd = {
 	handler(contents: string) {
-		const full_command = contents.slice(1).split(" ");
-		const command_name = full_command[0];
-		const args = full_command.slice(1, full_command.length - 0);
+		const fullCommand = contents.slice(1).split(" ");
+		const commandName = fullCommand[0];
+		const args = fullCommand.slice(1, fullCommand.length - 0);
 		const commands: command[] = [
 			{
 				name: "help",
@@ -298,9 +298,9 @@ const cmd = {
 				name: "set",
 				description: "Sets one of the avaliable settings",
 				exec() {
-					const parsed_arg = JSON.parse(args[1]);
-					if (typeof settings[args[0]] == typeof parsed_arg) {
-						settings[args[0]] = parsed_arg;
+					const parsedArgs = JSON.parse(args[1]);
+					if (typeof settings[args[0]] == typeof parsedArgs) {
+						settings[args[0]] = parsedArgs;
 					} else {
 						console.log("Wrong type")
 					}
@@ -325,7 +325,7 @@ const cmd = {
 				name: "save",
 				description: "Saves settings to localStorage",
 				exec() {
-					setting_manager.save();
+					settingManager.save();
 				}
 			},
 			{
@@ -360,45 +360,45 @@ const cmd = {
 				}
 			}
 		];
-		commands.find(obj => obj.name == command_name)?.exec();
-		if (contents != cmd.command_history[0]) {
-			cmd.command_history.unshift(contents);
-			cmd.command_history.splice(settings.cmd_history, 1);
+		commands.find(obj => obj.name == commandName)?.exec();
+		if (contents != cmd.commandHistory[0]) {
+			cmd.commandHistory.unshift(contents);
+			cmd.commandHistory.splice(settings.cmd_history, 1);
 			cmd.save();
 		}
 		cmd.position = -1;
 	},
-	command_history: [],
+	commandHistory: [],
 	position: -1,
 	current: "",
 	next() {
-		const new_position = cmd.position + 1;
+		const newPosition = cmd.position + 1;
 		if (cmd.position == -1) {
 			cmd.current = chatNode.typebox.value;
 		}
-		cmd.change_val(new_position);
+		cmd.changeVal(newPosition);
 	},
 	previous() {
-		const new_position = cmd.position - 1;
-		if (new_position <= -1) {
+		const newPosition = cmd.position - 1;
+		if (newPosition <= -1) {
 			chatNode.typebox.value = cmd.current;
 			cmd.position = -1;
-		} else cmd.change_val(new_position);
+		} else cmd.changeVal(newPosition);
 	},
-	change_val(new_position: number) {
-		if (cmd.command_history.length > 0 && cmd.command_history.length > new_position) {
-			cmd.position = new_position;
-			chatNode.typebox.value = cmd.command_history[new_position];
+	changeVal(newPosition: number) {
+		if (cmd.commandHistory.length > 0 && cmd.commandHistory.length > newPosition) {
+			cmd.position = newPosition;
+			chatNode.typebox.value = cmd.commandHistory[newPosition];
 		}
 	},
 	load() {
 		const item = JSON.parse(localStorage.getItem("history"));
 		if (item) {
-			cmd.command_history = item;
+			cmd.commandHistory = item;
 		}
 	},
 	save() {
-		localStorage.setItem("history", JSON.stringify(cmd.command_history));
+		localStorage.setItem("history", JSON.stringify(cmd.commandHistory));
 	},
 };
 
@@ -638,5 +638,5 @@ const newChat = async function () {
 };
 
 keyboard.init();
-setting_manager.load();
+settingManager.load();
 cmd.load();
