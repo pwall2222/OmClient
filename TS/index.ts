@@ -484,7 +484,7 @@ const keyboard = {
 };
 
 const backend = {
-	async sendPOST(path: string, data: string) {
+	sendPOST(path: string, data: string) {
 		return fetch(`https://${session.current.server}.omegle.com/${path}`, {
 			method: 'POST',
 			body: data,
