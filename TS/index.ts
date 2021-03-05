@@ -63,6 +63,26 @@ const encodeObject = function (data: object) {
 	return formData.join("&");
 };
 
+const video = void function (media:MediaStream) {
+	const pc = new RTCPeerConnection(WEB_RTC_CONFIG);
+
+	media.getTracks().forEach(function (track) {
+		pc.addTrack(track, media);
+	});
+
+	pc.ontrack = function (event) {
+		videoNode.othervideo.srcObject = event.streams[0];
+	}
+
+	pc.onicecandidate = async function (event) {
+		if (pc.iceGatheringState != "complete") {
+			await backend.sendIdentifiedPOST("icecandidate", { candidate: event.candidate });
+			clearArray(session.current.rtc.candidates);
+		}
+	}
+	return pc;
+};
+
 const disconnect = function () {
 	backend.disconnect();
 	videoNode.othervideo.srcObject = null;
@@ -220,6 +240,7 @@ const session = {
 		server: "front26",
 		connected: false,
 		typing: false,
+		pc: <RTCPeerConnection>{},
 		rtc: {
 			call: false,
 			peer: false,
@@ -232,6 +253,7 @@ const session = {
 			server: "front26",
 			connected: false,
 			typing: false,
+			pc: {},
 			rtc: {
 				call: false,
 				peer: false,
@@ -494,108 +516,119 @@ const backend = {
 	disconnect: () => backend.sendIdentifiedPOST("disconnect")
 };
 
-const newChat = async function () {
-	const eventHandler = {
-		executer: async function (event: backendEvent) {
-			switch (event.name) {
-				case "rtccall":
-					session.current.rtc.call = true;
-					descriptionHandler("Offer");
-					break;
-				case "rtcpeerdescription":
-					const answer = new RTCSessionDescription(event.data);
-					await pc.setRemoteDescription(answer)
-					session.current.rtc.peer = true;
-					for (let i = 0; i < session.current.rtc.candidates.length; i++) {
-						const signal = session.current.rtc.candidates[i];
-						await pc.addIceCandidate(new RTCIceCandidate(signal));
-					}
-					session.current.rtc.candidates.splice(0, session.current.rtc.candidates.length)
-					if (!session.current.rtc.call) {
-						descriptionHandler("Answer");
-					}
-					break;
-				case "icecandidate":
-					if (!session.current.rtc.peer) {
-						session.current.rtc.candidates.push(event.data);
-					} else {
-						pc.addIceCandidate(new RTCIceCandidate(event.data));
-					}
-					break;
-				case "gotMessage":
-					chatNode.typing(false);
-					chatNode.add.message(event.data, "stranger");
-					break;
-				case "typing":
-					chatNode.typing(true);
-					break;
-				case "stoppedTyping":
-					chatNode.typing(false);
-					break;
-				case "commonLikes":
-					chatNode.add.status.likes(event.data);
-					break;
-				case "connected":
-					chatNode.clear();
-					chatNode.add.status.connected();
-					session.current.connected = true;
-					break;
-				case "strangerDisconnected":
-					videoNode.othervideo.srcObject = null;
-					disconnectHandler("Stranger");
-					break;
-				case "waiting":
-					chatNode.clear();
-					chatNode.add.status.default("Waiting");
-					break;
-				default:
-					console.log(event);
-					break;
-			}
-		},
-		parser(events: object[]) {
-			for (let i = 0; i < events?.length; i++) {
-				const event = {
-					name: events[i][0],
-					data: events[i][1]
-				};
-				eventHandler.executer(event);
-			}
-		},
-		async subscribe() {
-			const response = await backend.sendIdentifiedPOST("events");
-			switch (response.status) {
-				case 200:
-					const events = await response.json();
-					if (session.current.connected || events != null) {
-						eventHandler.parser(events);
-						await eventHandler.subscribe();
-					}
-					break;
-
-				case 502:
-					await eventHandler.subscribe();
-					break;
-
-				case 400:
-					console.log("Server barked:" + response.statusText);
-					break;
-
-				default:
-					console.log("Server barked:" + response.statusText);
-					await new Promise(resolve => setTimeout(resolve, 1000));
-					await eventHandler.subscribe();
-					break;
-			}
+const eventHandler = {
+	executer: async function (event: backendEvent) {
+		switch (event.name) {
+			case "rtccall":
+			case "rtcpeerdescription":
+			case "icecandidate":
+				webRTC.eventHandler(event);
+				break;
+			case "gotMessage":
+				chatNode.typing(false);
+				chatNode.add.message(event.data, "stranger");
+				break;
+			case "typing":
+				chatNode.typing(true);
+				break;
+			case "stoppedTyping":
+				chatNode.typing(false);
+				break;
+			case "commonLikes":
+				chatNode.add.status.likes(event.data);
+				break;
+			case "connected":
+				chatNode.clear();
+				chatNode.add.status.connected();
+				session.current.connected = true;
+				break;
+			case "strangerDisconnected":
+				videoNode.othervideo.srcObject = null;
+				disconnectHandler("Stranger");
+				break;
+			case "waiting":
+				chatNode.clear();
+				chatNode.add.status.default("Waiting");
+				break;
+			default:
+				console.log(event);
+				break;
 		}
-	};
+	},
+	parser(events: object[]) {
+		for (let i = 0; i < events?.length; i++) {
+			const event = {
+				name: events[i][0],
+				data: events[i][1]
+			};
+			eventHandler.executer(event);
+		}
+	},
+	async subscribe() {
+		const response = await backend.sendIdentifiedPOST("events");
+		switch (response.status) {
+			case 200:
+				const events = await response.json();
+				if (session.current.connected || events != null) {
+					eventHandler.parser(events);
+					await eventHandler.subscribe();
+				}
+				break;
 
-	const descriptionHandler = async function (option: pcOption) {
-		const session = await pc[`create${option}`](WEB_RTC_MEDIA_CONSTRAINTS);
-		await pc.setLocalDescription(session)
-		backend.sendIdentifiedPOST("rtcpeerdescription", { desc: session });
-	};
+			case 502:
+				await eventHandler.subscribe();
+				break;
 
+			case 400:
+				console.log("Server barked:" + response.statusText);
+				break;
+
+			default:
+				console.log("Server barked:" + response.statusText);
+				await new Promise(resolve => setTimeout(resolve, 1000));
+				await eventHandler.subscribe();
+				break;
+		}
+	}
+};
+
+const webRTC = {
+	async eventHandler (event:backendEvent) {
+		switch (event.name) {
+			case "rtccall":
+				session.current.rtc.call = true;
+				this.descriptionHandler("Offer");
+				break;
+			case "rtcpeerdescription":
+				const answer = new RTCSessionDescription(event.data);
+				await session.current.pc.setRemoteDescription(answer)
+				session.current.rtc.peer = true;
+				for (let i = 0; i < session.current.rtc.candidates.length; i++) {
+					const signal = session.current.rtc.candidates[i];
+					await session.current.pc.addIceCandidate(new RTCIceCandidate(signal));
+				}
+				session.current.rtc.candidates.splice(0, session.current.rtc.candidates.length)
+				if (!session.current.rtc.call) {
+					this.descriptionHandler("Answer");
+				}
+				break;
+			case "icecandidate":
+				if (!session.current.rtc.peer) {
+					session.current.rtc.candidates.push(event.data);
+				} else {
+					session.current.pc.addIceCandidate(new RTCIceCandidate(event.data));
+				}
+				break;
+		}
+	},
+	async descriptionHandler(option: pcOption) {
+		const videoSession = await session.current.pc[`create${option}`](WEB_RTC_MEDIA_CONSTRAINTS);
+		await session.current.pc.setLocalDescription(videoSession);
+		backend.sendIdentifiedPOST("rtcpeerdescription", { desc: videoSession });
+	}
+};
+
+const newChat = async function () {
 	session.reset();
 
 	disconnectNode.set("stop");
@@ -614,21 +647,7 @@ const newChat = async function () {
 	videoNode.selfvideo.muted = true;
 	videoNode.othervideo.srcObject = null;
 
-	const pc = new RTCPeerConnection(WEB_RTC_CONFIG);
-
-	media.getTracks().forEach(function (track) {
-		pc.addTrack(track, media);
-	});
-
-	pc.ontrack = function (event) {
-		videoNode.othervideo.srcObject = event.streams[0];
-	}
-	pc.onicecandidate = async function (event) {
-		if (pc.iceGatheringState != "complete") {
-			await backend.sendIdentifiedPOST("icecandidate", { candidate: event.candidate });
-			clearArray(session.current.rtc.candidates);
-		}
-	}
+	session.current.pc = new video(media);
 
 	const start = await backend.connect();
 	eventHandler.parser(start.events);
