@@ -63,7 +63,7 @@ const encodeObject = function (data: object) {
 	return formData.join("&");
 };
 
-const video = void function (media:MediaStream) {
+const video = function (media:MediaStream) {
 	const pc = new RTCPeerConnection(WEB_RTC_CONFIG);
 
 	media.getTracks().forEach(function (track) {
@@ -647,7 +647,7 @@ const newChat = async function () {
 	videoNode.selfvideo.muted = true;
 	videoNode.othervideo.srcObject = null;
 
-	session.current.pc = new video(media);
+	session.current.pc = video(media);
 
 	const start = await backend.connect();
 	eventHandler.parser(start.events);
