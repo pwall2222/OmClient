@@ -468,6 +468,13 @@ const keyboard = {
 						key.preventDefault();
 						backend.disconnect();
 						newChat();
+					} if (key.ctrlKey) {
+						key.preventDefault();
+						if (settings.autoskip) {
+							settings.autoskip = false;
+							disconnect();
+							settings.autoskip = true;
+						}
 					} else {
 						key.preventDefault();
 						disconnectNode.handler();
