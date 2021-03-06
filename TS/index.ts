@@ -367,10 +367,10 @@ const cmd = {
 					if (session.current.connected) {
 						let msg = "";
 						for (const key in settings.socials) {
-							msg += `${key}: ${settings.socials[key]}\n` 
+							msg += `${key}: ${settings.socials[key]}\n`
 						}
 						backend.sendIdentifiedPOST("send", { msg });
-						chatNode.add.message(chatNode.typebox.value, "you");					
+						chatNode.add.message(chatNode.typebox.value, "you");
 					}
 				}
 			},
