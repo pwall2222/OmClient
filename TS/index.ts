@@ -385,6 +385,17 @@ const cmd = {
 				exec() {
 					settings.autoskip = !settings.autoskip;
 				}
+			},
+			{
+				name: "send",
+				description: "Sends a message in chat",
+				exec() {
+					const msg = args.join(" ");
+					if (session.current.connected) {
+						backend.sendIdentifiedPOST("send", { msg: msg })
+						chatNode.add.message(msg, "you");
+					}
+				}
 			}
 		];
 		commands.find(obj => obj.name == commandName)?.exec();
