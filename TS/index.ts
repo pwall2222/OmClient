@@ -46,6 +46,11 @@ const clearChilds = function (nodeName: string) {
 	node.textContent = "";
 };
 
+const clearAllElements = function (nodeName: string) {
+	const nodes = document.querySelectorAll(nodeName);
+	nodes.forEach(element => {element.remove()});
+};
+
 const encodeObject = function (data: object) {
 	const formData: string[] = [];
 	const append = function (key: string, value: string) {
@@ -436,7 +441,7 @@ const disconnectHandler = function (user: string) {
 			newChat();
 		}, settings.autoskip_delay);
 	}
-	document.querySelector(".spinner")?.remove();
+	clearAllElements(".spinner");
 };
 
 const keyboard = {
