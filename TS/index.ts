@@ -94,6 +94,12 @@ const disconnect = function () {
 	disconnectHandler("You");
 };
 
+const skip = function () {
+	backend.disconnect();
+	clearAllElements(".spinner");
+	newChat();
+};
+
 const chatNode = {
 	logbox: document.querySelector(".logbox"),
 	typebox: document.querySelector<HTMLTextAreaElement>(".chatmsg"),
@@ -337,8 +343,7 @@ const cmd = {
 				name: "skip",
 				description: "Skips current person starting a new chat",
 				exec() {
-					backend.disconnect();
-					newChat();
+					skip();
 				}
 			},
 			{
