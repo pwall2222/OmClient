@@ -492,6 +492,11 @@ const keyboard = {
 					}
 					break;
 
+				case "ContextMenu":
+					key.preventDefault();
+					skip();
+					break;
+
 				default:
 					break;
 			}
