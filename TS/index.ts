@@ -1,15 +1,18 @@
 const WEB_RTC_CONFIG = {
-	iceServers: [{
-		urls: "stun:stun.l.google.com:19302"
-	}, {
-		urls: "stun:stun.services.mozilla.com"
-	}]
+	iceServers: [
+		{
+			urls: "stun:stun.l.google.com:19302",
+		},
+		{
+			urls: "stun:stun.services.mozilla.com",
+		},
+	],
 };
 const WEB_RTC_MEDIA_CONSTRAINTS = {
 	mandatory: {
 		OfferToReceiveAudio: true,
-		OfferToReceiveVideo: true
-	}
+		OfferToReceiveVideo: true,
+	},
 };
 
 const clearArray = function (array: any[]) {
@@ -48,27 +51,29 @@ const clearChilds = function (nodeName: string) {
 
 const clearAllElements = function (nodeName: string) {
 	const nodes = document.querySelectorAll(nodeName);
-	nodes.forEach(element => {element.remove()});
+	nodes.forEach((element) => {
+		element.remove();
+	});
 };
 
 const encodeObject = function (data: object) {
 	const formData: string[] = [];
 	const append = function (key: string, value: string) {
 		formData.push(key + "=" + encodeURIComponent(value));
-	}
+	};
 
 	for (const key in data) {
 		const value = data[key];
 		if (typeof value == "string") {
 			append(key, value);
-		} else if (typeof value == "object") (
-			append(key, JSON.stringify(value))
-		)
+		} else if (typeof value == "object") {
+			append(key, JSON.stringify(value));
+		}
 	}
 	return formData.join("&");
 };
 
-const video = function (media:MediaStream) {
+const video = function (media: MediaStream) {
 	const pc = new RTCPeerConnection(WEB_RTC_CONFIG);
 
 	media.getTracks().forEach(function (track) {
@@ -77,14 +82,14 @@ const video = function (media:MediaStream) {
 
 	pc.ontrack = function (event) {
 		videoNode.othervideo.srcObject = event.streams[0];
-	}
+	};
 
 	pc.onicecandidate = async function (event) {
 		if (pc.iceGatheringState != "complete") {
 			await backend.sendIdentifiedPOST("icecandidate", { candidate: event.candidate });
 			clearArray(session.current.rtc.candidates);
 		}
-	}
+	};
 	return pc;
 };
 
@@ -118,10 +123,10 @@ const chatNode = {
 					child: {
 						tag: "span",
 						args: {
-							textContent: message
-						}
-					}
-				}
+							textContent: message,
+						},
+					},
+				},
 			});
 		},
 		status: {
@@ -130,8 +135,8 @@ const chatNode = {
 					tag: "p",
 					args: {
 						className: "statuslog",
-						textContent: text
-					}
+						textContent: text,
+					},
 				});
 				chatNode.scroll();
 			},
@@ -142,15 +147,15 @@ const chatNode = {
 				createChild(".logbox", {
 					tag: "div",
 					args: {
-						className: "logitem typing"
+						className: "logitem typing",
 					},
 					child: {
 						tag: "p",
 						args: {
 							className: "statuslog",
-							innerText: "Stranger is typing..."
-						}
-					}
+							innerText: "Stranger is typing...",
+						},
+					},
 				});
 				chatNode.scroll();
 			},
@@ -158,15 +163,12 @@ const chatNode = {
 				let display: string;
 				if (likes.length < 0) {
 					display = "Couldn't find a stranger with same interests.";
-				}
-				else if (likes.length == 1) {
+				} else if (likes.length == 1) {
 					display = `You both like ${likes[0]}.`;
-				}
-				else if (likes.length > 1) {
+				} else if (likes.length > 1) {
 					const last = likes.pop();
 					const body = likes.join(", ");
 					display = `You both like ${body} and ${last}.`;
-
 				}
 				chatNode.add.status.default(display);
 			},
@@ -192,12 +194,12 @@ const chatNode = {
 			cmd.handler(chatContents);
 			chatNode.typebox.value = "";
 		} else if (session.current.connected && chatContents != "") {
-			backend.sendIdentifiedPOST("send", { msg: chatNode.typebox.value })
+			backend.sendIdentifiedPOST("send", { msg: chatNode.typebox.value });
 			chatNode.add.message(chatNode.typebox.value, "you");
 			chatNode.typebox.value = "";
 			disconnectNode.set("stop");
 		}
-	}
+	},
 };
 
 const disconnectNode = {
@@ -237,12 +239,12 @@ const disconnectNode = {
 				newChat();
 				break;
 		}
-	}
+	},
 };
 
 const videoNode = {
 	othervideo: document.querySelector<HTMLVideoElement>("#othervideo"),
-	selfvideo: document.querySelector<HTMLVideoElement>("#selfvideo")
+	selfvideo: document.querySelector<HTMLVideoElement>("#selfvideo"),
 };
 
 const session = {
@@ -255,8 +257,8 @@ const session = {
 		rtc: {
 			call: false,
 			peer: false,
-			candidates: <RTCIceCandidate[]>[]
-		}
+			candidates: <RTCIceCandidate[]>[],
+		},
 	},
 	reset() {
 		this.current = {
@@ -268,10 +270,10 @@ const session = {
 			rtc: {
 				call: false,
 				peer: false,
-				candidates: []
-			}
-		}
-	}
+				candidates: [],
+			},
+		};
+	},
 };
 
 const settings = {
@@ -283,7 +285,7 @@ const settings = {
 	likes_enabled: false,
 	lang: "en",
 	video: true,
-	socials: {}
+	socials: {},
 };
 
 const settingManager = {
@@ -298,7 +300,7 @@ const settingManager = {
 	},
 	clear() {
 		localStorage.clear();
-	}
+	},
 };
 
 const cmd = {
@@ -317,10 +319,10 @@ const cmd = {
 						tag: "p",
 						args: {
 							innerHTML: instructions,
-							className: "command"
-						}
-					})
-				}
+							className: "command",
+						},
+					});
+				},
 			},
 			{
 				name: "Set",
@@ -331,9 +333,9 @@ const cmd = {
 					if (typeof settings[args[0]] == typeof parsedArgs) {
 						settings[args[0]] = parsedArgs;
 					} else {
-						console.log("Wrong type")
+						console.log("Wrong type");
 					}
-				}
+				},
 			},
 			{
 				name: "Skip",
@@ -341,7 +343,7 @@ const cmd = {
 				description: "Skips current person starting a new chat",
 				exec() {
 					skip();
-				}
+				},
 			},
 			{
 				name: "Disconnect",
@@ -349,7 +351,7 @@ const cmd = {
 				description: "Disconnects from the current stranger",
 				exec() {
 					disconnect();
-				}
+				},
 			},
 			{
 				name: "Save",
@@ -357,7 +359,7 @@ const cmd = {
 				description: "Saves settings to localStorage",
 				exec() {
 					settingManager.save();
-				}
+				},
 			},
 			{
 				name: "Text",
@@ -368,7 +370,7 @@ const cmd = {
 						settings.video = false;
 						newChat();
 					}
-				}
+				},
 			},
 			{
 				name: "Socials",
@@ -378,20 +380,20 @@ const cmd = {
 					if (session.current.connected) {
 						let msg = "";
 						for (const key in settings.socials) {
-							msg += `${key}: ${settings.socials[key]}\n`
+							msg += `${key}: ${settings.socials[key]}\n`;
 						}
 						backend.sendIdentifiedPOST("send", { msg });
 						chatNode.add.message(chatNode.typebox.value, "you");
 					}
-				}
+				},
 			},
 			{
 				name: "Autoskip",
 				alias: ["autoskip"],
-				description:"Switches autoskip",
+				description: "Switches autoskip",
 				exec() {
 					settings.autoskip = !settings.autoskip;
-				}
+				},
 			},
 			{
 				name: "Send",
@@ -400,13 +402,13 @@ const cmd = {
 				exec() {
 					const msg = args.join(" ");
 					if (session.current.connected) {
-						backend.sendIdentifiedPOST("send", { msg: msg })
+						backend.sendIdentifiedPOST("send", { msg: msg });
 						chatNode.add.message(msg, "you");
 					}
-				}
-			}
+				},
+			},
 		];
-		commands.find(obj => obj.alias.some(alias => alias == commandName))?.exec();
+		commands.find((obj) => obj.alias.some((alias) => alias == commandName))?.exec();
 		if (contents != cmd.commandHistory[0]) {
 			cmd.commandHistory.unshift(contents);
 			cmd.commandHistory.splice(settings.cmd_history, 1);
@@ -467,8 +469,8 @@ const keyboard = {
 	init() {
 		document.body.addEventListener("keydown", keyboard.handler);
 	},
-	handler (keyEvent: KeyboardEvent) {
-		const target = (keyEvent.target as HTMLElement);
+	handler(keyEvent: KeyboardEvent) {
+		const target = keyEvent.target as HTMLElement;
 
 		const events = [
 			{
@@ -478,7 +480,7 @@ const keyboard = {
 				exec() {
 					keyEvent.preventDefault();
 					chatNode.handleInput();
-				}
+				},
 			},
 			{
 				key: "ArrowUp",
@@ -486,7 +488,7 @@ const keyboard = {
 				exec() {
 					keyEvent.preventDefault();
 					cmd.next();
-				}
+				},
 			},
 			{
 				key: "ArrowDown",
@@ -494,7 +496,7 @@ const keyboard = {
 				exec() {
 					keyEvent.preventDefault();
 					cmd.previous();
-				}
+				},
 			},
 			{
 				key: "Escape",
@@ -502,7 +504,7 @@ const keyboard = {
 				exec() {
 					keyEvent.preventDefault();
 					disconnectNode.handler();
-				}
+				},
 			},
 			{
 				key: "Escape",
@@ -512,7 +514,7 @@ const keyboard = {
 					keyEvent.preventDefault();
 					backend.disconnect();
 					newChat();
-				}
+				},
 			},
 			{
 				key: "Escape",
@@ -525,7 +527,7 @@ const keyboard = {
 						disconnect();
 						settings.autoskip = true;
 					}
-				}
+				},
 			},
 			{
 				key: "Slash",
@@ -534,7 +536,7 @@ const keyboard = {
 					if (chatNode.typebox.value == "") {
 						chatNode.typebox.focus();
 					}
-				}
+				},
 			},
 			{
 				key: "ContextMenu",
@@ -542,49 +544,46 @@ const keyboard = {
 				exec() {
 					keyEvent.preventDefault();
 					skip();
-				}
-			}
+				},
+			},
 		];
 
-		const tag = target.tagName == "BODY" ? "body" : target.className 
-		const key = events.find((element:keyEvents) => element.key == keyEvent.code&&element.tag == tag);
+		const tag = target.tagName == "BODY" ? "body" : target.className;
+		const key = events.find((element: keyEvents) => element.key == keyEvent.code && element.tag == tag);
 		if (key?.conditions == null || key?.conditions) {
 			key.exec();
 		}
-	}
+	},
 };
 
 const backend = {
 	sendPOST(path: string, data: string) {
 		return fetch(`https://${session.current.server}.omegle.com/${path}`, {
-			method: 'POST',
+			method: "POST",
 			body: data,
 			headers: {
-				"content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+				"content-type": "application/x-www-form-urlencoded; charset=UTF-8",
 			},
-			referrerPolicy: "no-referrer"
+			referrerPolicy: "no-referrer",
 		});
 	},
 	sendIdentifiedPOST: (path: string, data = {}) => backend.sendPOST(path, encodeObject({ id: session.current.id, ...data })),
 	async connect() {
-		const args = [
-			"firstevents=0",
-			`lang=${settings.lang}`
-		];
+		const args = ["firstevents=0", `lang=${settings.lang}`];
 
 		if (settings.likes_enabled) {
-			args.push(`topics=${encodeURIComponent(JSON.stringify(settings.likes))}`)
+			args.push(`topics=${encodeURIComponent(JSON.stringify(settings.likes))}`);
 		}
 
 		if (settings.video) {
-			args.push("webrtc=1")
+			args.push("webrtc=1");
 		}
 
-		const url = `https://${session.current.server}.omegle.com/start?${args.join("&")}`
-		const response = await fetch(url, { method: "POST", referrerPolicy: "no-referrer" })
+		const url = `https://${session.current.server}.omegle.com/start?${args.join("&")}`;
+		const response = await fetch(url, { method: "POST", referrerPolicy: "no-referrer" });
 		return response.json();
 	},
-	disconnect: () => backend.sendIdentifiedPOST("disconnect")
+	disconnect: () => backend.sendIdentifiedPOST("disconnect"),
 };
 
 const eventHandler = {
@@ -630,7 +629,7 @@ const eventHandler = {
 		for (let i = 0; i < events?.length; i++) {
 			const event = {
 				name: events[i][0],
-				data: events[i][1]
+				data: events[i][1],
 			};
 			eventHandler.executer(event);
 		}
@@ -656,38 +655,39 @@ const eventHandler = {
 
 			default:
 				console.log("Server barked:" + response.statusText);
-				await new Promise(resolve => setTimeout(resolve, 1000));
+				await new Promise((resolve) => setTimeout(resolve, 1000));
 				await eventHandler.subscribe();
 				break;
 		}
-	}
+	},
 };
 
 const webRTC = {
 	async eventHandler (event:backendEvent) {
+		const { pc, rtc } = session.current;
 		switch (event.name) {
 			case "rtccall":
-				session.current.rtc.call = true;
+				rtc.call = true;
 				this.descriptionHandler("Offer");
 				break;
 			case "rtcpeerdescription":
 				const answer = new RTCSessionDescription(event.data);
-				await session.current.pc.setRemoteDescription(answer)
-				session.current.rtc.peer = true;
-				for (let i = 0; i < session.current.rtc.candidates.length; i++) {
-					const signal = session.current.rtc.candidates[i];
-					await session.current.pc.addIceCandidate(new RTCIceCandidate(signal));
+				await pc.setRemoteDescription(answer);
+				rtc.peer = true;
+				for (let i = 0; i < rtc.candidates.length; i++) {
+					const signal = rtc.candidates[i];
+					await pc.addIceCandidate(new RTCIceCandidate(signal));
 				}
-				session.current.rtc.candidates.splice(0, session.current.rtc.candidates.length)
-				if (!session.current.rtc.call) {
+				rtc.candidates.splice(0, rtc.candidates.length);
+				if (!rtc.call) {
 					this.descriptionHandler("Answer");
 				}
 				break;
 			case "icecandidate":
-				if (!session.current.rtc.peer) {
-					session.current.rtc.candidates.push(event.data);
+				if (!rtc.peer) {
+					rtc.candidates.push(event.data);
 				} else {
-					session.current.pc.addIceCandidate(new RTCIceCandidate(event.data));
+					pc.addIceCandidate(new RTCIceCandidate(event.data));
 				}
 				break;
 		}
@@ -696,7 +696,7 @@ const webRTC = {
 		const videoSession = await session.current.pc[`create${option}`](WEB_RTC_MEDIA_CONSTRAINTS);
 		await session.current.pc.setLocalDescription(videoSession);
 		backend.sendIdentifiedPOST("rtcpeerdescription", { desc: videoSession });
-	}
+	},
 };
 
 const newChat = async function () {
@@ -711,7 +711,7 @@ const newChat = async function () {
 		chatNode.typebox.value = "";
 	}
 
-	createChild("#videowrapper", { tag: "div", args: { className: "spinner" } })
+	createChild("#videowrapper", { tag: "div", args: { className: "spinner" } });
 
 	const media = await navigator.mediaDevices.getUserMedia({ video: true, audio: { echoCancellation: true } });
 	videoNode.selfvideo.srcObject ??= media;
