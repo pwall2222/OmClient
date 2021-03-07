@@ -465,56 +465,91 @@ const disconnectHandler = function (user: string) {
 
 const keyboard = {
 	init() {
-		document.querySelector(".chatmsg").addEventListener("keydown", keyboard.handler.chatbox);
-		document.body.addEventListener("keydown", keyboard.handler.doc);
+		document.body.addEventListener("keydown", keyboard.handler);
 	},
-	handler: {
-		doc(key: KeyboardEvent) {
-			switch (key.code) {
-				case "Escape":
-					if (key.shiftKey && session.current.connected) {
-						key.preventDefault();
-						backend.disconnect();
-						newChat();
-					} if (key.ctrlKey) {
-						key.preventDefault();
-						if (settings.autoskip) {
-							settings.autoskip = false;
-							disconnect();
-							settings.autoskip = true;
-						}
-					} else {
-						key.preventDefault();
-						disconnectNode.handler();
-					}
-					break;
+	handler (keyEvent: KeyboardEvent) {
+		const target = (keyEvent.target as HTMLElement);
 
-				case "Slash":
+		const events = [
+			{
+				key: "Enter",
+				tag: "chatmsg",
+				conditions: !keyEvent.shiftKey,
+				exec() {
+					keyEvent.preventDefault();
+					chatNode.handleInput();
+				}
+			},
+			{
+				key: "ArrowUp",
+				tag: "chatmsg",
+				exec() {
+					keyEvent.preventDefault();
+					cmd.next();
+				}
+			},
+			{
+				key: "ArrowDown",
+				tag: "chatmsg",
+				exec() {
+					keyEvent.preventDefault();
+					cmd.previous();
+				}
+			},
+			{
+				key: "Escape",
+				tag: "body",
+				exec() {
+					keyEvent.preventDefault();
+					disconnectNode.handler();
+				}
+			},
+			{
+				key: "Escape",
+				tag: "body",
+				conditions: keyEvent.shiftKey && session.current.connected,
+				exec() {
+					keyEvent.preventDefault();
+					backend.disconnect();
+					newChat();
+				}
+			},
+			{
+				key: "Escape",
+				tag: "body",
+				conditions: keyEvent.ctrlKey,
+				exec() {
+					keyEvent.preventDefault();
+					if (settings.autoskip) {
+						settings.autoskip = false;
+						disconnect();
+						settings.autoskip = true;
+					}
+				}
+			},
+			{
+				key: "Slash",
+				tag: "body",
+				exec() {
 					if (chatNode.typebox.value == "") {
 						chatNode.typebox.focus();
 					}
-					break;
-
-				case "ContextMenu":
-					key.preventDefault();
+				}
+			},
+			{
+				key: "ContextMenu",
+				tag: "body",
+				exec() {
+					keyEvent.preventDefault();
 					skip();
-					break;
+				}
+			}
+		];
 
-				default:
-					break;
-			}
-		},
-		chatbox(key: KeyboardEvent) {
-			if (key.code == "Enter" && !key.shiftKey) {
-				key.preventDefault();
-				chatNode.handleInput();
-			} else if (key.code == "ArrowUp") {
-				cmd.next();
-				key.preventDefault();
-			} else if (key.code == "ArrowDown") {
-				cmd.previous();
-				key.preventDefault();
-			}
+		const tag = target.tagName == "BODY" ? "body" : target.className 
+		const key = events.find((element:keyEvents) => element.key == keyEvent.code&&element.tag == tag);
+		if (key?.conditions == null || key?.conditions) {
+			key.exec();
 		}
 	}
 };

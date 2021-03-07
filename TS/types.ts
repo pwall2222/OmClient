@@ -45,6 +45,13 @@ interface args {
 	/* [key: string]: unknown */
 }
 
+interface keyEvents {
+	key: string;
+	tag: string;
+	conditions?: boolean;
+	exec: Function;
+}
+
 type disconnectStatus = "stop" | "rlly" | "new";
 type author = "you" | "stranger";
 type pcOption = "Offer" | "Answer";
