@@ -11,6 +11,7 @@ interface domObject {
 
 interface command {
 	name: string;
+	alias: string[];
 	description: string;
 	exec: Function;
 }

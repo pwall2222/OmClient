@@ -308,15 +308,15 @@ const cmd = {
 		const args = fullCommand.slice(1, fullCommand.length - 0);
 		const commands: command[] = [
 			{
-				name: "help",
+				name: "Help",
+				alias: ["help"],
 				description: "Shows the help information",
 				exec() {
 					// TODO: Adding help response
 					let instructions = "";
 					for (let i = 0; i < commands.length; i++) {
-						const elements = commands[i];
-						const nameCapitalized = elements.name.charAt(0).toUpperCase() + elements.name.slice(1)
-						instructions += `<b>${nameCapitalized}</b>:<br>${elements.description}<br>`
+						const element = commands[i];
+						instructions += `<b>${element.name}</b>:<br>${element.description}<br>`;
 					}
 					createChild(".logbox", {
 						tag: "p",
@@ -328,7 +328,8 @@ const cmd = {
 				}
 			},
 			{
-				name: "set",
+				name: "Set",
+				alias: ["set"],
 				description: "Sets one of the avaliable settings",
 				exec() {
 					const parsedArgs = JSON.parse(args[1]);
@@ -340,28 +341,32 @@ const cmd = {
 				}
 			},
 			{
-				name: "skip",
+				name: "Skip",
+				alias: ["skip"],
 				description: "Skips current person starting a new chat",
 				exec() {
 					skip();
 				}
 			},
 			{
-				name: "disconnect",
+				name: "Disconnect",
+				alias: ["disconnect", "stop"],
 				description: "Disconnects from the current stranger",
 				exec() {
 					disconnect();
 				}
 			},
 			{
-				name: "save",
+				name: "Save",
+				alias: ["save"],
 				description: "Saves settings to localStorage",
 				exec() {
 					settingManager.save();
 				}
 			},
 			{
-				name: "text",
+				name: "Text",
+				alias: ["text"],
 				description: "Passes mode to text and makes a new chat",
 				exec() {
 					if (session.current.connected == false) {
@@ -371,7 +376,8 @@ const cmd = {
 				}
 			},
 			{
-				name: "socials",
+				name: "Socials",
+				alias: ["socials"],
 				description: "Sends socials to stranger",
 				exec() {
 					if (session.current.connected) {
@@ -385,14 +391,16 @@ const cmd = {
 				}
 			},
 			{
-				name: "autoskip",
+				name: "Autoskip",
+				alias: ["autoskip"],
 				description:"Switches autoskip",
 				exec() {
 					settings.autoskip = !settings.autoskip;
 				}
 			},
 			{
-				name: "send",
+				name: "Send",
+				alias: ["send"],
 				description: "Sends a message in chat",
 				exec() {
 					const msg = args.join(" ");
@@ -403,7 +411,7 @@ const cmd = {
 				}
 			}
 		];
-		commands.find(obj => obj.name == commandName)?.exec();
+		commands.find(obj => obj.alias.some(alias => alias == commandName))?.exec();
 		if (contents != cmd.commandHistory[0]) {
 			cmd.commandHistory.unshift(contents);
 			cmd.commandHistory.splice(settings.cmd_history, 1);
