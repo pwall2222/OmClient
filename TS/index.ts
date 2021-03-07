@@ -312,12 +312,7 @@ const cmd = {
 				alias: ["help"],
 				description: "Shows the help information",
 				exec() {
-					// TODO: Adding help response
-					let instructions = "";
-					for (let i = 0; i < commands.length; i++) {
-						const element = commands[i];
-						instructions += `<b>${element.name}</b>:<br>${element.description}<br>`;
-					}
+					const instructions = commands.reduce((val, element) => `${val}<b>${element.name}</b>:<br>${element.description}<br>`, "");
 					createChild(".logbox", {
 						tag: "p",
 						args: {
