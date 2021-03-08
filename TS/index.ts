@@ -567,7 +567,7 @@ const backend = {
 			referrerPolicy: "no-referrer",
 		});
 	},
-	sendIdentifiedPOST: (path: string, data = {}) => backend.sendPOST(path, encodeObject({ id: session.current.id, ...data })),
+	sendIdentifiedPOST: (path: string, data?: object) => backend.sendPOST(path, encodeObject({ id: session.current.id, ...(data || {}) })),
 	async connect() {
 		const args = ["firstevents=0", `lang=${settings.lang}`];
 
