@@ -152,7 +152,7 @@ const chatNode = {
 		if (chatContents[0] == "/") {
 			cmd.handler(chatContents);
 			chatNode.typebox.value = "";
-		} else if (session.current.connected && chatContents != "") {
+		} else if (session.current.active && chatContents != "") {
 			backend.sendIdentifiedPOST("send", { msg: chatNode.typebox.value });
 			chatNode.add.message(chatNode.typebox.value, "you");
 			chatNode.typebox.value = "";
@@ -195,7 +195,9 @@ const disconnectNode = {
 
 			case "new":
 				disconnectNode.set("stop");
-				newChat();
+				if (!session.current.connected) {
+					newChat();
+				}
 				break;
 		}
 	},
@@ -210,6 +212,7 @@ const session = {
 	current: {
 		id: "",
 		server: "front26",
+		active: false,
 		connected: false,
 		typing: false,
 		pc: <RTCPeerConnection>{},
@@ -223,6 +226,7 @@ const session = {
 		this.current = {
 			id: "",
 			server: "front26",
+			active: false,
 			connected: false,
 			typing: false,
 			pc: {},
@@ -325,7 +329,7 @@ const cmd = {
 				alias: ["text"],
 				description: "Passes mode to text and makes a new chat",
 				exec() {
-					if (session.current.connected == false) {
+					if (!session.current.connected) {
 						settings.video = false;
 						newChat();
 					}
@@ -336,7 +340,7 @@ const cmd = {
 				alias: ["socials"],
 				description: "Sends socials to stranger",
 				exec() {
-					if (session.current.connected) {
+					if (session.current.active) {
 						let msg = "";
 						for (const key in settings.socials) {
 							msg += `${key}: ${settings.socials[key]}\n`;
@@ -360,7 +364,7 @@ const cmd = {
 				description: "Sends a message in chat",
 				exec() {
 					const msg = args.join(" ");
-					if (session.current.connected) {
+					if (session.current.active) {
 						backend.sendIdentifiedPOST("send", { msg: msg });
 						chatNode.add.message(msg, "you");
 					}
@@ -410,15 +414,18 @@ const cmd = {
 };
 
 const disconnectHandler = function (user: string) {
-	if (session.current.connected) {
+	if (session.current.active) {
 		chatNode.add.status.default(`${user} Disconnected`);
 		disconnectNode.set("new");
+		session.current.active = false;
 		session.current.connected = false;
 		document.querySelector(".typing")?.remove();
 	}
 	if (settings.autoskip) {
 		setTimeout(() => {
-			newChat();
+			if (!session.current.connected) {
+				newChat();
+			}
 		}, settings.autoskip_delay);
 	}
 	clearAllElements(".spinner");
@@ -463,9 +470,8 @@ const keyboard = {
 				tag: "body",
 				exec() {
 					keyEvent.preventDefault();
-					if (keyEvent.shiftKey && session.current.connected) {
-						backend.disconnect();
-						newChat();
+					if (keyEvent.shiftKey && session.current.active) {
+						skip();
 					} else if (keyEvent.ctrlKey && settings.autoskip) {
 						settings.autoskip = false;
 						disconnect();
@@ -553,7 +559,7 @@ const eventHandler = {
 			case "connected":
 				chatNode.clear();
 				chatNode.add.status.connected();
-				session.current.connected = true;
+				session.current.active = true;
 				break;
 			case "strangerDisconnected":
 				videoNode.othervideo.srcObject = null;
@@ -582,7 +588,7 @@ const eventHandler = {
 		switch (response.status) {
 			case 200:
 				const events = await response.json();
-				if (session.current.connected || events != null) {
+				if (session.current.active || events != null) {
 					eventHandler.parser(events);
 					await eventHandler.subscribe();
 				}
@@ -644,6 +650,7 @@ const webRTC = {
 
 const newChat = async function () {
 	session.reset();
+	session.current.connected = true;
 
 	disconnectNode.set("stop");
 
