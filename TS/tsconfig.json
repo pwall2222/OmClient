@@ -6,5 +6,5 @@
 		"incremental": true,
 		"alwaysStrict": true
 	},
-	"files": ["index.ts", "types.ts"]
+	"files": ["index.ts", "types.ts", "functions.ts"]
 }
