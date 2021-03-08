@@ -1,17 +1,19 @@
-const WEB_RTC_CONFIG = {
-	iceServers: [
-		{
-			urls: "stun:stun.l.google.com:19302",
+const WEB = {
+	config: {
+		iceServers: [
+			{
+				urls: "stun:stun.l.google.com:19302",
+			},
+			{
+				urls: "stun:stun.services.mozilla.com",
+			},
+		],
+	},
+	constrains: {
+		mandatory: {
+			OfferToReceiveAudio: true,
+			OfferToReceiveVideo: true,
 		},
-		{
-			urls: "stun:stun.services.mozilla.com",
-		},
-	],
-};
-const WEB_RTC_MEDIA_CONSTRAINTS = {
-	mandatory: {
-		OfferToReceiveAudio: true,
-		OfferToReceiveVideo: true,
 	},
 };
 
@@ -33,7 +35,7 @@ const encodeObject = function (data: object) {
 };
 
 const video = function (media: MediaStream) {
-	const pc = new RTCPeerConnection(WEB_RTC_CONFIG);
+	const pc = new RTCPeerConnection(WEB.config);
 
 	media.getTracks().forEach(function (track) {
 		pc.addTrack(track, media);
@@ -62,6 +64,24 @@ const skip = function () {
 	backend.disconnect();
 	clearAllElements(".spinner");
 	newChat();
+};
+
+const disconnectHandler = function (user: string) {
+	if (session.current.active) {
+		chatNode.add.status.default(`${user} Disconnected`);
+		disconnectNode.set("new");
+		session.current.active = false;
+		session.current.connected = false;
+		document.querySelector(".typing")?.remove();
+	}
+	if (settings.autoskip) {
+		setTimeout(() => {
+			if (!session.current.connected) {
+				newChat();
+			}
+		}, settings.autoskip_delay);
+	}
+	clearAllElements(".spinner");
 };
 
 const chatNode = {
@@ -413,24 +433,6 @@ const cmd = {
 	},
 };
 
-const disconnectHandler = function (user: string) {
-	if (session.current.active) {
-		chatNode.add.status.default(`${user} Disconnected`);
-		disconnectNode.set("new");
-		session.current.active = false;
-		session.current.connected = false;
-		document.querySelector(".typing")?.remove();
-	}
-	if (settings.autoskip) {
-		setTimeout(() => {
-			if (!session.current.connected) {
-				newChat();
-			}
-		}, settings.autoskip_delay);
-	}
-	clearAllElements(".spinner");
-};
-
 const keyboard = {
 	init() {
 		document.body.addEventListener("keydown", keyboard.handler);
@@ -642,7 +644,7 @@ const webRTC = {
 		}
 	},
 	async descriptionHandler(option: pcOption) {
-		const videoSession = await session.current.pc[`create${option}`](WEB_RTC_MEDIA_CONSTRAINTS);
+		const videoSession = await session.current.pc[`create${option}`](WEB.constrains);
 		await session.current.pc.setLocalDescription(videoSession);
 		backend.sendIdentifiedPOST("rtcpeerdescription", { desc: videoSession });
 	},
