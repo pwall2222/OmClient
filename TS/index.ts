@@ -476,10 +476,11 @@ const keyboard = {
 			{
 				key: "Enter",
 				tag: "chatmsg",
-				conditions: !keyEvent.shiftKey,
 				exec() {
-					keyEvent.preventDefault();
-					chatNode.handleInput();
+					if (!keyEvent.shiftKey) {
+						keyEvent.preventDefault();
+						chatNode.handleInput();
+					}
 				},
 			},
 			{
@@ -503,29 +504,15 @@ const keyboard = {
 				tag: "body",
 				exec() {
 					keyEvent.preventDefault();
-					disconnectNode.handler();
-				},
-			},
-			{
-				key: "Escape",
-				tag: "body",
-				conditions: keyEvent.shiftKey && session.current.connected,
-				exec() {
-					keyEvent.preventDefault();
-					backend.disconnect();
-					newChat();
-				},
-			},
-			{
-				key: "Escape",
-				tag: "body",
-				conditions: keyEvent.ctrlKey,
-				exec() {
-					keyEvent.preventDefault();
-					if (settings.autoskip) {
+					if (keyEvent.shiftKey && session.current.connected) {
+						backend.disconnect();
+						newChat();
+					} else if (keyEvent.ctrlKey && settings.autoskip) {
 						settings.autoskip = false;
 						disconnect();
 						settings.autoskip = true;
+					} else {
+						disconnectNode.handler();
 					}
 				},
 			},
@@ -548,11 +535,8 @@ const keyboard = {
 			},
 		];
 
-		const tag = target.tagName == "BODY" ? "body" : target.className;
-		const key = events.find((element: keyEvents) => element.key == keyEvent.code && element.tag == tag);
-		if (key?.conditions == null || key?.conditions) {
-			key.exec();
-		}
+		const filter = (element: keyEvents) => element.key == keyEvent.code && (element.tag == target.className || element.tag == "body");
+		events.find(filter)?.exec();
 	},
 };
 
@@ -663,7 +647,7 @@ const eventHandler = {
 };
 
 const webRTC = {
-	async eventHandler (event:backendEvent) {
+	async eventHandler(event: backendEvent) {
 		const { pc, rtc } = session.current;
 		switch (event.name) {
 			case "rtccall":
