@@ -390,6 +390,17 @@ const cmd = {
 					}
 				},
 			},
+			{
+				name: "Set volume",
+				alias: ["volume", "vol"],
+				description: "Sets stranger volume",
+				exec() {
+					const num = Number(args[0]);
+					if (num >= 0 && num <= 100) {
+						videoNode.setVolume(num);
+					}
+				},
+			},
 		];
 		commands.find((obj) => obj.alias.some((alias) => alias == commandName))?.exec();
 		if (contents != cmd.commandHistory[0]) {
