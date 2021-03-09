@@ -38,3 +38,10 @@ const clearAllElements = function (nodeName: string) {
 		element.remove();
 	});
 };
+
+const setFirstByIndex = function (array: object[], index: number) {
+	if (index > -1) {
+		const identy = array.splice(index, 1);
+		array.unshift(identy[0]);
+	}
+};

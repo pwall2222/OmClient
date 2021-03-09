@@ -608,10 +608,12 @@ const eventHandler = {
 		}
 	},
 	parser(events: object[]) {
-		for (let i = 0; i < events?.length; i++) {
+		const index = events.findIndex((element) => element[0] == "identDigests");
+		setFirstByIndex(events, index);
+		for (const element of events) {
 			const event = {
-				name: events[i][0],
-				data: events[i][1],
+				name: element[0],
+				data: element[1],
 			};
 			eventHandler.executer(event);
 		}
