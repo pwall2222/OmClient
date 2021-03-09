@@ -621,7 +621,7 @@ const eventHandler = {
 		switch (response.status) {
 			case 200:
 				const events = await response.json();
-				if (session.current.active || events != null) {
+				if (events != null && session.current.connected) {
 					eventHandler.parser(events);
 					await eventHandler.subscribe();
 				}
