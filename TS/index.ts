@@ -66,6 +66,13 @@ const skip = function () {
 	newChat();
 };
 
+const stopAutoskip = function () {
+	const temp = settings.autoskip;
+	settings.autoskip = false;
+	disconnect();
+	settings.autoskip = temp;
+};
+
 const disconnectHandler = function (user: string) {
 	if (session.current.active) {
 		chatNode.add.status.default(`${user} Disconnected`);
@@ -226,6 +233,9 @@ const disconnectNode = {
 const videoNode = {
 	othervideo: document.querySelector<HTMLVideoElement>("#othervideo"),
 	selfvideo: document.querySelector<HTMLVideoElement>("#selfvideo"),
+	setVolume(volume: number) {
+		videoNode.othervideo.volume = volume / 100;
+	},
 };
 
 const session = {
@@ -330,7 +340,7 @@ const cmd = {
 			},
 			{
 				name: "Disconnect",
-				alias: ["disconnect", "stop"],
+				alias: ["disconnect"],
 				description: "Disconnects from the current stranger",
 				exec() {
 					disconnect();
@@ -399,6 +409,14 @@ const cmd = {
 					if (num >= 0 && num <= 100) {
 						videoNode.setVolume(num);
 					}
+				},
+			},
+			{
+				name: "Stop",
+				alias: ["stop"],
+				description: "Disconnects from current stranger and stops rerolling temporally",
+				exec() {
+					stopAutoskip();
 				},
 			},
 		];
@@ -486,9 +504,7 @@ const keyboard = {
 					if (keyEvent.shiftKey && session.current.active) {
 						skip();
 					} else if (keyEvent.ctrlKey && settings.autoskip) {
-						settings.autoskip = false;
-						disconnect();
-						settings.autoskip = true;
+						stopAutoskip();
 					} else {
 						disconnectNode.handler();
 					}
