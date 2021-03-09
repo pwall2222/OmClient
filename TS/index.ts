@@ -231,7 +231,7 @@ const videoNode = {
 const session = {
 	current: {
 		id: "",
-		server: "front26",
+		server: "",
 		active: false,
 		connected: false,
 		typing: false,
@@ -245,7 +245,7 @@ const session = {
 	reset() {
 		this.current = {
 			id: "",
-			server: "front26",
+			server: this.current.server,
 			active: false,
 			connected: false,
 			typing: false,
@@ -535,6 +535,10 @@ const backend = {
 		return response.json();
 	},
 	disconnect: () => backend.sendIdentifiedPOST("disconnect"),
+	async server() {
+		const info = await fetch("http://omegle.com/status").then((data) => data.json());
+		session.current.server = info.servers[Math.floor(Math.random() * info.servers.length)];
+	},
 };
 
 const eventHandler = {
@@ -606,8 +610,7 @@ const eventHandler = {
 
 			default:
 				console.log("Server barked:" + response.statusText);
-				await new Promise((resolve) => setTimeout(resolve, 1000));
-				await eventHandler.subscribe();
+				await backend.server();
 				break;
 		}
 	},
@@ -682,3 +685,4 @@ const newChat = async function () {
 keyboard.init();
 settingManager.load();
 cmd.load();
+backend.server();
