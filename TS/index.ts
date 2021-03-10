@@ -608,8 +608,7 @@ const eventHandler = {
 		}
 	},
 	parser(events: object[]) {
-		const index = events.findIndex((element) => element[0] == "identDigests");
-		setFirstByIndex(events, index);
+		eventHandler.putIdentityFirst(events);
 		for (const element of events) {
 			const event = {
 				name: element[0],
@@ -642,6 +641,10 @@ const eventHandler = {
 				await backend.server();
 				break;
 		}
+	},
+	putIdentityFirst(events: object[]) {
+		const index = events.findIndex((element) => element[0] == "identDigests");
+		setFirstByIndex(events, index);
 	},
 };
 
