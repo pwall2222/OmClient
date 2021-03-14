@@ -37,16 +37,16 @@ const encodeObject = function (data: object) {
 const video = function (media: MediaStream) {
 	const pc = new RTCPeerConnection(WEB.config);
 
-	media.getTracks().forEach(function (track) {
+	media.getTracks().forEach((track: MediaStreamTrack) => {
 		pc.addTrack(track, media);
 	});
 
-	pc.ontrack = function (event) {
+	pc.ontrack = function (event: RTCTrackEvent) {
 		videoNode.othervideo.srcObject = event.streams[0];
 	};
 
-	pc.onicecandidate = async function (event) {
-		if (pc.iceGatheringState != "complete") {
+	pc.onicecandidate = async function (event: RTCPeerConnectionIceEvent) {
+		if (pc.iceGatheringState !== "complete") {
 			await backend.sendIdentifiedPOST("icecandidate", { candidate: event.candidate });
 			clearArray(session.current.rtc.candidates);
 		}
@@ -307,7 +307,7 @@ const cmd = {
 				alias: ["help"],
 				description: "Shows the help information",
 				exec() {
-					const instructions = commands.reduce((val, element) => `${val}<b>${element.name}</b>:<br>${element.description}<br>`, "");
+					const instructions = commands.reduce((val: string, element: command) => `${val}<b>${element.name}</b>:<br>${element.description}<br>`, "");
 					createChild(".logbox", {
 						tag: "p",
 						args: {
@@ -420,7 +420,7 @@ const cmd = {
 				},
 			},
 		];
-		commands.find((obj) => obj.alias.some((alias) => alias == commandName))?.exec();
+		commands.find((obj: command) => obj.alias.some((alias: string) => alias == commandName))?.exec();
 		if (contents != cmd.commandHistory[0]) {
 			cmd.commandHistory.unshift(contents);
 			cmd.commandHistory.splice(settings.cmd_history, 1);
@@ -563,7 +563,7 @@ const backend = {
 	},
 	disconnect: () => backend.sendIdentifiedPOST("disconnect"),
 	async server() {
-		const info = await fetch("http://omegle.com/status").then((data) => data.json());
+		const info = await fetch("http://omegle.com/status").then((data: Response) => data.json());
 		session.current.server = info.servers[Math.floor(Math.random() * info.servers.length)];
 	},
 };
@@ -643,7 +643,7 @@ const eventHandler = {
 		}
 	},
 	putIdentityFirst(events: object[]) {
-		const index = events.findIndex((element) => element[0] == "identDigests");
+		const index = events.findIndex((element: string[]) => element[0] == "identDigests");
 		setFirstByIndex(events, index);
 	},
 };
