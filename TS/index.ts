@@ -25,9 +25,9 @@ const encodeObject = function (data: object) {
 
 	for (const key in data) {
 		const value = data[key];
-		if (typeof value == "string") {
+		if (typeof value === "string") {
 			append(key, value);
-		} else if (typeof value == "object") {
+		} else if (typeof value === "object") {
 			append(key, JSON.stringify(value));
 		}
 	}
@@ -97,7 +97,7 @@ const chatNode = {
 	add: {
 		message(message: string, sender: author) {
 			const pclass = `${sender}msg`;
-			const user = sender == "you" ? "You" : "Stranger";
+			const user = sender === "you" ? "You" : "Stranger";
 			createChildBefore(".logbox", ".typing", {
 				tag: "div",
 				child: {
@@ -149,7 +149,7 @@ const chatNode = {
 				let display: string;
 				if (likes.length < 0) {
 					display = "Couldn't find a stranger with same interests.";
-				} else if (likes.length == 1) {
+				} else if (likes.length === 1) {
 					display = `You both like ${likes[0]}.`;
 				} else if (likes.length > 1) {
 					const last = likes.pop();
@@ -176,10 +176,10 @@ const chatNode = {
 	},
 	handleInput() {
 		const chatContents = chatNode.typebox.value;
-		if (chatContents[0] == "/") {
+		if (chatContents[0] === "/") {
 			cmd.handler(chatContents);
 			chatNode.typebox.value = "";
-		} else if (session.current.active && chatContents != "") {
+		} else if (session.current.active && chatContents !== "") {
 			backend.sendIdentifiedPOST("send", { msg: chatNode.typebox.value });
 			chatNode.add.message(chatNode.typebox.value, "you");
 			chatNode.typebox.value = "";
@@ -323,7 +323,7 @@ const cmd = {
 				description: "Sets one of the avaliable settings",
 				exec() {
 					const parsedArgs = JSON.parse(args[1]);
-					if (typeof settings[args[0]] == typeof parsedArgs) {
+					if (typeof settings[args[0]] === typeof parsedArgs) {
 						settings[args[0]] = parsedArgs;
 					} else {
 						console.log("Wrong type");
@@ -420,8 +420,8 @@ const cmd = {
 				},
 			},
 		];
-		commands.find((obj: command) => obj.alias.some((alias: string) => alias == commandName))?.exec();
-		if (contents != cmd.commandHistory[0]) {
+		commands.find((obj: command) => obj.alias.some((alias: string) => alias === commandName))?.exec();
+		if (contents !== cmd.commandHistory[0]) {
 			cmd.commandHistory.unshift(contents);
 			cmd.commandHistory.splice(settings.cmd_history, 1);
 			cmd.save();
@@ -433,7 +433,7 @@ const cmd = {
 	current: "",
 	next() {
 		const newPosition = cmd.position + 1;
-		if (cmd.position == -1) {
+		if (cmd.position === -1) {
 			cmd.current = chatNode.typebox.value;
 		}
 		cmd.changeVal(newPosition);
@@ -514,7 +514,7 @@ const keyboard = {
 				key: "Slash",
 				tag: "body",
 				exec() {
-					if (chatNode.typebox.value == "") {
+					if (chatNode.typebox.value === "") {
 						chatNode.typebox.focus();
 					}
 				},
@@ -529,7 +529,7 @@ const keyboard = {
 			},
 		];
 
-		const filter = (element: keyEvents) => element.key == keyEvent.code && (element.tag == target.className || element.tag == "body");
+		const filter = (element: keyEvents) => element.key === keyEvent.code && (element.tag === target.className || element.tag === "body");
 		events.find(filter)?.exec();
 	},
 };
