@@ -1,8 +1,8 @@
-const clearArray = function (array: any[]) {
+const clearArray = (array: any[]) => {
 	return array.splice(0, array.length);
 };
 
-const createElement = function (domObject: domObject) {
+const createElement = (domObject: domObject) => {
 	const element = document.createElement(domObject.tag);
 	if (domObject.args) {
 		for (const key in domObject.args) {
@@ -15,38 +15,38 @@ const createElement = function (domObject: domObject) {
 	return element;
 };
 
-const createChild = function (parent: string, domObject: domObject) {
+const createChild = (parent: string, domObject: domObject) => {
 	const child = createElement(domObject);
 	document.querySelector(parent).appendChild(child);
 };
 
-const createChildBefore = function (parent: string, reference: string, domObject: domObject) {
+const createChildBefore = (parent: string, reference: string, domObject: domObject) => {
 	const child = createElement(domObject);
 	const parentNode = document.querySelector(parent);
 	const referenceNode = parentNode.querySelector(reference);
 	parentNode.insertBefore(child, referenceNode);
 };
 
-const clearChilds = function (nodeName: string) {
+const clearChilds = (nodeName: string) => {
 	const node = document.querySelector(nodeName);
 	node.textContent = "";
 };
 
-const clearAllElements = function (nodeName: string) {
+const clearAllElements = (nodeName: string) => {
 	const nodes = document.querySelectorAll(nodeName);
 	nodes.forEach((element) => {
 		element.remove();
 	});
 };
 
-const setFirstByIndex = function (array: object[], index: number) {
+const setFirstByIndex = (array: object[], index: number) => {
 	if (index > -1) {
 		const identy = array.splice(index, 1);
 		array.unshift(identy[0]);
 	}
 };
 
-const hash = function (string: string) {
+const hash = (string: string) => {
 	let hash = 0;
 	if (string.length === 0) return hash;
 	for (let i = 0; i < string.length; i++) {

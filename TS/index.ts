@@ -17,7 +17,7 @@ const WEB = {
 	},
 };
 
-const encodeObject = function (data: object) {
+const encodeObject = (data: object) => {
 	const formData: string[] = [];
 	const append = function (key: string, value: string) {
 		formData.push(key + "=" + encodeURIComponent(value));
@@ -34,7 +34,7 @@ const encodeObject = function (data: object) {
 	return formData.join("&");
 };
 
-const video = function (media: MediaStream) {
+const video = (media: MediaStream) => {
 	const pc = new RTCPeerConnection(WEB.config);
 
 	media.getTracks().forEach((track: MediaStreamTrack) => {
@@ -54,26 +54,26 @@ const video = function (media: MediaStream) {
 	return pc;
 };
 
-const disconnect = function () {
+const disconnect = () => {
 	backend.disconnect();
 	videoNode.othervideo.srcObject = null;
 	disconnectHandler("You");
 };
 
-const skip = function () {
+const skip = () => {
 	backend.disconnect();
 	clearAllElements(".spinner");
 	newChat();
 };
 
-const stopAutoskip = function () {
+const stopAutoskip = () => {
 	const temp = settings.autoskip;
 	settings.autoskip = false;
 	disconnect();
 	settings.autoskip = temp;
 };
 
-const disconnectHandler = function (user: string) {
+const disconnectHandler = (user: string) => {
 	if (session.current.active) {
 		chatNode.add.status.default(`${user} Disconnected`);
 		disconnectNode.set("new");
