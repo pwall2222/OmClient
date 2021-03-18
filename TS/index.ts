@@ -236,6 +236,10 @@ const videoNode = {
 	setVolume(volume: number) {
 		videoNode.othervideo.volume = volume / 100;
 	},
+	playEvent() {
+		session.current.video = true;
+		clearAllElements(".spinner");
+	},
 };
 
 const session = {
@@ -244,6 +248,7 @@ const session = {
 		server: "",
 		active: false,
 		connected: false,
+		video: false,
 		typing: false,
 		pc: <RTCPeerConnection>{},
 		rtc: {
@@ -258,6 +263,7 @@ const session = {
 			server: this.current.server,
 			active: false,
 			connected: false,
+			video: false,
 			typing: false,
 			pc: {},
 			rtc: {
