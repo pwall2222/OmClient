@@ -257,6 +257,7 @@ const session = {
 			candidates: <RTCIceCandidate[]>[],
 		},
 	},
+	history: <string[]>[],
 	reset() {
 		this.current = {
 			id: "",
@@ -278,6 +279,7 @@ const session = {
 const settings = {
 	autoskip: false,
 	autoskip_delay: 500,
+	twiceskip: false,
 	autoclearchat: true,
 	cmd_history: 25,
 	likes: <string[]>[],
@@ -609,6 +611,13 @@ const eventHandler = {
 			case "waiting":
 				chatNode.clear();
 				chatNode.add.status.default("Waiting");
+				break;
+			case "identDigests":
+				if (!session.history.some((id: string) => id == event.data)) {
+					session.history.push(event.data);
+				} else if (settings.twiceskip) {
+					skip();
+				}
 				break;
 			default:
 				console.log(event);
