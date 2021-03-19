@@ -573,7 +573,7 @@ const backend = {
 	},
 	disconnect: () => backend.sendIdentifiedPOST("disconnect"),
 	async server() {
-		const info = await fetch("http://omegle.com/status").then((data: Response) => data.json());
+		const info = await fetch("https://omegle.com/status").then((data: Response) => data.json());
 		session.current.server = info.servers[Math.floor(Math.random() * info.servers.length)];
 	},
 };
