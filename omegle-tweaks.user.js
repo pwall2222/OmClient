@@ -11,12 +11,12 @@
 */
 
 (async function () {
-	document.write("<head><title>Omegle</title></head><body></body>");
+	document.documentElement.innerHTML = "<head><title>Omegle</title></head><body></body>";
 	window.stop()
 	const doc = await fetch("").then(response => response.text());
 	const item = document.createElement("iframe");
+	item.srcdoc = doc;
 	item.style = "position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none;"
 	document.body.appendChild(item);
-	item.contentDocument.write(doc);
 	item.focus();
 })();
