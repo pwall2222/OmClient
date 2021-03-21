@@ -280,6 +280,8 @@ const settings = {
 	autoskip: false,
 	autoskip_delay: 500,
 	twiceskip: false,
+	autodisconnect: false,
+	autodisconnect_delay: 10000,
 	autoclearchat: true,
 	cmd_history: 25,
 	likes: <string[]>[],
@@ -604,6 +606,11 @@ const eventHandler = {
 				chatNode.add.status.likes(event.data);
 				break;
 			case "connected":
+				setTimeout(() => {
+					if (settings.video && !session.current.video && session.current.active) {
+						disconnect();
+					}
+				}, settings.autodisconnect_delay);
 				chatNode.clear();
 				chatNode.add.status.connected();
 				session.current.active = true;
