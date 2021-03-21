@@ -573,8 +573,12 @@ const backend = {
 	},
 	disconnect: () => backend.sendIdentifiedPOST("disconnect"),
 	async server() {
-		const info = await fetch("https://omegle.com/status").then((data: Response) => data.json());
-		session.current.server = info.servers[Math.floor(Math.random() * info.servers.length)];
+		try {
+			const info = await fetch("https://omegle.com/status").then((data: Response) => data.json());
+			session.current.server = info.servers[Math.floor(Math.random() * info.servers.length)];
+		} catch (error) {
+			chatNode.add.status.default("Couldn't fetch server status");
+		}
 	},
 };
 
@@ -703,13 +707,17 @@ const webRTC = {
 };
 
 const newChat = async function () {
+	if (!session.current.server) {
+		chatNode.add.status.default("No server could be fetched");
+		return;
+	}
 	session.reset();
 	session.current.connected = true;
 
 	disconnectNode.set("stop");
 
 	chatNode.clear();
-	chatNode.add.status.default("Conneting to server...");
+	chatNode.add.status.default("Getting access to camera...");
 
 	if (settings.autoclearchat) {
 		chatNode.typebox.value = "";
@@ -717,12 +725,26 @@ const newChat = async function () {
 
 	createChild("#videowrapper", { tag: "div", args: { className: "spinner" } });
 
-	const media = await navigator.mediaDevices.getUserMedia({ video: true, audio: { echoCancellation: true } });
-	videoNode.selfvideo.srcObject ??= media;
-	videoNode.selfvideo.muted = true;
-	videoNode.othervideo.srcObject = null;
+	try {
+		const media = await navigator.mediaDevices.getUserMedia({ video: true, audio: { echoCancellation: true } });
+		videoNode.selfvideo.srcObject ??= media;
+		videoNode.selfvideo.muted = true;
+		videoNode.othervideo.srcObject = null;
 
-	session.current.pc = video(media);
+		session.current.pc = video(media);
+	} catch (error) {
+		chatNode.clear();
+		if (window.RTCPeerConnection) {
+			chatNode.add.status.default("Error getting to camera");
+		} else {
+			chatNode.add.status.default("WebRTC is disabled");
+		}
+		clearAllElements(".spinner");
+		return;
+	}
+
+	chatNode.clear();
+	chatNode.add.status.default("Conneting to server...");
 
 	const start = await backend.connect();
 	eventHandler.parser(start.events);
