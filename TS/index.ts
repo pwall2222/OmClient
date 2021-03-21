@@ -386,7 +386,19 @@ const cmd = {
 							msg += `${key}: ${settings.socials[key]}\n`;
 						}
 						backend.sendIdentifiedPOST("send", { msg });
-						chatNode.add.message(chatNode.typebox.value, "you");
+						chatNode.add.message(msg, "you");
+					}
+				},
+			},
+			{
+				name: "Social",
+				alias: ["social", "sendSocial"],
+				description: "Sends one social to stranger",
+				exec() {
+					if (args[0]) {
+						const msg = `${args[0]}: ${settings.socials[args[0]]}`;
+						backend.sendIdentifiedPOST("send", { msg });
+						chatNode.add.message(msg, "you");
 					}
 				},
 			},
