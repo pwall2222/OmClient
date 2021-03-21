@@ -5,7 +5,7 @@
 @author       PWall
 @include      https://omegle.com/*
 @include      https://www.omegle.com/*
-@run-at       document-end
+@run-at       document-start
 @grant        none
 ==/UserScript== 
 */
