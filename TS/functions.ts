@@ -57,3 +57,20 @@ const hash = (string: string) => {
 	}
 	return hash;
 };
+
+const encodeObject = (data: object) => {
+	const formData: string[] = [];
+	const append = function (key: string, value: string) {
+		formData.push(key + "=" + encodeURIComponent(value));
+	};
+
+	for (const key in data) {
+		const value = data[key];
+		if (typeof value === "string") {
+			append(key, value);
+		} else if (typeof value === "object") {
+			append(key, JSON.stringify(value));
+		}
+	}
+	return formData.join("&");
+};

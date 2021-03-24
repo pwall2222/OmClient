@@ -17,23 +17,6 @@ const WEB = {
 	},
 };
 
-const encodeObject = (data: object) => {
-	const formData: string[] = [];
-	const append = function (key: string, value: string) {
-		formData.push(key + "=" + encodeURIComponent(value));
-	};
-
-	for (const key in data) {
-		const value = data[key];
-		if (typeof value === "string") {
-			append(key, value);
-		} else if (typeof value === "object") {
-			append(key, JSON.stringify(value));
-		}
-	}
-	return formData.join("&");
-};
-
 const video = (media: MediaStream) => {
 	const pc = new RTCPeerConnection(WEB.config);
 
