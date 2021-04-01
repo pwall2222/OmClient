@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Omegle - Local</title>
+		<link rel="stylesheet" type="text/css" media="screen" href="index.css" />
+		<link rel="icon" type="image/png" href="favicon.png" />
+		<script async src="functions.js"></script>
+		<script async src="index.js"></script>
+	</head>
+
+	<body>
+		<div id="header">
+			<img id="logo" src="logomasked.png" alt="logo" width="236" height="57" />
+		</div>
+		<div id="flex-tape">
+			<div class="video">
+				<div id="videowrapper">
+					<video id="othervideo" autoplay="" playsinline="playsinline"></video>
+					<video id="selfvideo" autoplay="" playsinline="playsinline"></video>
+				</div>
+			</div>
+			<div class="chat">
+				<div id="chatbox">
+					<div class="logwrapper">
+						<div class="logbox"></div>
+					</div>
+					<div id="controllbox">
+						<button class="dscntbtn new" onclick="disconnectNode.handler();">
+							<p class="dscnttxt">New</p>
+							<p class="dscntkey">Esc</p>
+						</button>
+						<div class="chatmsgwrapper">
+							<textarea class="chatmsg"></textarea>
+						</div>
+						<div class="sendbtnwrapper">
+							<button class="sendbtn" onclick="chatnode.handleInput();">
+								Send
+								<div class="btnkbshortcut">Enter</div>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
