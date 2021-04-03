@@ -10,17 +10,17 @@ const disconnect = () => {
 	disconnectHandler("You");
 };
 
-const skip = () => {
-	backend.disconnect();
-	clearAllElements(".spinner");
-	newChat();
-};
-
 const stopAutoskip = () => {
 	const temp = settings.autoskip;
 	settings.autoskip = false;
 	disconnect();
 	settings.autoskip = temp;
+};
+
+const skip = () => {
+	backend.disconnect();
+	clearAllElements(".spinner");
+	newChat();
 };
 
 const disconnectHandler = (user: string) => {
