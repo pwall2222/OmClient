@@ -81,8 +81,13 @@ const encodeObject = (data: object) => {
 	return formData.join("&");
 };
 
+const blockUnload = () => (window.onbeforeunload = () => "");
+
+const allowUnload = () => (window.onbeforeunload = null);
+
 export { clearAllElements, clearChilds };
 export { clearArray, setFirstByIndex };
 export { createElement, createChild, createChildBefore };
 export { hash };
 export { encodeObject };
+export { allowUnload, blockUnload };
