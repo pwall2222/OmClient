@@ -16,9 +16,9 @@ const keyboard = {
 			{
 				key: "Enter",
 				tag: "chatmsg",
+				prevent: true,
 				exec() {
 					if (!keyEvent.shiftKey) {
-						keyEvent.preventDefault();
 						chatNode.handleInput();
 					}
 				},
@@ -26,24 +26,24 @@ const keyboard = {
 			{
 				key: "ArrowUp",
 				tag: "chatmsg",
+				prevent: true,
 				exec() {
-					keyEvent.preventDefault();
 					cmd.next();
 				},
 			},
 			{
 				key: "ArrowDown",
 				tag: "chatmsg",
+				prevent: true,
 				exec() {
-					keyEvent.preventDefault();
 					cmd.previous();
 				},
 			},
 			{
 				key: "Escape",
 				tag: "body",
+				prevent: true,
 				exec() {
-					keyEvent.preventDefault();
 					if (keyEvent.shiftKey && session.current.active) {
 						skip();
 					} else if (keyEvent.ctrlKey && settings.autoskip) {
@@ -56,6 +56,7 @@ const keyboard = {
 			{
 				key: "Slash",
 				tag: "body",
+				prevent: false,
 				exec() {
 					if (chatNode.typebox.value === "") {
 						chatNode.typebox.focus();
@@ -65,15 +66,19 @@ const keyboard = {
 			{
 				key: "ContextMenu",
 				tag: "body",
+				prevent: true,
 				exec() {
-					keyEvent.preventDefault();
 					skip();
 				},
 			},
 		];
 
 		const filter = (element: keyEvents) => element.key === keyEvent.code && (element.tag === target.className || element.tag === "body");
-		events.find(filter)?.exec();
+		const command = events.find(filter);
+		if (command?.prevent) {
+			keyEvent.preventDefault();
+		}
+		command?.exec();
 	},
 };
 
