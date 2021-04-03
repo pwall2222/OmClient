@@ -28,8 +28,8 @@ class Backend {
 
 	async connect() {
 		const arg = {
-			webrtc: "1",
-			firstevents: "0",
+			webrtc: true,
+			firstevents: false,
 			lang: this.settings.lang,
 			topics: this.settings.likes,
 		};

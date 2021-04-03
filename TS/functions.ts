@@ -66,10 +66,16 @@ const encodeObject = (data: object) => {
 
 	for (const key in data) {
 		const value = data[key];
-		if (typeof value === "string") {
-			append(key, value);
-		} else if (typeof value === "object") {
-			append(key, JSON.stringify(value));
+		switch (typeof value) {
+			case "string":
+				append(key, value);
+				break;
+			case "object":
+				append(key, JSON.stringify(value));
+				break;
+			case "boolean":
+				append(key, Number(value).toString());
+				break;
 		}
 	}
 	return formData.join("&");
