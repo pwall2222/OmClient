@@ -39,7 +39,7 @@ class Video extends RTCPeerConnection {
 
 	addVideo(media: MediaStream) {
 		media.getTracks().forEach((track: MediaStreamTrack) => {
-			session.pc.addTrack(track, media);
+			this.addTrack(track, media);
 		});
 	}
 }
