@@ -74,3 +74,9 @@ const encodeObject = (data: object) => {
 	}
 	return formData.join("&");
 };
+
+export { clearAllElements, clearChilds };
+export { clearArray, setFirstByIndex };
+export { createElement, createChild, createChildBefore };
+export { hash };
+export { encodeObject };

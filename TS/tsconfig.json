@@ -4,7 +4,8 @@
 		"lib": ["DOM","ESNext"],
 		"outDir": "../output",
 		"incremental": true,
-		"alwaysStrict": true
+		"alwaysStrict": true,
+		"module": "ES6"
 	},
-	"files": ["index.ts", "types.ts", "functions.ts"]
+	"exclude": ["connect.ts"]
 }
