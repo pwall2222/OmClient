@@ -1,4 +1,5 @@
 import { cmd } from "./commands.js";
+import { sendMessage } from "./frontFunctions.js";
 import { createChildBefore, createChild, clearChilds } from "./functions.js";
 import { session, backend } from "./index.js";
 import { disconnectNode } from "./nodes.js";
@@ -92,8 +93,7 @@ const chatNode = {
 			cmd.handler(chatContents);
 			chatNode.typebox.value = "";
 		} else if (session.current.active && chatContents !== "") {
-			backend.sendIdentifiedPOST("send", { msg: chatNode.typebox.value });
-			chatNode.add.message(chatNode.typebox.value, "you");
+			sendMessage(chatNode.typebox.value);
 			chatNode.typebox.value = "";
 			disconnectNode.set("stop");
 		}

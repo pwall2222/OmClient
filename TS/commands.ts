@@ -1,5 +1,5 @@
 import { chatNode } from "./chat.js";
-import { skip, disconnect, stopAutoskip } from "./frontFunctions.js";
+import { skip, disconnect, stopAutoskip, sendMessage } from "./frontFunctions.js";
 import { createChild } from "./functions.js";
 import { backend, newChat } from "./index.js";
 import { videoNode } from "./nodes.js";
@@ -85,8 +85,7 @@ const cmd = {
 						for (const key in settings.socials) {
 							msg += `${key}: ${settings.socials[key]}\n`;
 						}
-						backend.sendIdentifiedPOST("send", { msg });
-						chatNode.add.message(msg, "you");
+						sendMessage(msg);
 					}
 				},
 			},
@@ -96,9 +95,7 @@ const cmd = {
 				description: "Sends one social to stranger",
 				exec() {
 					if (args[0]) {
-						const msg = `${args[0]}: ${settings.socials[args[0]]}`;
-						backend.sendIdentifiedPOST("send", { msg });
-						chatNode.add.message(msg, "you");
+						sendMessage(`${args[0]}: ${settings.socials[args[0]]}`);
 					}
 				},
 			},
@@ -115,10 +112,8 @@ const cmd = {
 				alias: ["send"],
 				description: "Sends a message in chat",
 				exec() {
-					const msg = args.join(" ");
 					if (session.current.active) {
-						backend.sendIdentifiedPOST("send", { msg: msg });
-						chatNode.add.message(msg, "you");
+						sendMessage(args.join(" "));
 					}
 				},
 			},

@@ -41,4 +41,9 @@ const disconnectHandler = (user: string) => {
 	clearAllElements(".spinner");
 };
 
-export { disconnect, skip, stopAutoskip, disconnectHandler };
+const sendMessage = (msg: string) => {
+	backend.sendIdentifiedPOST("send", { msg });
+	chatNode.add.message(msg, "you");
+};
+
+export { disconnect, skip, stopAutoskip, disconnectHandler, sendMessage };
