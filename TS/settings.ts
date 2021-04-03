@@ -24,7 +24,7 @@ const settingManager = {
 		localStorage.setItem("settings", JSON.stringify(settings));
 	},
 	clear() {
-		localStorage.clear();
+		localStorage.removeItem("settings");
 	},
 };
 
