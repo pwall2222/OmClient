@@ -36,7 +36,7 @@ const disconnectNode = {
 
 			case "new":
 				disconnectNode.set("stop");
-				if (!session.current.connected) {
+				if (!session.connected) {
 					newChat();
 				}
 				break;
@@ -51,7 +51,7 @@ const videoNode = {
 		videoNode.othervideo.volume = volume / 100;
 	},
 	playEvent() {
-		session.current.video = true;
+		session.video = true;
 		clearAllElements(".spinner");
 	},
 	addSpinner() {

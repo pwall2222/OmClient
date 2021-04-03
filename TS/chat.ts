@@ -74,7 +74,7 @@ const chatNode = {
 		},
 	},
 	typing(state: boolean) {
-		session.current.typing = state;
+		session.typing = state;
 		if (state) {
 			chatNode.add.status.typing();
 		} else {
@@ -92,7 +92,7 @@ const chatNode = {
 		if (chatContents[0] === "/") {
 			cmd.handler(chatContents);
 			chatNode.typebox.value = "";
-		} else if (session.current.active && chatContents !== "") {
+		} else if (session.active && chatContents !== "") {
 			sendMessage(chatNode.typebox.value);
 			chatNode.typebox.value = "";
 			disconnectNode.set("stop");

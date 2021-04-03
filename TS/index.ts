@@ -2,20 +2,18 @@ import { Backend } from "./backend.js";
 import { chatNode } from "./chat.js";
 import { cmd } from "./commands.js";
 import { eventHandler } from "./events.js";
-import { createChild, clearAllElements } from "./functions.js";
+import { clearAllElements } from "./functions.js";
 import { keyboard } from "./keyboard.js";
 import { videoNode, disconnectNode } from "./nodes.js";
-import { session } from "./session.js";
+import { Session } from "./session.js";
 import { settings, settingManager } from "./settings.js";
 import { video } from "./webrtc.js";
 
+let session = new Session();
+
 const newChat = async function () {
-	if (!session.current.server) {
-		chatNode.add.status.default("No server could be fetched");
-		return;
-	}
-	session.reset();
-	session.current.connected = true;
+	session = new Session();
+	session.connected = true;
 
 	disconnectNode.set("stop");
 
@@ -34,7 +32,7 @@ const newChat = async function () {
 		videoNode.selfvideo.muted = true;
 		videoNode.othervideo.srcObject = null;
 
-		session.current.pc = video(media);
+		session.pc = video(media);
 	} catch (error) {
 		chatNode.clear();
 		if (window.RTCPeerConnection) {

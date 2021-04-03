@@ -35,7 +35,7 @@ const video = (media: MediaStream) => {
 	pc.onicecandidate = async function (event: RTCPeerConnectionIceEvent) {
 		if (pc.iceGatheringState !== "complete") {
 			await backend.sendIdentifiedPOST("icecandidate", { candidate: event.candidate });
-			clearArray(session.current.rtc.candidates);
+			clearArray(session.rtc.candidates);
 		}
 	};
 	return pc;
@@ -43,7 +43,7 @@ const video = (media: MediaStream) => {
 
 const webRTC = {
 	async eventHandler(event: backendEvent) {
-		const { pc, rtc } = session.current;
+		const { pc, rtc } = session;
 		switch (event.name) {
 			case "rtccall":
 				rtc.call = true;
@@ -72,8 +72,8 @@ const webRTC = {
 		}
 	},
 	async descriptionHandler(option: descriptionOption) {
-		const videoSession = await session.current.pc[`create${option}`](WEB.constrains);
-		await session.current.pc.setLocalDescription(videoSession);
+		const videoSession = await session.pc[`create${option}`](WEB.constrains);
+		await session.pc.setLocalDescription(videoSession);
 		backend.sendIdentifiedPOST("rtcpeerdescription", { desc: videoSession });
 	},
 };

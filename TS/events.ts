@@ -5,6 +5,8 @@ import { videoNode } from "./nodes.js";
 import { settings } from "./settings.js";
 import { webRTC } from "./webrtc.js";
 
+const history: string[] = [];
+
 const eventHandler = async function (event: backendEvent) {
 	switch (event.name) {
 		case "rtccall":
@@ -27,13 +29,13 @@ const eventHandler = async function (event: backendEvent) {
 			break;
 		case "connected":
 			setTimeout(() => {
-				if (settings.video && !session.current.video && session.current.active) {
+				if (settings.video && !session.video && session.active) {
 					disconnect();
 				}
 			}, settings.autodisconnect_delay);
 			chatNode.clear();
 			chatNode.add.status.connected();
-			session.current.active = true;
+			session.active = true;
 			break;
 		case "strangerDisconnected":
 			videoNode.othervideo.srcObject = null;
@@ -44,8 +46,8 @@ const eventHandler = async function (event: backendEvent) {
 			chatNode.add.status.default("Waiting");
 			break;
 		case "identDigests":
-			if (!session.history.some((id: string) => id == event.data)) {
-				session.history.push(event.data);
+			if (!history.some((id: string) => id == event.data)) {
+				history.push(event.data);
 			} else if (settings.twiceskip) {
 				skip();
 			}

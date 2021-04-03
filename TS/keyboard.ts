@@ -1,8 +1,8 @@
 import { chatNode } from "./chat.js";
 import { cmd } from "./commands.js";
 import { skip, stopAutoskip } from "./frontFunctions.js";
+import { session } from "./index.js";
 import { disconnectNode } from "./nodes.js";
-import { session } from "./session.js";
 import { settings } from "./settings.js";
 
 const keyboard = {
@@ -44,7 +44,7 @@ const keyboard = {
 				tag: "body",
 				prevent: true,
 				exec() {
-					if (keyEvent.shiftKey && session.current.active) {
+					if (keyEvent.shiftKey && session.active) {
 						skip();
 					} else if (keyEvent.ctrlKey && settings.autoskip) {
 						stopAutoskip();

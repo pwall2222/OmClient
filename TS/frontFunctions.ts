@@ -24,16 +24,16 @@ const skip = () => {
 };
 
 const disconnectHandler = (user: string) => {
-	if (session.current.active) {
+	if (session.active) {
 		chatNode.add.status.default(`${user} Disconnected`);
 		disconnectNode.set("new");
-		session.current.active = false;
-		session.current.connected = false;
+		session.active = false;
+		session.connected = false;
 		document.querySelector(".typing")?.remove();
 	}
 	if (settings.autoskip) {
 		setTimeout(() => {
-			if (!session.current.connected) {
+			if (!session.connected) {
 				newChat();
 			}
 		}, settings.autoskip_delay);

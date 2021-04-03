@@ -1,9 +1,8 @@
 import { chatNode } from "./chat.js";
 import { skip, disconnect, stopAutoskip, sendMessage } from "./frontFunctions.js";
 import { createChild } from "./functions.js";
-import { backend, newChat } from "./index.js";
+import { newChat, session } from "./index.js";
 import { videoNode } from "./nodes.js";
-import { session } from "./session.js";
 import { settings, settingManager } from "./settings.js";
 
 const cmd = {
@@ -69,7 +68,7 @@ const cmd = {
 				alias: ["text"],
 				description: "Passes mode to text and makes a new chat",
 				exec() {
-					if (!session.current.connected) {
+					if (!session.connected) {
 						settings.video = false;
 						newChat();
 					}
@@ -80,7 +79,7 @@ const cmd = {
 				alias: ["socials"],
 				description: "Sends socials to stranger",
 				exec() {
-					if (session.current.active) {
+					if (session.active) {
 						let msg = "";
 						for (const key in settings.socials) {
 							msg += `${key}: ${settings.socials[key]}\n`;
@@ -112,7 +111,7 @@ const cmd = {
 				alias: ["send"],
 				description: "Sends a message in chat",
 				exec() {
-					if (session.current.active) {
+					if (session.active) {
 						sendMessage(args.join(" "));
 					}
 				},
