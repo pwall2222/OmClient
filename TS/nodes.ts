@@ -1,5 +1,5 @@
 import { disconnect } from "./frontFunctions.js";
-import { clearAllElements } from "./functions.js";
+import { clearAllElements, createChild } from "./functions.js";
 import { newChat, session } from "./index.js";
 
 const disconnectNode = {
@@ -54,6 +54,11 @@ const videoNode = {
 		session.current.video = true;
 		clearAllElements(".spinner");
 	},
+	addSpinner() {
+		createChild("#videowrapper", { tag: "div", args: { className: "spinner" } });
+	},
 };
+
+videoNode.othervideo.addEventListener("play", videoNode.playEvent);
 
 export { videoNode, disconnectNode };

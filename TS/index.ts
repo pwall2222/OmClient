@@ -26,7 +26,7 @@ const newChat = async function () {
 		chatNode.typebox.value = "";
 	}
 
-	createChild("#videowrapper", { tag: "div", args: { className: "spinner" } });
+	videoNode.addSpinner();
 
 	try {
 		const media = await navigator.mediaDevices.getUserMedia({ video: true, audio: { echoCancellation: true } });
