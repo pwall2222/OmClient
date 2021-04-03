@@ -1,7 +1,7 @@
 import { cmd } from "./commands.js";
 import { sendMessage } from "./frontFunctions.js";
 import { createChildBefore, createChild, clearChilds } from "./functions.js";
-import { session, backend } from "./index.js";
+import { session } from "./index.js";
 import { disconnectNode } from "./nodes.js";
 
 const chatNode = {
