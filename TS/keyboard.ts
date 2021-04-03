@@ -3,7 +3,6 @@ import { cmd } from "./commands.js";
 import { skip, stopAutoskip } from "./frontFunctions.js";
 import { session } from "./index.js";
 import { disconnectNode } from "./nodes.js";
-import { settings } from "./settings.js";
 
 const keyboard = {
 	init() {
@@ -46,7 +45,7 @@ const keyboard = {
 				exec() {
 					if (keyEvent.shiftKey && session.active) {
 						skip();
-					} else if (keyEvent.ctrlKey && settings.autoskip) {
+					} else if (keyEvent.ctrlKey) {
 						stopAutoskip();
 					} else {
 						disconnectNode.handler();
