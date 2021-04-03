@@ -7,7 +7,7 @@ const chatNode = {
 	logbox: document.querySelector(".logbox"),
 	typebox: document.querySelector<HTMLTextAreaElement>(".chatmsg"),
 	add: {
-		message(message: string, sender: author) {
+		message(message: string, sender: messageAuthor) {
 			const pclass = `${sender}msg`;
 			const user = sender === "you" ? "You" : "Stranger";
 			createChildBefore(".logbox", ".typing", {

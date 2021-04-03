@@ -71,7 +71,7 @@ const webRTC = {
 				break;
 		}
 	},
-	async descriptionHandler(option: pcOption) {
+	async descriptionHandler(option: descriptionOption) {
 		const videoSession = await session.current.pc[`create${option}`](WEB.constrains);
 		await session.current.pc.setLocalDescription(videoSession);
 		backend.sendIdentifiedPOST("rtcpeerdescription", { desc: videoSession });

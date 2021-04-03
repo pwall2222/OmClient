@@ -5,7 +5,7 @@ interface backendEvent {
 
 interface domObject {
 	tag: string;
-	args?: args;
+	args?: domObjectArguments;
 	child?: domObject;
 }
 
@@ -16,7 +16,7 @@ interface command {
 	exec: Function;
 }
 
-interface args {
+interface domObjectArguments {
 	accessKey?: string;
 	autocapitalize?: string;
 	dir?: string;
@@ -68,5 +68,5 @@ interface keyEvents {
 }
 
 type disconnectStatus = "stop" | "rlly" | "new";
-type author = "you" | "stranger";
-type pcOption = "Offer" | "Answer";
+type messageAuthor = "you" | "stranger";
+type descriptionOption = "Offer" | "Answer";
