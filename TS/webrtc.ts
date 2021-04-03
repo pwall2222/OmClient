@@ -21,25 +21,28 @@ const WEB = {
 	},
 };
 
-const video = (media: MediaStream) => {
-	const pc = new RTCPeerConnection(WEB.config);
+class Video extends RTCPeerConnection {
+	constructor() {
+		super(WEB.config);
 
-	media.getTracks().forEach((track: MediaStreamTrack) => {
-		pc.addTrack(track, media);
-	});
+		this.onicecandidate = async (event: RTCPeerConnectionIceEvent) => {
+			if (this.iceGatheringState !== "complete") {
+				await backend.sendIdentifiedPOST("icecandidate", { candidate: event.candidate });
+				clearArray(session.rtc.candidates);
+			}
+		};
 
-	pc.ontrack = function (event: RTCTrackEvent) {
-		videoNode.othervideo.srcObject = event.streams[0];
-	};
+		this.ontrack = (event: RTCTrackEvent) => {
+			videoNode.othervideo.srcObject = event.streams[0];
+		};
+	}
 
-	pc.onicecandidate = async function (event: RTCPeerConnectionIceEvent) {
-		if (pc.iceGatheringState !== "complete") {
-			await backend.sendIdentifiedPOST("icecandidate", { candidate: event.candidate });
-			clearArray(session.rtc.candidates);
-		}
-	};
-	return pc;
-};
+	addVideo(media: MediaStream) {
+		media.getTracks().forEach((track: MediaStreamTrack) => {
+			session.pc.addTrack(track, media);
+		});
+	}
+}
 
 const webRTC = {
 	async eventHandler(event: backendEvent) {
@@ -78,4 +81,4 @@ const webRTC = {
 	},
 };
 
-export { video, webRTC };
+export { webRTC, Video };

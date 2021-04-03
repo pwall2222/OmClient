@@ -7,7 +7,7 @@ import { keyboard } from "./keyboard.js";
 import { videoNode, disconnectNode } from "./nodes.js";
 import { Session } from "./session.js";
 import { settings, settingManager } from "./settings.js";
-import { video } from "./webrtc.js";
+import { Video } from "./webrtc.js";
 
 let session = new Session();
 
@@ -32,7 +32,8 @@ const newChat = async function () {
 		videoNode.selfvideo.muted = true;
 		videoNode.othervideo.srcObject = null;
 
-		session.pc = video(media);
+		session.pc = new Video();
+		session.pc.addVideo(media);
 	} catch (error) {
 		chatNode.clear();
 		if (window.RTCPeerConnection) {
