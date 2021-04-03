@@ -1,8 +1,7 @@
-import { backend } from "./backend.js";
 import { chatNode } from "./chat.js";
 import { skip, disconnect, stopAutoskip } from "./frontFunctions.js";
 import { createChild } from "./functions.js";
-import { newChat } from "./index.js";
+import { backend, newChat } from "./index.js";
 import { videoNode } from "./nodes.js";
 import { session } from "./session.js";
 import { settings, settingManager } from "./settings.js";

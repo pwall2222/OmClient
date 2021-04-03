@@ -45,6 +45,21 @@ interface args {
 	/* [key: string]: unknown */
 }
 
+interface setting {
+	autoskip: boolean;
+	autoskip_delay: number;
+	twiceskip: boolean;
+	autodisconnect: boolean;
+	autodisconnect_delay: number;
+	autoclearchat: boolean;
+	cmd_history: number;
+	likes: string[];
+	likes_enabled: boolean;
+	lang: string;
+	video: boolean;
+	socials: {};
+}
+
 interface keyEvents {
 	key: string;
 	tag: string;

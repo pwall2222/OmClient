@@ -1,4 +1,4 @@
-import { backend } from "./backend.js";
+import { Backend } from "./backend.js";
 import { chatNode } from "./chat.js";
 import { cmd } from "./commands.js";
 import { eventHandler } from "./events.js";
@@ -49,17 +49,14 @@ const newChat = async function () {
 	chatNode.clear();
 	chatNode.add.status.default("Conneting to server...");
 
-	const start = await backend.connect();
-	eventHandler.parser(start.events);
-	session.current.id = start.clientID;
-
-	eventHandler.subscribe();
+	backend.newConnection();
 };
 
+const backend = new Backend(eventHandler, settings);
 keyboard.init();
 settingManager.load();
 cmd.load();
-backend.server();
+backend.serverFinder();
 
 export { session, backend };
 export { newChat };

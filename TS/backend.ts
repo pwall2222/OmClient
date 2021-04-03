@@ -1,11 +1,18 @@
-import { chatNode } from "./chat.js";
-import { encodeObject } from "./functions.js";
-import { session } from "./session.js";
-import { settings } from "./settings.js";
+import { encodeObject, setFirstByIndex } from "./functions.js";
 
-const backend = {
+class Backend {
+	executer: Function;
+	settings: setting;
+	server: string;
+	id: string;
+
+	constructor(eventExecuter: Function, settings: setting) {
+		this.executer = eventExecuter;
+		this.settings = settings;
+	}
+
 	sendPOST(path: string, data: string) {
-		return fetch(`https://${session.current.server}.omegle.com/${path}`, {
+		return fetch(`https://${this.server}.omegle.com/${path}`, {
 			method: "POST",
 			body: data,
 			headers: {
@@ -13,32 +20,76 @@ const backend = {
 			},
 			referrerPolicy: "no-referrer",
 		});
-	},
-	sendIdentifiedPOST: (path: string, data?: object) => backend.sendPOST(path, encodeObject({ id: session.current.id, ...(data || {}) })),
+	}
+
+	sendIdentifiedPOST = (path: string, data?: object) => this.sendPOST(path, encodeObject({ id: this.id, ...(data || {}) }));
+
+	disconnect = () => this.sendIdentifiedPOST("disconnect");
+
 	async connect() {
-		const args = ["firstevents=0", `lang=${settings.lang}`];
+		const arg = {
+			webrtc: "1",
+			firstevents: "0",
+			lang: this.settings.lang,
+			topics: this.settings.likes,
+		};
 
-		if (settings.likes_enabled) {
-			args.push(`topics=${encodeURIComponent(JSON.stringify(settings.likes))}`);
+		if (!this.settings.likes_enabled) {
+			delete arg.topics;
 		}
 
-		if (settings.video) {
-			args.push("webrtc=1");
+		if (!this.settings.video) {
+			delete arg.webrtc;
 		}
 
-		const url = `https://${session.current.server}.omegle.com/start?${args.join("&")}`;
-		const response = await fetch(url, { method: "POST", referrerPolicy: "no-referrer" });
+		const url = `https://${this.server}.omegle.com/start?${encodeObject(arg)}`;
+		const response = await fetch(url, {
+			method: "POST",
+			referrerPolicy: "no-referrer",
+		});
 		return response.json();
-	},
-	disconnect: () => backend.sendIdentifiedPOST("disconnect"),
-	async server() {
-		try {
-			const info = await fetch("https://omegle.com/status").then((data: Response) => data.json());
-			session.current.server = info.servers[Math.floor(Math.random() * info.servers.length)];
-		} catch (error) {
-			chatNode.add.status.default("Couldn't fetch server status");
-		}
-	},
-};
+	}
 
-export { backend };
+	async subscribe() {
+		const response = await this.sendIdentifiedPOST("events");
+		if (response.status == 200) {
+			const events = await response.json();
+			if (events != null) {
+				this.eventParser(events);
+				await this.subscribe();
+			}
+		} else {
+			console.log({ responseCode: response.status, responseText: response.statusText });
+		}
+	}
+
+	async newConnection() {
+		const info = await this.connect();
+		this.id = info.clientID;
+		this.eventParser(info.events);
+		this.subscribe();
+	}
+
+	async serverFinder() {
+		const info = await fetch("https://omegle.com/status").then((data: Response) => data.json());
+		this.server = info.servers[Math.floor(Math.random() * info.servers.length)];
+	}
+
+	eventParser(events: object[]) {
+		this.setIdentityFirst(events);
+		for (const element of events) {
+			const event = {
+				name: element[0],
+				data: element[1],
+			};
+			this.executer(event);
+		}
+	}
+
+	setIdentityFirst(events: object[]) {
+		const index = events.findIndex((element: string[]) => element[0] === "identDigests");
+		setFirstByIndex(events, index);
+	}
+}
+
+export { Backend };
