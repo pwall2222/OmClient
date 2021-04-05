@@ -60,5 +60,6 @@ const videoNode = {
 };
 
 videoNode.othervideo.addEventListener("play", videoNode.playEvent);
+disconnectNode.btn.addEventListener("click", disconnectNode.handler);
 
 export { videoNode, disconnectNode };

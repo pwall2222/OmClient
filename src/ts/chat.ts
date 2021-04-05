@@ -7,6 +7,7 @@ import { disconnectNode } from "./nodes.js";
 const chatNode = {
 	logbox: document.querySelector(".logbox"),
 	typebox: document.querySelector<HTMLTextAreaElement>(".chatmsg"),
+	sendbtn: document.querySelector<HTMLButtonElement>(".sendbtn"),
 	add: {
 		message(message: string, sender: messageAuthor) {
 			const pclass = `${sender}msg`;
@@ -99,5 +100,7 @@ const chatNode = {
 		}
 	},
 };
+
+chatNode.sendbtn.addEventListener("click", chatNode.handleInput);
 
 export { chatNode };
