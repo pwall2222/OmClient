@@ -1,8 +1,13 @@
-const clearArray = (array: any[]) => {
-	return array.splice(0, array.length);
-};
+const clearArray = (array: any[]) => array.splice(0, array.length);
 
 const getRandomItem = (array: any[]) => array[Math.floor(Math.random() * array.length)];
+
+const setFirstByIndex = (array: object[], index: number) => {
+	if (index > -1) {
+		const identy = array.splice(index, 1);
+		array.unshift(identy[0]);
+	}
+};
 
 const createElement = (domObject: domObject) => {
 	const element = document.createElement(domObject.tag);
@@ -39,13 +44,6 @@ const clearAllElements = (nodeName: string) => {
 	nodes.forEach((element: Element) => {
 		element.remove();
 	});
-};
-
-const setFirstByIndex = (array: object[], index: number) => {
-	if (index > -1) {
-		const identy = array.splice(index, 1);
-		array.unshift(identy[0]);
-	}
 };
 
 const hash = (string: string) => {
