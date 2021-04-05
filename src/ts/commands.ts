@@ -1,7 +1,7 @@
 import { chatNode } from "./chat.js";
 import { skip, disconnect, stopAutoskip, sendMessage } from "./frontFunctions.js";
 import { createChild } from "./functions.js";
-import { newChat, session } from "./index.js";
+import { backend, newChat, session } from "./index.js";
 import { videoNode } from "./nodes.js";
 import { settings, settingManager } from "./settings.js";
 
@@ -133,6 +133,14 @@ const cmd = {
 				description: "Disconnects from current stranger and stops rerolling temporally",
 				exec() {
 					stopAutoskip();
+				},
+			},
+			{
+				name: "Server",
+				alias: ["server"],
+				description: "Get a server for running the backend",
+				exec() {
+					backend.serverFinder();
 				},
 			},
 		];
