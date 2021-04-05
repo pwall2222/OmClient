@@ -9,8 +9,6 @@ import { Session } from "./session.js";
 import { settings, settingManager } from "./settings.js";
 import { Video } from "./webrtc.js";
 
-let session = new Session();
-
 const newChat = async function () {
 	session = new Session();
 	session.connected = true;
@@ -51,9 +49,12 @@ const newChat = async function () {
 };
 
 const backend = new Backend(eventHandler, settings);
+let session = new Session();
+
+cmd.load();
 keyboard.init();
 settingManager.load();
-cmd.load();
+
 backend.serverFinder();
 
 export { session, backend };
