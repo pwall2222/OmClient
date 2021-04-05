@@ -27,7 +27,6 @@ const newChat = async function () {
 	try {
 		const media = await navigator.mediaDevices.getUserMedia({ video: true, audio: { echoCancellation: true } });
 		videoNode.selfvideo.srcObject ??= media;
-		videoNode.othervideo.srcObject = null;
 
 		session.pc = new Video();
 		session.pc.addVideo(media);
