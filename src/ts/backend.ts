@@ -71,7 +71,8 @@ class Backend {
 	}
 
 	async serverFinder() {
-		const info = await fetch("https://omegle.com/status").then((data: Response) => data.json());
+		const rawData = await fetch("https://omegle.com/status");
+		const info = await rawData.json();
 		this.server = info.servers[Math.floor(Math.random() * info.servers.length)];
 	}
 
