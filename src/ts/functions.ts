@@ -2,7 +2,7 @@ const clearArray = (array: any[]) => array.splice(0, array.length);
 
 const getRandomItem = (array: any[]) => array[Math.floor(Math.random() * array.length)];
 
-const setFirstByIndex = (array: object[], index: number) => {
+const setFirstByIndex = (array: any[], index: number) => {
 	if (index > -1) {
 		const identy = array.splice(index, 1);
 		array.unshift(identy[0]);
