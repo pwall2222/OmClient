@@ -1,5 +1,5 @@
 import { Backend } from "./backend.js";
-import { chatNode } from "./chat.js";
+import { addStatus, chatNode } from "./chat.js";
 import { cmd } from "./commands.js";
 import { eventHandler } from "./events.js";
 import { clearAllElements } from "./functions.js";
@@ -18,7 +18,7 @@ const newChat = async function () {
 	disconnectNode.set("stop");
 
 	chatNode.clear();
-	chatNode.add.status.default("Getting access to camera...");
+	addStatus.default("Getting access to camera...");
 
 	if (settings.autoclearchat) {
 		chatNode.typebox.value = "";
@@ -36,16 +36,16 @@ const newChat = async function () {
 	} catch (error) {
 		chatNode.clear();
 		if (window.RTCPeerConnection) {
-			chatNode.add.status.default("Error getting to camera");
+			addStatus.default("Error getting to camera");
 		} else {
-			chatNode.add.status.default("WebRTC is disabled");
+			addStatus.default("WebRTC is disabled");
 		}
 		clearAllElements(".spinner");
 		return;
 	}
 
 	chatNode.clear();
-	chatNode.add.status.default("Conneting to server...");
+	addStatus.default("Conneting to server...");
 
 	backend.newConnection();
 };

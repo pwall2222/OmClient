@@ -1,4 +1,4 @@
-import { chatNode } from "./chat.js";
+import { addMessage, addStatus, chatNode } from "./chat.js";
 import { disconnect, disconnectHandler, skip } from "./frontFunctions.js";
 import { session } from "./index.js";
 import { videoNode } from "./nodes.js";
@@ -16,7 +16,7 @@ const eventHandler = async function (event: backendEvent) {
 			break;
 		case "gotMessage":
 			chatNode.typing(false);
-			chatNode.add.message(event.data, "stranger");
+			addMessage(event.data, "stranger");
 			break;
 		case "typing":
 			chatNode.typing(true);
@@ -25,7 +25,7 @@ const eventHandler = async function (event: backendEvent) {
 			chatNode.typing(false);
 			break;
 		case "commonLikes":
-			chatNode.add.status.likes(event.data);
+			addStatus.likes(event.data);
 			break;
 		case "connected":
 			setTimeout(() => {
@@ -34,7 +34,7 @@ const eventHandler = async function (event: backendEvent) {
 				}
 			}, settings.autodisconnect_delay);
 			chatNode.clear();
-			chatNode.add.status.connected();
+			addStatus.connected();
 			session.active = true;
 			break;
 		case "strangerDisconnected":
@@ -43,7 +43,7 @@ const eventHandler = async function (event: backendEvent) {
 			break;
 		case "waiting":
 			chatNode.clear();
-			chatNode.add.status.default("Waiting");
+			addStatus.default("Waiting");
 			break;
 		case "identDigests":
 			if (!history.some((id: string) => id == event.data)) {

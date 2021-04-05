@@ -1,4 +1,4 @@
-import { chatNode } from "./chat.js";
+import { addMessage, addStatus, chatNode } from "./chat.js";
 import { clearAllElements } from "./functions.js";
 import { backend, newChat, session } from "./index.js";
 import { videoNode, disconnectNode } from "./nodes.js";
@@ -25,7 +25,7 @@ const skip = () => {
 
 const disconnectHandler = (user: string) => {
 	if (session.active) {
-		chatNode.add.status.default(`${user} Disconnected`);
+		addStatus.default(`${user} Disconnected`);
 		disconnectNode.set("new");
 		session.active = false;
 		session.connected = false;
@@ -43,7 +43,7 @@ const disconnectHandler = (user: string) => {
 
 const sendMessage = (msg: string) => {
 	backend.sendIdentifiedPOST("send", { msg });
-	chatNode.add.message(msg, "you");
+	addMessage(msg, "you");
 };
 
 export { disconnect, skip, stopAutoskip, disconnectHandler, sendMessage };
