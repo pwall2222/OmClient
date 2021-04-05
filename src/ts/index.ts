@@ -9,6 +9,20 @@ import { Session } from "./session.js";
 import { settings, settingManager } from "./settings.js";
 import { Video } from "./webrtc.js";
 
+const errorHandler = (error: unknown) => {
+	chatNode.clear();
+	if (typeof error == "string") {
+		addStatus.default(error);
+	} else if (window.RTCPeerConnection) {
+		addStatus.default("Error getting to camera");
+	} else {
+		addStatus.default("WebRTC is disabled");
+	}
+	disconnectNode.set("new");
+	session.connected = false;
+	clearAllElements(".spinner");
+};
+
 const newChat = async function () {
 	session = new Session();
 	session.connected = true;
@@ -31,20 +45,14 @@ const newChat = async function () {
 		session.pc = new Video();
 		session.pc.addVideo(media);
 	} catch (error) {
-		chatNode.clear();
-		if (window.RTCPeerConnection) {
-			addStatus.default("Error getting to camera");
-		} else {
-			addStatus.default("WebRTC is disabled");
-		}
-		clearAllElements(".spinner");
+		errorHandler(error);
 		return;
 	}
 
 	chatNode.clear();
 	addStatus.default("Conneting to server...");
 
-	backend.newConnection();
+	backend.newConnection().catch(errorHandler);
 };
 
 const backend = new Backend(eventHandler, settings);
