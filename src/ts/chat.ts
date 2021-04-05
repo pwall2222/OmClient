@@ -1,5 +1,5 @@
 import { cmd } from "./commands.js";
-import { sendMessage } from "./frontFunctions.js";
+import { getLikeString, sendMessage } from "./frontFunctions.js";
 import { createChildBefore, createChild, clearChilds } from "./functions.js";
 import { session } from "./index.js";
 import { disconnectNode } from "./nodes.js";
@@ -87,17 +87,7 @@ const addStatus = {
 		chatNode.scroll();
 	},
 	likes(likes: string[]) {
-		let display: string;
-		if (likes.length < 0) {
-			display = "Couldn't find a stranger with same interests.";
-		} else if (likes.length === 1) {
-			display = `You both like ${likes[0]}.`;
-		} else if (likes.length > 1) {
-			const last = likes.pop();
-			const body = likes.join(", ");
-			display = `You both like ${body} and ${last}.`;
-		}
-		addStatus.default(display);
+		return addStatus.default(getLikeString(likes));
 	},
 };
 

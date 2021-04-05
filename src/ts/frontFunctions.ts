@@ -1,4 +1,4 @@
-import { addMessage, addStatus, chatNode } from "./chat.js";
+import { addMessage, addStatus } from "./chat.js";
 import { clearAllElements } from "./functions.js";
 import { backend, newChat, session } from "./index.js";
 import { videoNode, disconnectNode } from "./nodes.js";
@@ -46,4 +46,20 @@ const sendMessage = (msg: string) => {
 	addMessage(msg, "you");
 };
 
-export { disconnect, skip, stopAutoskip, disconnectHandler, sendMessage };
+const getLikeString = (likes: string[]) => {
+	if (likes.length < 0) {
+		return "Couldn't find a stranger with same interests.";
+	}
+
+	if (likes.length === 1) {
+		return `You both like ${likes[0]}.`;
+	}
+
+	if (likes.length > 1) {
+		const last = likes.pop();
+		const body = likes.join(", ");
+		return `You both like ${body} and ${last}.`;
+	}
+};
+
+export { disconnect, skip, stopAutoskip, disconnectHandler, sendMessage, getLikeString };
