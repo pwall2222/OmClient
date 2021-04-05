@@ -1,4 +1,4 @@
-import { encodeObject, getRandomItem, setFirstByIndex } from "./functions.js";
+import { encodeObject, getRandomItem, setFirst } from "./functions.js";
 
 class Backend {
 	executer: Function;
@@ -77,7 +77,7 @@ class Backend {
 	}
 
 	eventParser(events: object[]) {
-		this.setIdentityFirst(events);
+		setFirst(events, (element: string[]) => element[0] === "identDigests");
 		for (const element of events) {
 			const event = {
 				name: element[0],
@@ -85,11 +85,6 @@ class Backend {
 			};
 			this.executer(event);
 		}
-	}
-
-	setIdentityFirst(events: object[]) {
-		const index = events.findIndex((element: string[]) => element[0] === "identDigests");
-		setFirstByIndex(events, index);
 	}
 }
 

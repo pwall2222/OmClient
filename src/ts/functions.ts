@@ -9,6 +9,11 @@ const setFirstByIndex = (array: any[], index: number) => {
 	}
 };
 
+const setFirst = (array: any[], find: (value: any, index: number, obj: any[]) => unknown) => {
+	const index = array.findIndex(find);
+	setFirstByIndex(array, index);
+};
+
 const createElement = (domObject: domObject) => {
 	const element = document.createElement(domObject.tag);
 	if (domObject.args) {
@@ -86,7 +91,7 @@ const blockUnload = () => (window.onbeforeunload = () => "");
 const allowUnload = () => (window.onbeforeunload = null);
 
 export { clearAllElements, clearChilds };
-export { clearArray, getRandomItem, setFirstByIndex };
+export { clearArray, getRandomItem, setFirstByIndex, setFirst };
 export { createElement, createChild, createChildBefore };
 export { hash };
 export { encodeObject };
