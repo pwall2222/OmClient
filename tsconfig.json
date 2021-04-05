@@ -7,6 +7,5 @@
 		"incremental": true,
 		"alwaysStrict": true,
 		"module": "ES6"
-	},
-	"exclude": ["connect.ts"]
+	}
 }
