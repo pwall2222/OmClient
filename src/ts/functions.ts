@@ -2,6 +2,8 @@ const clearArray = (array: any[]) => {
 	return array.splice(0, array.length);
 };
 
+const getRandomItem = (array: any[]) => array[Math.floor(Math.random() * array.length)];
+
 const createElement = (domObject: domObject) => {
 	const element = document.createElement(domObject.tag);
 	if (domObject.args) {
@@ -86,7 +88,7 @@ const blockUnload = () => (window.onbeforeunload = () => "");
 const allowUnload = () => (window.onbeforeunload = null);
 
 export { clearAllElements, clearChilds };
-export { clearArray, setFirstByIndex };
+export { clearArray, getRandomItem, setFirstByIndex };
 export { createElement, createChild, createChildBefore };
 export { hash };
 export { encodeObject };

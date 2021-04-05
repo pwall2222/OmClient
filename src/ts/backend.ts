@@ -1,4 +1,4 @@
-import { encodeObject, setFirstByIndex } from "./functions.js";
+import { encodeObject, getRandomItem, setFirstByIndex } from "./functions.js";
 
 class Backend {
 	executer: Function;
@@ -73,7 +73,7 @@ class Backend {
 	async serverFinder() {
 		const rawData = await fetch("https://omegle.com/status");
 		const info = await rawData.json();
-		this.server = info.servers[Math.floor(Math.random() * info.servers.length)];
+		this.server = getRandomItem(info.servers);
 	}
 
 	eventParser(events: object[]) {
