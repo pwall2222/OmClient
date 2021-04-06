@@ -1,11 +1,11 @@
-import { Video } from "./webrtc.js";
+import { PeerConnection } from "./webrtc.js";
 
 class Session {
 	active = false;
 	connected = false;
 	video = false;
 	typing = false;
-	pc = <Video>{};
+	pc = <PeerConnection>{};
 	rtc = {
 		call: false,
 		peer: false,

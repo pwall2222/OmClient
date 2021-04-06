@@ -21,7 +21,7 @@ const WEB = {
 	},
 };
 
-class Video extends RTCPeerConnection {
+class PeerConnection extends RTCPeerConnection {
 	constructor() {
 		super(WEB.config);
 
@@ -81,4 +81,4 @@ const webRTC = {
 	},
 };
 
-export { webRTC, Video };
+export { webRTC, PeerConnection };

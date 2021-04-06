@@ -7,7 +7,7 @@ import { keyboard } from "./keyboard.js";
 import { videoNode, disconnectNode } from "./nodes.js";
 import { Session } from "./session.js";
 import { settings, settingManager } from "./settings.js";
-import { Video } from "./webrtc.js";
+import { PeerConnection } from "./webrtc.js";
 
 const errorHandler = (error: unknown) => {
 	chatNode.clear();
@@ -42,7 +42,7 @@ const newChat = async function () {
 		const media = await navigator.mediaDevices.getUserMedia({ video: true, audio: { echoCancellation: true } });
 		videoNode.selfvideo.srcObject ??= media;
 
-		session.pc = new Video();
+		session.pc = new PeerConnection();
 		session.pc.addVideo(media);
 	} catch (error) {
 		errorHandler(error);
