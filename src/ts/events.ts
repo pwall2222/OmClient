@@ -1,5 +1,6 @@
 import { addMessage, addStatus, chatNode } from "./chat.js";
 import { disconnect, disconnectHandler, skip } from "./frontFunctions.js";
+import { blockUnload } from "./functions.js";
 import { session } from "./index.js";
 import { videoNode } from "./nodes.js";
 import { settings } from "./settings.js";
@@ -35,6 +36,9 @@ const eventHandler = async function (event: backendEvent) {
 			}, settings.autodisconnect_delay);
 			chatNode.clear();
 			addStatus.connected();
+			if (settings.block_unload) {
+				blockUnload();
+			}
 			session.active = true;
 			break;
 		case "strangerDisconnected":

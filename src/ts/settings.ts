@@ -1,6 +1,7 @@
 const settings = {
 	autoskip: false,
 	autoskip_delay: 500,
+	block_unload: false,
 	twiceskip: false,
 	autodisconnect: false,
 	autodisconnect_delay: 10000,

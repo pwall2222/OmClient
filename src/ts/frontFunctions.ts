@@ -1,5 +1,5 @@
 import { addMessage, addStatus } from "./chat.js";
-import { clearAllElements } from "./functions.js";
+import { allowUnload, clearAllElements } from "./functions.js";
 import { backend, newChat, session } from "./index.js";
 import { videoNode, disconnectNode } from "./nodes.js";
 import { settings } from "./settings.js";
@@ -25,6 +25,7 @@ const skip = () => {
 
 const disconnectHandler = (user: string) => {
 	if (session.active) {
+		allowUnload();
 		addStatus.default(`${user} Disconnected`);
 		disconnectNode.set("new");
 		session.active = false;
