@@ -30,7 +30,7 @@ const eventHandler = async function (event: backendEvent) {
 			break;
 		case "connected":
 			setTimeout(() => {
-				if (settings.video && !session.video && session.active) {
+				if (settings.video && !session.video && session.connected) {
 					disconnect();
 				}
 			}, settings.autodisconnect_delay);
@@ -39,7 +39,7 @@ const eventHandler = async function (event: backendEvent) {
 			if (settings.block_unload) {
 				blockUnload();
 			}
-			session.active = true;
+			session.connected = true;
 			break;
 		case "strangerDisconnected":
 			videoNode.othervideo.srcObject = null;

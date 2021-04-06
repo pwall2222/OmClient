@@ -24,17 +24,17 @@ const skip = () => {
 };
 
 const disconnectHandler = (user: string) => {
-	if (session.active) {
+	if (session.connected) {
 		allowUnload();
 		addStatus.default(`${user} Disconnected`);
 		disconnectNode.set("new");
-		session.active = false;
 		session.connected = false;
+		session.started = false;
 		document.querySelector(".typing")?.remove();
 	}
 	if (settings.autoskip) {
 		setTimeout(() => {
-			if (!session.connected) {
+			if (!session.started) {
 				newChat();
 			}
 		}, settings.autoskip_delay);

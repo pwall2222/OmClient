@@ -1,7 +1,7 @@
 import { PeerConnection } from "./webrtc.js";
 
 class Session {
-	active = false;
+	started = false;
 	connected = false;
 	video = false;
 	typing = false;

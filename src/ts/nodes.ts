@@ -36,7 +36,7 @@ const disconnectNode = {
 
 			case "new":
 				disconnectNode.set("stop");
-				if (!session.connected) {
+				if (!session.started) {
 					newChat();
 				}
 				break;

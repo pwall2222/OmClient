@@ -68,7 +68,7 @@ const cmd = {
 				alias: ["text"],
 				description: "Passes mode to text and makes a new chat",
 				exec() {
-					if (!session.connected) {
+					if (!session.started) {
 						settings.video = false;
 						newChat();
 					}
@@ -79,7 +79,7 @@ const cmd = {
 				alias: ["socials"],
 				description: "Sends socials to stranger",
 				exec() {
-					if (session.active) {
+					if (session.connected) {
 						let msg = "";
 						for (const key in settings.socials) {
 							msg += `${key}: ${settings.socials[key]}\n`;
@@ -111,7 +111,7 @@ const cmd = {
 				alias: ["send"],
 				description: "Sends a message in chat",
 				exec() {
-					if (session.active) {
+					if (session.connected) {
 						sendMessage(args.join(" "));
 					}
 				},

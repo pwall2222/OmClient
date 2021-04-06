@@ -13,7 +13,7 @@ const errorHandler = (error: unknown) => {
 		addStatus.default("WebRTC is disabled");
 	}
 	disconnectNode.set("new");
-	session.connected = false;
+	session.started = false;
 	clearAllElements(".spinner");
 };
 

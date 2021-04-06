@@ -27,7 +27,7 @@ const chatNode = {
 		if (chatContents[0] === "/") {
 			cmd.handler(chatContents);
 			chatNode.typebox.value = "";
-		} else if (session.active && chatContents !== "") {
+		} else if (session.connected && chatContents !== "") {
 			sendMessage(chatNode.typebox.value);
 			chatNode.typebox.value = "";
 			disconnectNode.set("stop");

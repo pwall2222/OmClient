@@ -43,7 +43,7 @@ const keyboard = {
 				tag: "body",
 				prevent: true,
 				exec() {
-					if (keyEvent.shiftKey && session.active) {
+					if (keyEvent.shiftKey && session.connected) {
 						skip();
 					} else if (keyEvent.ctrlKey) {
 						stopAutoskip();

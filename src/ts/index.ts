@@ -11,7 +11,7 @@ import { PeerConnection } from "./webrtc.js";
 
 const newChat = async function () {
 	session = new Session();
-	session.connected = true;
+	session.started = true;
 
 	disconnectNode.set("stop");
 
