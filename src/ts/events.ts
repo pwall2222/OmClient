@@ -8,7 +8,10 @@ import { webRTC } from "./webrtc.js";
 
 const history: string[] = [];
 
-const eventHandler = async function (event: backendEvent) {
+const eventHandler = (event: backendEvent) => {
+	if (!session.started) {
+		return;
+	}
 	switch (event.name) {
 		case "rtccall":
 		case "rtcpeerdescription":
