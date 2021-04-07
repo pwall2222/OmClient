@@ -6,6 +6,6 @@
 		"outDir": "../output",
 		"incremental": true,
 		"alwaysStrict": true,
-		"module": "ES6"
+		"module": "ESNext"
 	}
 }

@@ -57,6 +57,9 @@ const videoNode = {
 	addSpinner() {
 		createChild("#videowrapper", { tag: "div", args: { className: "spinner" } });
 	},
+	addMedia(media: MediaStream) {
+		videoNode.selfvideo.srcObject ??= media;
+	},
 };
 
 videoNode.othervideo.addEventListener("play", videoNode.playEvent);
