@@ -41,7 +41,7 @@ const newChat = async function () {
 	backend.newConnection().catch(errorHandler);
 };
 
-const backend = new Backend(eventHandler, settings);
+const backend = new Backend({ eventHandler, errorHandler, settings });
 let session = new Session();
 
 cmd.load();

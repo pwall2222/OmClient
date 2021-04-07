@@ -2,17 +2,19 @@ import { encodeObject, getRandomItem, setFirst } from "./functions.js";
 
 class Backend {
 	executer: Function;
+	errorHandler: (error: any) => void;
 	settings: setting;
 	server: string;
 	id: string;
 
-	constructor(eventExecuter: Function, settings: setting) {
-		this.executer = eventExecuter;
+	constructor({ eventHandler, settings, errorHandler }: { eventHandler: Function; settings: setting; errorHandler: (error: any) => void }) {
+		this.executer = eventHandler;
 		this.settings = settings;
+		this.errorHandler = errorHandler;
 	}
 
-	sendPOST(path: string, data: string) {
-		return fetch(`https://${this.server}.omegle.com/${path}`, {
+	async sendPOST(path: string, data: string) {
+		const response = fetch(`https://${this.server}.omegle.com/${path}`, {
 			method: "POST",
 			body: data,
 			headers: {
@@ -20,6 +22,8 @@ class Backend {
 			},
 			referrerPolicy: "no-referrer",
 		});
+		response.catch(this.errorHandler);
+		return response;
 	}
 
 	sendIdentifiedPOST = (path: string, data?: object) => this.sendPOST(path, encodeObject({ id: this.id, ...(data || {}) }));
@@ -43,10 +47,12 @@ class Backend {
 		}
 
 		const url = `https://${this.server}.omegle.com/start?${encodeObject(arg)}`;
-		const response = await fetch(url, {
+		const responsePromise = fetch(url, {
 			method: "POST",
 			referrerPolicy: "no-referrer",
 		});
+		responsePromise.catch(this.errorHandler);
+		const response = await responsePromise;
 		return response.json();
 	}
 
@@ -74,7 +80,9 @@ class Backend {
 	}
 
 	async serverFinder() {
-		const rawData = await fetch("https://omegle.com/status");
+		const rawDataPromise = fetch("https://omegle.com/status");
+		rawDataPromise.catch(this.errorHandler);
+		const rawData = await rawDataPromise;
 		const info = await rawData.json();
 		this.server = getRandomItem(info.servers);
 	}

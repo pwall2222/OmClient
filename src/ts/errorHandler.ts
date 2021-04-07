@@ -3,14 +3,12 @@ import { clearAllElements } from "./functions.js";
 import { session } from "./index.js";
 import { disconnectNode } from "./nodes.js";
 
-const errorHandler = (error: unknown) => {
+const errorHandler = (error: any) => {
 	chatNode.clear();
 	if (typeof error == "string") {
 		addStatus.default(error);
-	} else if (window.RTCPeerConnection) {
-		addStatus.default("Error getting to camera");
 	} else {
-		addStatus.default("WebRTC is disabled");
+		addStatus.default(error?.message);
 	}
 	disconnectNode.set("new");
 	session.started = false;
