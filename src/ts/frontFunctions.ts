@@ -19,6 +19,7 @@ const stopAutoskip = () => {
 
 const skip = () => {
 	backend.disconnect();
+	videoNode.othervideo.srcObject = null;
 	clearAllElements(".spinner");
 	newChat();
 };
