@@ -39,18 +39,15 @@ const addMessage = (message: string, sender: messageAuthor) => {
 	const pclass = `${sender}msg`;
 	const user = sender === "you" ? "You" : "Stranger";
 	createChildBefore(".logbox", ".typing", {
-		tag: "div",
+		tag: "p",
+		args: {
+			className: pclass,
+			innerHTML: `<strong class="msgsource">${user}: </strong>`,
+		},
 		child: {
-			tag: "p",
+			tag: "span",
 			args: {
-				className: pclass,
-				innerHTML: `<strong class="msgsource">${user}: </strong>`,
-			},
-			child: {
-				tag: "span",
-				args: {
-					textContent: message,
-				},
+				textContent: message,
 			},
 		},
 	});
