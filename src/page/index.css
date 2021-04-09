@@ -72,6 +72,7 @@ img {
 
 .chat {
 	height: 100%;
+	width: 0;
 	max-width: 70.5%;
 	margin-left: 8px;
 	margin-right: 8px;
@@ -162,6 +163,7 @@ img {
 }
 
 .logbox {
+	display: inline-block;
 	padding: 8px;
 	overflow: auto;
 }
