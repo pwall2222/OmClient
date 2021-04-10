@@ -1,5 +1,5 @@
 import { cmd } from "./commands.js";
-import { getLikeString, sendMessage } from "./frontFunctions.js";
+import { sendMessage } from "./frontFunctions.js";
 import { createChildBefore, createChild, clearChilds } from "./functions.js";
 import { session } from "./index.js";
 import { disconnectNode } from "./nodes.js";
@@ -11,7 +11,20 @@ const chatNode = {
 	typing(state: boolean) {
 		session.typing = state;
 		if (state) {
-			addStatus.typing();
+			createChild(".logbox", {
+				tag: "div",
+				args: {
+					className: "logitem typing",
+				},
+				child: {
+					tag: "p",
+					args: {
+						className: "statuslog",
+						innerText: "Stranger is typing...",
+					},
+				},
+			});
+			chatNode.scroll();
 		} else {
 			document.querySelector(".typing")?.remove();
 		}
@@ -53,46 +66,23 @@ const addMessage = (message: string, sender: messageAuthor) => {
 	});
 };
 
-const addStatus = {
-	default(text: string) {
-		createChildBefore(".logbox", ".typing", {
-			tag: "p",
-			args: {
-				className: "statuslog",
-				textContent: text,
-			},
-		});
-		chatNode.scroll();
-	},
-	connected() {
-		addStatus.default("You're now chatting with a random stranger.");
-	},
-	typing() {
-		createChild(".logbox", {
-			tag: "div",
-			args: {
-				className: "logitem typing",
-			},
-			child: {
-				tag: "p",
-				args: {
-					className: "statuslog",
-					innerText: "Stranger is typing...",
-				},
-			},
-		});
-		chatNode.scroll();
-	},
-	likes(likes: string[]) {
-		return addStatus.default(getLikeString(likes));
-	},
-	custom(domObject: domObject) {
-		createChildBefore(".logbox", ".typing", domObject);
-		chatNode.scroll();
-	},
+const addStatus = (text: string) => {
+	createChildBefore(".logbox", ".typing", {
+		tag: "p",
+		args: {
+			className: "statuslog",
+			textContent: text,
+		},
+	});
+	chatNode.scroll();
+};
+
+const addCustomStatus = (domObject: domObject) => {
+	createChildBefore(".logbox", ".typing", domObject);
+	chatNode.scroll();
 };
 
 chatNode.sendbtn.addEventListener("click", chatNode.handleInput);
 
 export { chatNode };
-export { addMessage, addStatus };
+export { addMessage, addStatus, addCustomStatus };

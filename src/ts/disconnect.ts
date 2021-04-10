@@ -47,7 +47,7 @@ const execAutoskip = () => {
 const disconnectUI = (user: string) => {
 	document.querySelector(".typing")?.remove();
 	disconnectNode.set("new");
-	addStatus.default(`${user} Disconnected`);
+	addStatus(`${user} Disconnected`);
 };
 
 const disconnectVideo = () => {

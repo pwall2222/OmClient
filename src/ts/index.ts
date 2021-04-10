@@ -17,7 +17,7 @@ const newChat = async () => {
 	disconnectNode.set("stop");
 
 	chatNode.clear();
-	addStatus.default("Getting access to camera...");
+	addStatus("Getting access to camera...");
 
 	if (settings.autoclearchat) {
 		chatNode.typebox.value = "";
@@ -35,7 +35,7 @@ const newChat = async () => {
 	}
 
 	chatNode.clear();
-	addStatus.default("Conneting to server...");
+	addStatus("Conneting to server...");
 
 	backend.newConnection().catch(errorHandler);
 };

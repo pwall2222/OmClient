@@ -1,5 +1,6 @@
 import { addMessage, addStatus, chatNode } from "./chat.js";
 import { disconnect, skip, userDisconect } from "./disconnect.js";
+import { getLikeString } from "./frontFunctions.js";
 import { blockUnload } from "./functions.js";
 import { session } from "./index.js";
 import { settings } from "./settings.js";
@@ -28,7 +29,7 @@ const eventHandler = (event: backendEvent) => {
 			chatNode.typing(false);
 			break;
 		case "commonLikes":
-			addStatus.likes(event.data);
+			addStatus(getLikeString(event.data));
 			break;
 		case "connected":
 			setTimeout(() => {
@@ -38,7 +39,7 @@ const eventHandler = (event: backendEvent) => {
 				}
 			}, settings.autodisconnect_delay);
 			chatNode.clear();
-			addStatus.connected();
+			addStatus("You're now chatting with a random stranger.");
 			if (settings.block_unload) {
 				blockUnload();
 			}
@@ -49,7 +50,7 @@ const eventHandler = (event: backendEvent) => {
 			break;
 		case "waiting":
 			chatNode.clear();
-			addStatus.default("Waiting");
+			addStatus("Waiting");
 			break;
 		case "identDigests":
 			if (!history.some((id: string) => id == event.data)) {

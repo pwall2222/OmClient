@@ -6,9 +6,9 @@ import { disconnectNode } from "./nodes.js";
 const errorHandler = (error: any) => {
 	chatNode.clear();
 	if (typeof error == "string") {
-		addStatus.default(error);
+		addStatus(error);
 	} else {
-		addStatus.default(error?.message);
+		addStatus(error?.message);
 	}
 	disconnectNode.set("new");
 	session.started = false;
