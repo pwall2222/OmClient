@@ -86,6 +86,10 @@ const addStatus = {
 	likes(likes: string[]) {
 		return addStatus.default(getLikeString(likes));
 	},
+	custom(domObject: domObject) {
+		createChildBefore(".logbox", ".typing", domObject);
+		chatNode.scroll();
+	},
 };
 
 chatNode.sendbtn.addEventListener("click", chatNode.handleInput);
