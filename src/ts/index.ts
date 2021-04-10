@@ -24,11 +24,11 @@ const newChat = async () => {
 	}
 
 	videoNode.addSpinner();
-	videoNode.addMedia(media);
+	videoNode.addMedia(await media);
 
 	try {
 		session.pc = new PeerConnection();
-		session.pc.addVideo(media);
+		session.pc.addVideo(await media);
 	} catch (error) {
 		errorHandler(error);
 		return;
