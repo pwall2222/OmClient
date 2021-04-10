@@ -1,8 +1,7 @@
 import { addMessage, addStatus, chatNode } from "./chat.js";
-import { disconnect, disconnectHandler, skip } from "./frontFunctions.js";
+import { disconnect, skip, userDisconect } from "./disconnect.js";
 import { blockUnload } from "./functions.js";
 import { session } from "./index.js";
-import { videoNode } from "./nodes.js";
 import { settings } from "./settings.js";
 import { webRTC } from "./webrtc.js";
 
@@ -33,7 +32,8 @@ const eventHandler = (event: backendEvent) => {
 			break;
 		case "connected":
 			setTimeout(() => {
-				if (settings.video && !session.video && session.connected) {
+				const bool = settings.autodisconnect && settings.video && !session.video && session.connected;
+				if (bool) {
 					disconnect();
 				}
 			}, settings.autodisconnect_delay);
@@ -45,8 +45,7 @@ const eventHandler = (event: backendEvent) => {
 			session.connected = true;
 			break;
 		case "strangerDisconnected":
-			videoNode.othervideo.srcObject = null;
-			disconnectHandler("Stranger");
+			userDisconect("Stranger");
 			break;
 		case "waiting":
 			chatNode.clear();

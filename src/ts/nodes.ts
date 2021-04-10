@@ -1,4 +1,4 @@
-import { disconnect } from "./frontFunctions.js";
+import { disconnect } from "./disconnect.js";
 import { clearAllElements, createChild } from "./functions.js";
 import { newChat, session } from "./index.js";
 

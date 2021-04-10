@@ -1,6 +1,6 @@
 import { chatNode } from "./chat.js";
 import { cmd } from "./commands.js";
-import { skip, stopAutoskip } from "./frontFunctions.js";
+import { disconnect, skip } from "./disconnect.js";
 import { session } from "./index.js";
 import { disconnectNode } from "./nodes.js";
 
@@ -46,7 +46,7 @@ const keyboard = {
 					if (keyEvent.shiftKey && session.connected) {
 						skip();
 					} else if (keyEvent.ctrlKey) {
-						stopAutoskip();
+						disconnect(false);
 					} else {
 						disconnectNode.handler();
 					}
