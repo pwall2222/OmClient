@@ -10,7 +10,7 @@ import { settings, settingManager } from "./settings.js";
 import { media } from "./video.js";
 import { PeerConnection } from "./webrtc.js";
 
-const newChat = async function () {
+const newChat = async () => {
 	session = new Session();
 	session.started = true;
 

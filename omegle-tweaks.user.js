@@ -10,7 +10,7 @@
 ==/UserScript== 
 */
 
-(async function () {
+(async () => {
 	document.documentElement.innerHTML = "<head><title>Omegle</title></head><body></body>";
 	window.stop()
 	const doc = await fetch("").then((response) => response.text());

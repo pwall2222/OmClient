@@ -65,7 +65,7 @@ const hash = (string: string) => {
 
 const encodeObject = (data: object) => {
 	const formData: string[] = [];
-	const append = function (key: string, value: string) {
+	const append = (key: string, value: string) => {
 		formData.push(key + "=" + encodeURIComponent(value));
 	};
 
