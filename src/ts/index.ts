@@ -5,12 +5,18 @@ import { errorHandler } from "./errorHandler.js";
 import { eventHandler } from "./events.js";
 import { keyboard } from "./keyboard.js";
 import { videoNode, disconnectNode } from "./nodes.js";
+import { rateLimit, rateLimited } from "./ratelimit.js";
 import { Session } from "./session.js";
 import { settings, settingManager } from "./settings.js";
 import { media } from "./video.js";
 import { PeerConnection } from "./webrtc.js";
 
 const newChat = async () => {
+	if (rateLimited) {
+		return;
+	}
+	rateLimit();
+
 	session = new Session();
 	session.started = true;
 

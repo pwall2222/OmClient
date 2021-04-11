@@ -2,6 +2,7 @@ import { addStatus } from "./chat.js";
 import { allowUnload, clearAllElements } from "./functions.js";
 import { backend, session, newChat } from "./index.js";
 import { disconnectNode, videoNode } from "./nodes.js";
+import { rateLimited } from "./ratelimit.js";
 import { settings } from "./settings.js";
 
 const disconnect = (autoskip: boolean = true) => {
@@ -31,7 +32,7 @@ const disconnection = () => {
 };
 
 const skip = () => {
-	if (session.started) {
+	if (session.started && !rateLimited) {
 		backend.disconnect();
 		disconnectVideo();
 	}
