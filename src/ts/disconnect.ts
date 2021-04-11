@@ -15,6 +15,9 @@ const disconnect = (autoskip: boolean = true) => {
 const userDisconect = (user: string) => {
 	disconnectUI(user);
 	disconnection();
+	if (user !== "You") {
+		execAutoskip();
+	}
 };
 
 const disconnection = () => {
