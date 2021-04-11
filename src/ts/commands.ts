@@ -1,5 +1,4 @@
-import { chatNode } from "./chat.js";
-import { skip, disconnect } from "./disconnect.js";
+import { addCustomStatus, chatNode } from "./chat.js";
 import { sendMessage } from "./frontFunctions.js";
 import { createChild } from "./functions.js";
 import { backend, newChat, session } from "./index.js";
@@ -150,6 +149,19 @@ const cmd = {
 				description: "Sends project url to stranger",
 				exec() {
 					sendMessage("https://github.com/PWall2222/Omegle-Tweak");
+				},
+			},
+			{
+				name: "Settings",
+				alias: ["settings"],
+				description: "Displays settings in chat",
+				exec() {
+					addCustomStatus({
+						tag: "pre",
+						args: {
+							innerText: JSON.stringify(settings, null, 4),
+						},
+					});
 				},
 			},
 		];
