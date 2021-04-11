@@ -31,8 +31,10 @@ const disconnection = () => {
 };
 
 const skip = () => {
-	backend.disconnect();
-	disconnectVideo();
+	if (session.started) {
+		backend.disconnect();
+		disconnectVideo();
+	}
 	newChat();
 };
 
