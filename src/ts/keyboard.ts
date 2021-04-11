@@ -11,7 +11,7 @@ const keyboard = {
 	handler(keyEvent: KeyboardEvent) {
 		const target = keyEvent.target as HTMLElement;
 
-		const events = [
+		const events: keyEvents[] = [
 			{
 				key: "Enter",
 				tag: "chatmsg",

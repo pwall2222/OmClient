@@ -63,7 +63,7 @@ interface setting {
 interface keyEvents {
 	key: string;
 	tag: string;
-	conditions?: boolean;
+	prevent: boolean;
 	exec: Function;
 }
 
