@@ -144,6 +144,14 @@ const cmd = {
 					backend.serverFinder();
 				},
 			},
+			{
+				name: "Send Project",
+				alias: ["project"],
+				description: "Sends project url to stranger",
+				exec() {
+					sendMessage("https://github.com/PWall2222/Omegle-Tweak");
+				},
+			},
 		];
 		commands.find((obj: command) => obj.alias.some((alias: string) => alias === commandName))?.exec();
 		if (contents !== cmd.commandHistory[0]) {
