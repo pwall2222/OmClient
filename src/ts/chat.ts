@@ -33,7 +33,7 @@ const chatNode = {
 		clearChilds(".logbox");
 	},
 	scroll() {
-		chatNode.logbox.scroll(0, chatNode.logbox.scrollHeight);
+		chatNode.logbox.lastElementChild.scrollIntoView();
 	},
 	handleInput() {
 		const chatContents = chatNode.typebox.value;
@@ -64,6 +64,7 @@ const addMessage = (message: string, sender: messageAuthor) => {
 			},
 		},
 	});
+	chatNode.scroll();
 };
 
 const addStatus = (text: string) => {
