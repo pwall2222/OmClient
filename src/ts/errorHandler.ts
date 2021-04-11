@@ -1,4 +1,4 @@
-import { chatNode, addStatus } from "./chat.js";
+import { addStatus, chatNode } from "./chat.js";
 import { clearAllElements } from "./functions.js";
 import { session } from "./index.js";
 import { disconnectNode } from "./nodes.js";

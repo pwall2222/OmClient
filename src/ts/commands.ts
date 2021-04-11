@@ -1,9 +1,10 @@
 import { addCustomStatus, chatNode } from "./chat.js";
+import { disconnect, skip } from "./disconnect.js";
 import { sendMessage } from "./frontFunctions.js";
 import { createChild } from "./functions.js";
 import { backend, newChat, session } from "./index.js";
 import { videoNode } from "./nodes.js";
-import { settings, settingManager } from "./settings.js";
+import { settingManager, settings } from "./settings.js";
 
 const cmd = {
 	handler(contents: string) {
