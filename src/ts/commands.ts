@@ -36,7 +36,7 @@ const cmd = {
 					if (typeof settings[args[0]] === typeof parsedArgs) {
 						settings[args[0]] = parsedArgs;
 					} else {
-						console.log("Wrong type");
+						addCommand("Type doesn't match or property doesn't exist.");
 					}
 				},
 			},
