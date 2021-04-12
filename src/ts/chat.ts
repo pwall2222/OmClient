@@ -83,7 +83,18 @@ const addCustomStatus = (domObject: domObject) => {
 	chatNode.scroll();
 };
 
+const addCommand = (text: string) => {
+	createChildBefore(".logbox", ".typing", {
+		tag: "pre",
+		args: {
+			className: "command",
+			textContent: text,
+		},
+	});
+	chatNode.scroll();
+};
+
 chatNode.sendbtn.addEventListener("click", chatNode.handleInput);
 
 export { chatNode };
-export { addMessage, addStatus, addCustomStatus };
+export { addMessage, addStatus, addCustomStatus, addCommand };

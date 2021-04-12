@@ -1,4 +1,4 @@
-import { addCustomStatus, chatNode } from "./chat.js";
+import { addCommand, chatNode } from "./chat.js";
 import { disconnect, skip } from "./disconnect.js";
 import { sendMessage } from "./frontFunctions.js";
 import { createChild } from "./functions.js";
@@ -157,12 +157,7 @@ const cmd = {
 				alias: ["settings"],
 				description: "Displays settings in chat",
 				exec() {
-					addCustomStatus({
-						tag: "pre",
-						args: {
-							innerText: JSON.stringify(settings, null, 4),
-						},
-					});
+					addCommand(JSON.stringify(settings, null, 4));
 				},
 			},
 		];

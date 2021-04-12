@@ -210,6 +210,11 @@ img {
 	font-weight: 700;
 }
 
+.command {
+	font-family: Lucida Console, Lucida Sans Typewriter, monaco, Bitstream Vera Sans Mono, monospace;
+	font-size: 1rem;
+}
+
 /*
 * 5. Controll Box
 */
