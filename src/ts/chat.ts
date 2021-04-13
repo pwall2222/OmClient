@@ -1,4 +1,4 @@
-import { cmd } from "./commands.js";
+import { commandHandler } from "./commandHandler.js";
 import { sendMessage } from "./frontFunctions.js";
 import { clearChilds, createChild, createChildBefore } from "./functions.js";
 import { session } from "./index.js";
@@ -38,7 +38,7 @@ const chatNode = {
 	handleInput() {
 		const chatContents = chatNode.typebox.value;
 		if (chatContents[0] === "/") {
-			cmd.handler(chatContents);
+			commandHandler(chatContents);
 			chatNode.typebox.value = "";
 		} else if (session.connected && chatContents !== "") {
 			sendMessage(chatNode.typebox.value);
