@@ -28,7 +28,7 @@ const cmd = {
 	},
 	load() {
 		const item = JSON.parse(localStorage.getItem("history"));
-		if (item) {
+		if (Array.isArray(item)) {
 			cmd.commandHistory = item;
 		}
 	},
