@@ -6,6 +6,9 @@ import { rateLimited } from "./ratelimit.js";
 import { settings } from "./settings.js";
 
 const disconnect = (autoskip: boolean = true) => {
+	if (!session.started) {
+		return;
+	}
 	backend.disconnect();
 	userDisconect("You");
 	if (autoskip) {
@@ -22,9 +25,6 @@ const userDisconect = (user: string) => {
 };
 
 const disconnection = () => {
-	if (!session.started) {
-		return;
-	}
 	session.started = false;
 	session.connected = false;
 	disconnectVideo();
