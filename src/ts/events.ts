@@ -1,4 +1,4 @@
-import { addMessage, addStatus, chatNode } from "./chat.js";
+import { addMessage, addStatus, chatNode, clearAdd } from "./chat.js";
 import { disconnect, skip, userDisconect } from "./disconnect.js";
 import { getLikeString } from "./frontFunctions.js";
 import { blockUnload } from "./functions.js";
@@ -38,8 +38,7 @@ const eventHandler = (event: backendEvent) => {
 					disconnect();
 				}
 			}, settings.autodisconnect_delay);
-			chatNode.clear();
-			addStatus("You're now chatting with a random stranger.");
+			clearAdd("You're now chatting with a random stranger.");
 			if (settings.block_unload) {
 				blockUnload();
 			}
@@ -49,8 +48,7 @@ const eventHandler = (event: backendEvent) => {
 			userDisconect("Stranger");
 			break;
 		case "waiting":
-			chatNode.clear();
-			addStatus("Waiting");
+			clearAdd("Waiting");
 			break;
 		case "identDigests":
 			if (!history.some((id: string) => id == event.data)) {

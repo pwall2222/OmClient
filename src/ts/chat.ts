@@ -94,7 +94,12 @@ const addCommand = (text: string) => {
 	chatNode.scroll();
 };
 
+const clearAdd = (text: string) => {
+	chatNode.clear();
+	addStatus(text);
+};
+
 chatNode.sendbtn.addEventListener("click", chatNode.handleInput);
 
 export { chatNode };
-export { addMessage, addStatus, addCustomStatus, addCommand };
+export { addMessage, addStatus, addCustomStatus, addCommand, clearAdd };

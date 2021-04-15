@@ -1,5 +1,5 @@
 import { Backend } from "./backend.js";
-import { addStatus, chatNode } from "./chat.js";
+import { chatNode, clearAdd } from "./chat.js";
 import { cmd } from "./commands.js";
 import { errorHandler } from "./errorHandler.js";
 import { eventHandler } from "./events.js";
@@ -22,8 +22,7 @@ const newChat = async () => {
 
 	disconnectNode.set("stop");
 
-	chatNode.clear();
-	addStatus("Getting access to camera...");
+	clearAdd("Getting access to camera...");
 
 	if (settings.autoclearchat) {
 		chatNode.typebox.value = "";
@@ -40,8 +39,7 @@ const newChat = async () => {
 		return;
 	}
 
-	chatNode.clear();
-	addStatus("Conneting to server...");
+	clearAdd("Conneting to server...");
 
 	backend.newConnection().catch(errorHandler);
 };
