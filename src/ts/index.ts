@@ -41,7 +41,7 @@ const newChat = async () => {
 
 	clearAdd("Conneting to server...");
 
-	backend.newConnection().catch(errorHandler);
+	backend.newConnection();
 };
 
 const backend = new Backend({ eventHandler, errorHandler, settings });
