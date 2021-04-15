@@ -168,6 +168,14 @@ const commandExecuter = (command: UserCommand) => {
 				addCommand(JSON.stringify(settings, null, 4));
 			},
 		},
+		{
+			name: "Clear Command History",
+			alias: ["clear_history"],
+			description: "Clears the command history",
+			exec() {
+				cmd.clear();
+			},
+		},
 	];
 	commands.find((obj: command) => obj.alias.some((alias: string) => alias === command.name))?.exec();
 };

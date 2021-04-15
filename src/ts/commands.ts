@@ -35,6 +35,10 @@ const cmd = {
 	save() {
 		localStorage.setItem("history", JSON.stringify(cmd.commandHistory));
 	},
+	clear() {
+		cmd.commandHistory = [];
+		cmd.save();
+	},
 };
 
 export { cmd };
