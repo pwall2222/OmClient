@@ -21,7 +21,10 @@ const cmd = {
 		cmd.changeVal(newPosition);
 	},
 	changeVal(newPosition: number) {
-		if (cmd.commandHistory.length > 0 && cmd.commandHistory.length > newPosition) {
+		if (cmd.commandHistory.length <= 0) {
+			return;
+		}
+		if (cmd.commandHistory.length > newPosition) {
 			cmd.position = newPosition;
 			chatNode.typebox.value = cmd.commandHistory[newPosition];
 		}
