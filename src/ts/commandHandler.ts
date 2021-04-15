@@ -170,12 +170,6 @@ const commandExecuter = (command: UserCommand) => {
 		},
 	];
 	commands.find((obj: command) => obj.alias.some((alias: string) => alias === command.name))?.exec();
-	if (command.full !== cmd.commandHistory[0]) {
-		cmd.commandHistory.unshift(command.full);
-		cmd.commandHistory.splice(settings.cmd_history, 1);
-		cmd.save();
-	}
-	cmd.position = -1;
 };
 
 class UserCommand {
