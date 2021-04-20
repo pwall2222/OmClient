@@ -30,6 +30,7 @@ const serveFiles = () => {
 };
 
 const compileSync = () => {
+	compile();
 	compileWatch();
 	serveFiles();
 };
