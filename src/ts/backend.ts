@@ -31,22 +31,8 @@ class Backend {
 	disconnect = () => this.sendIdentifiedPOST("disconnect");
 
 	async connect() {
-		const arg = {
-			webrtc: true,
-			firstevents: false,
-			lang: this.settings.lang,
-			topics: this.settings.likes,
-		};
-
-		if (!this.settings.likes_enabled) {
-			delete arg.topics;
-		}
-
-		if (!this.settings.video) {
-			delete arg.webrtc;
-		}
-
-		const url = `https://${this.server}.omegle.com/start?${encodeObject(arg)}`;
+		const args = encodeObject(this.connectSettings());
+		const url = `https://${this.server}.omegle.com/start?${args}`;
 		const responsePromise = fetch(url, {
 			method: "POST",
 			referrerPolicy: "no-referrer",
@@ -54,6 +40,25 @@ class Backend {
 		responsePromise.catch(this.errorHandler);
 		const response = await responsePromise;
 		return response.json();
+	}
+
+	connectSettings() {
+		const { video, likes_enabled, likes, lang } = this.settings;
+		const arg = {
+			webrtc: true,
+			firstevents: false,
+			lang: lang,
+			topics: likes,
+		};
+
+		if (!likes_enabled) {
+			delete arg.topics;
+		}
+
+		if (!video) {
+			delete arg.webrtc;
+		}
+		return arg;
 	}
 
 	async subscribe() {
