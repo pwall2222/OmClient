@@ -176,6 +176,16 @@ const commandExecuter = (command: UserCommand) => {
 				cmd.clear();
 			},
 		},
+		{
+			name: "Theme",
+			alias: ["theme"],
+			description: "Sets the theme",
+			exec() {
+				const theme: themes = settings.theme == "dark" ? "light" : "dark";
+				settings.theme = theme;
+				setTheme(theme);
+			},
+		},
 	];
 	commands.find((obj: command) => obj.alias.some((alias: string) => alias === command.name))?.exec();
 };

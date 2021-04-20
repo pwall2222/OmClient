@@ -10,16 +10,38 @@
 /*
 * 1. Global
 */
+:root {
+	--background: #fff7ee;
+	--header: #ffffff;
+	--chat: #ffffff;
+	--video: #555555;
+	--border: #cccccc;
+	--text: #000000;
+	--log: #555555;
+	--fonts: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+[data-theme="dark"] {
+	--background: #121212;
+	--header: #181818;
+	--chat: #282828;
+	--video: #3c3c3c;
+	--text: #ffffff;
+	--log: #b3b3b3;
+	--border: var(--chat);
+}
+
 html {
 	height: 100%;
 }
 
 body {
-	font-family: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 	margin: 0;
 	padding: 0;
-	background: #fff7ee;
 	height: 100%;
+	font-family: var(--fonts);
+	color: var(--text);
+	background: var(--background);
 }
 
 img {
@@ -34,8 +56,12 @@ img {
 	height: 57px;
 	padding: 8px;
 	margin-bottom: 16px;
-	background-color: white;
+	background-color: var(--header);
 	box-shadow: 0 0.25em 0.75em #ccc;
+}
+
+[data-theme="dark"] #header {
+	box-shadow: none;
 }
 
 #logo {
@@ -49,8 +75,8 @@ img {
 
 #onlinecount {
 	font-size: 1.5em;
-	color: #9cf;
 	text-align: right;
+	color: #9cf;
 }
 
 #onlinecount strong {
@@ -94,9 +120,9 @@ img {
 #selfvideo,
 #othervideo {
 	flex-grow: 1;
-	background: #555;
 	object-fit: cover;
 	height: calc((100% - 89px) / 2);
+	background: var(--video);
 }
 
 #othervideo {
@@ -131,10 +157,8 @@ img {
 }
 
 .chatmsg {
-	font-family: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 	resize: none;
 	width: 100%;
-	background: #fff;
 	font-size: 1em;
 	border: 0 none;
 	padding: 0;
@@ -143,24 +167,27 @@ img {
 	font-size: 1em;
 	overflow: auto;
 	border-radius: 0;
+	color: var(--text);
+	font-family: var(--fonts);
+	background: var(--chat);
 }
 
 .chatmsgwrapper {
 	flex-grow: 1;
-	background: #fff;
-	border: 1px solid #ccc;
 	height: 4.5em;
 	padding: 0.25em;
+	border: 1px solid var(--border);
+	background: var(--chat);
 }
 
 .logwrapper {
 	flex-grow: 1;
 	margin-bottom: 8px;
 	overflow-y: auto;
-	border: 1px solid #ccc;
 	border-top-left-radius: 0.5em;
 	border-top-right-radius: 0.5em;
-	background: #fff;
+	border: 1px solid var(--border);
+	background: var(--chat);
 }
 
 .logbox {
@@ -185,12 +212,12 @@ img {
 }
 
 .statuslog {
-	color: #555;
 	font-size: 0.9em;
 	font-weight: 700;
 	margin: 0;
 	padding: 0;
 	animation: msgfade 0.25s ease-out forwards;
+	color: var(--log);
 }
 
 .youmsg,
@@ -202,7 +229,7 @@ img {
 }
 
 .youmsg .msgsource {
-	color: #00f;
+	color: #017ffe;
 	font-weight: 700;
 }
 
@@ -242,15 +269,16 @@ img {
 .dscntbtn {
 	width: 7.1em;
 	font-size: 1em;
-	border: 1px solid #ccc;
-	background: #fff;
 	margin-right: 8px;
+	border: 1px solid var(--chat);
+	background: var(--chat);
+	color: var(--text);
 }
 
 .dscntbtn.new {
+	color: #ffffff;
 	background: #409ffe;
 	background-image: linear-gradient(top, #80c0ff 0, #017ffe 100%);
-	color: #fff;
 }
 
 :is(.new, .rlly) .dscnttxt {
@@ -260,19 +288,20 @@ img {
 .sendbtnwrapper {
 	overflow: hidden;
 	margin-left: 0.5em;
-	border: 1px solid #ccc;
 	border-bottom-right-radius: 0.5em;
+	border: 1px solid var(--border);
 }
 
 .sendbtn {
 	font-size: 1em;
-	background: #fff;
 	width: 7em;
 	height: 5em;
 	padding: 0;
 	margin: 0;
 	border: 0 none;
 	border-bottom-right-radius: 0.5em;
+	background: var(--chat);
+	color: var(--text);
 }
 
 textarea:focus {
