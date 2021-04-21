@@ -1,6 +1,7 @@
 {
 	"tabWidth": 4,
 	"useTabs": true,
+	"trailingComma": "es5",
 	"endOfLine": "auto",
 	"printWidth": 1000,
 	"arrowParens": "always",
