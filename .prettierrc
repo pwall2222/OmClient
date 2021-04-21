@@ -1,0 +1,8 @@
+{
+	"tabWidth": 4,
+	"useTabs": true,
+	"endOfLine": "auto",
+	"printWidth": 1000,
+	"arrowParens": "always",
+	"singleQuote": false
+}

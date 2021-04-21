@@ -1,0 +1,22 @@
+{
+	"parserOptions": {
+		"ecmaVersion": 2021,
+		"sourceType": "module",
+		"impliedStrict": true
+	},
+	"env": {
+		"es6": true,
+		"browser": true
+	},
+	"rules": {
+		"prefer-const":			"error",
+		"no-var": 				"error",
+		"no-nested-ternary": 	"error",
+		"camelcase": 			"warn",
+		"no-useless-return": 	"warn",
+		"curly": 				"warn",
+		"arrow-parens": 		"warn",
+		"no-return-await": 		"warn",
+		"default-case": 		"off"
+	}
+}

@@ -1,0 +1,26 @@
+{
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaVersion": 2021,
+		"sourceType": "script"
+	},
+
+	"plugins": ["@typescript-eslint"],
+
+	"rules": {
+		"@typescript-eslint/typedef": [
+			"warn",
+			{
+				"arrowParameter": true,
+				"variableDeclaration": false,
+				"parameter": true
+			}
+		],
+		"camelcase": [
+			"warn",
+			{
+				"allow": ["autoskip_delay", "cmd_history", "likes_enabled", "autodisconnect_delay", "block_unload"]
+			}
+		]
+	}
+}
