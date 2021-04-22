@@ -23,6 +23,7 @@ const serveFiles = () => {
 		server: {
 			baseDir: "./server/",
 		},
+		notify: false,
 		ghostMode: false,
 	});
 
