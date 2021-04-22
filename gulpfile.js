@@ -10,7 +10,7 @@ const logTask = (message, task, colorNum) => {
 
 const compile = () => tsc.compile({ outDir: "server" });
 
-const compileWatch = () => watch("src/ts/*").on("change", compileLog);
+const compileWatch = () => watch("src/ts/**/*").on("change", compileLog);
 
 const compileLog = async () => {
 	logTask("Compiling files", "TypeScript", "36");
@@ -26,7 +26,7 @@ const serveFiles = () => {
 		ghostMode: false,
 	});
 
-	watch("server/*").on("change", browserSync.reload);
+	watch("server/**/*").on("change", browserSync.reload);
 };
 
 const compileSync = () => {
