@@ -1,9 +1,13 @@
 const { src, task, watch, symlink, dest } = require("gulp");
 const changed = require("gulp-changed");
+const replace = require("gulp-replace");
 const browserSync = require("browser-sync").create();
 const ts = require("gulp-typescript");
 
 const tsProject = ts.createProject("tsconfig.json");
+
+const url = "/";
+const pathRegEx = /(import { [a-zA-Z, ]* } from ")([^.][a-zA-Z/.]*)(";)/g;
 
 const logTask = (message, task, colorNum) => {
 	const white = "\x1b[0m";
@@ -15,6 +19,7 @@ const compile = () => {
 	return new Promise((resolve) => {
 		src("src/ts/**")
 			.pipe(tsProject())
+			.pipe(replace(pathRegEx, `$1${url}$2$3`))
 			.pipe(changed("server", { hasChanged: changed.compareContents }))
 			.pipe(dest("server"))
 			.on("end", () => {
