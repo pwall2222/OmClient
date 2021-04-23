@@ -1,6 +1,9 @@
-const { src, task, watch, symlink } = require("gulp");
+const { src, task, watch, symlink, dest } = require("gulp");
+const changed = require("gulp-changed");
 const browserSync = require("browser-sync").create();
-const tsc = require("node-typescript-compiler");
+const ts = require("gulp-typescript");
+
+const tsProject = ts.createProject("tsconfig.json");
 
 const logTask = (message, task, colorNum) => {
 	const white = "\x1b[0m";
@@ -8,7 +11,17 @@ const logTask = (message, task, colorNum) => {
 	console.log(`[${color}${task}${white}]${message}`);
 };
 
-const compile = () => tsc.compile({ outDir: "server" });
+const compile = () => {
+	return new Promise((resolve) => {
+		src("src/ts/**")
+			.pipe(tsProject())
+			.pipe(changed("server", { hasChanged: changed.compareContents }))
+			.pipe(dest("server"))
+			.on("end", () => {
+				resolve("End");
+			});
+	});
+};
 
 const compileWatch = () => watch("src/ts/**/*").on("change", compileLog);
 
