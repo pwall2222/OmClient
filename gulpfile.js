@@ -1,8 +1,8 @@
 const { src, task, watch, symlink, dest } = require("gulp");
 const changed = require("gulp-changed");
 const replace = require("gulp-replace");
-const browserSync = require("browser-sync").create();
 const ts = require("gulp-typescript");
+const browserSync = require("browser-sync").create();
 
 const tsProject = ts.createProject("tsconfig.json");
 
