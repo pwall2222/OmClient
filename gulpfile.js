@@ -22,9 +22,7 @@ const compile = () => {
 			.pipe(replace(pathRegEx, `$1${url}$2$3`))
 			.pipe(changed("server", { hasChanged: changed.compareContents }))
 			.pipe(dest("server"))
-			.on("end", () => {
-				resolve("End");
-			});
+			.on("end", resolve);
 	});
 };
 
