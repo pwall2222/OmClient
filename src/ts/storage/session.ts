@@ -1,4 +1,4 @@
-import { PeerConnection } from "./webrtc.js";
+import { PeerConnection } from "network/webrtc.js";
 
 class Session {
 	started = false;

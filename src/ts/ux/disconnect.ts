@@ -1,9 +1,9 @@
-import { addStatus } from "./chat.js";
-import { allowUnload, clearAllElements } from "./functions.js";
-import { backend, newChat, session } from "./index.js";
-import { disconnectNode, videoNode } from "./nodes.js";
-import { rateLimited } from "./ratelimit.js";
-import { settings } from "./settings.js";
+import { backend, newChat, session } from "index.js";
+import { allowUnload, clearAllElements } from "modules/functions.js";
+import { rateLimited } from "modules/ratelimit.js";
+import { settings } from "storage/settings.js";
+import { addStatus } from "ui/chat.js";
+import { disconnectNode, videoNode } from "ui/nodes.js";
 
 const disconnect = (autoskip: boolean = true) => {
 	if (!session.started) {

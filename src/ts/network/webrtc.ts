@@ -1,6 +1,6 @@
-import { clearArray } from "./functions.js";
-import { backend, session } from "./index.js";
-import { videoNode } from "./nodes.js";
+import { backend, session } from "index.js";
+import { clearArray } from "modules/functions.js";
+import { videoNode } from "ui/nodes.js";
 
 const WEB = {
 	config: {

@@ -1,7 +1,7 @@
-import { commandHandler } from "./commandHandler.js";
-import { sendMessage } from "./frontFunctions.js";
-import { clearChilds, createChild, createChildBefore } from "./functions.js";
-import { session } from "./index.js";
+import { sendMessage } from "extra/frontFunctions.js";
+import { session } from "index.js";
+import { clearChilds, createChild, createChildBefore } from "modules/functions.js";
+import { commandHandler } from "ux/commandHandler.js";
 import { disconnectNode } from "./nodes.js";
 
 const chatNode = {

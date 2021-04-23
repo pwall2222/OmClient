@@ -1,4 +1,4 @@
-import { encodeObject, getRandomItem, setFirst } from "./functions.js";
+import { encodeObject, getRandomItem, setFirst } from "modules/functions.js";
 
 class Backend {
 	executer: Function;

@@ -1,11 +1,11 @@
-import { addCommand } from "./chat.js";
+import { sendMessage } from "extra/frontFunctions.js";
+import { backend, newChat, session } from "index.js";
+import { createChild } from "modules/functions.js";
+import { settingManager, settings } from "storage/settings.js";
+import { addCommand } from "ui/chat.js";
+import { videoNode } from "ui/nodes.js";
 import { cmd } from "./commands.js";
 import { disconnect, skip } from "./disconnect.js";
-import { sendMessage } from "./frontFunctions.js";
-import { createChild } from "./functions.js";
-import { backend, newChat, session } from "./index.js";
-import { videoNode } from "./nodes.js";
-import { settingManager, settings } from "./settings.js";
 
 const commandHandler = (contents: string) => {
 	const command = new UserCommand(contents);

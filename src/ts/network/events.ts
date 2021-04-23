@@ -1,9 +1,9 @@
-import { addMessage, addStatus, chatNode, clearAdd } from "./chat.js";
-import { disconnect, skip, userDisconect } from "./disconnect.js";
-import { getLikeString } from "./frontFunctions.js";
-import { blockUnload } from "./functions.js";
-import { session } from "./index.js";
-import { settings } from "./settings.js";
+import { getLikeString } from "extra/frontFunctions.js";
+import { session } from "index.js";
+import { blockUnload } from "modules/functions.js";
+import { settings } from "storage/settings.js";
+import { addMessage, addStatus, chatNode, clearAdd } from "ui/chat.js";
+import { disconnect, skip, userDisconect } from "ux/disconnect.js";
 import { webRTC } from "./webrtc.js";
 
 const history: string[] = [];

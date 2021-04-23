@@ -1,6 +1,6 @@
-import { disconnect } from "./disconnect.js";
-import { clearAllElements, createChild } from "./functions.js";
-import { newChat, session } from "./index.js";
+import { newChat, session } from "index.js";
+import { clearAllElements, createChild } from "modules/functions.js";
+import { disconnect } from "ux/disconnect.js";
 
 const disconnectNode = {
 	txt: document.querySelector(".dscnttxt"),

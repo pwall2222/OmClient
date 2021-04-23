@@ -1,5 +1,5 @@
-import { addMessage } from "./chat.js";
-import { backend } from "./index.js";
+import { backend } from "index.js";
+import { addMessage } from "ui/chat.js";
 
 const sendMessage = (msg: string) => {
 	backend.sendIdentifiedPOST("send", { msg });

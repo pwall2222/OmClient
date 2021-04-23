@@ -1,8 +1,8 @@
-import { chatNode } from "./chat.js";
+import { session } from "index.js";
+import { chatNode } from "ui/chat.js";
+import { disconnectNode } from "ui/nodes.js";
 import { cmd } from "./commands.js";
 import { disconnect, skip } from "./disconnect.js";
-import { session } from "./index.js";
-import { disconnectNode } from "./nodes.js";
 
 const keyboard = {
 	init() {

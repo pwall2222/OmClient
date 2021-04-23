@@ -1,15 +1,15 @@
-import { Backend } from "./backend.js";
-import { chatNode, clearAdd } from "./chat.js";
-import { cmd } from "./commands.js";
-import { errorHandler } from "./errorHandler.js";
-import { eventHandler } from "./events.js";
-import { keyboard } from "./keyboard.js";
-import { disconnectNode, videoNode } from "./nodes.js";
-import { rateLimit, rateLimited } from "./ratelimit.js";
-import { Session } from "./session.js";
-import { settingManager, settings } from "./settings.js";
-import { media } from "./video.js";
-import { PeerConnection } from "./webrtc.js";
+import { media } from "extra/video.js";
+import { rateLimit, rateLimited } from "modules/ratelimit.js";
+import { Backend } from "network/backend.js";
+import { eventHandler } from "network/events.js";
+import { PeerConnection } from "network/webrtc.js";
+import { Session } from "storage/session.js";
+import { settingManager, settings } from "storage/settings.js";
+import { chatNode, clearAdd } from "ui/chat.js";
+import { errorHandler } from "ui/errorHandler.js";
+import { disconnectNode, videoNode } from "ui/nodes.js";
+import { cmd } from "ux/commands.js";
+import { keyboard } from "ux/keyboard.js";
 
 const newChat = async () => {
 	if (rateLimited) {
