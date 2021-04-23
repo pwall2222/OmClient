@@ -3,7 +3,8 @@
 		"target": "ESNext",
 		"lib": ["DOM","ESNext"],
 		"rootDir": "./src/ts",
-		"outDir": "../output",
+		"outDir": "./output",
+		"baseUrl": "./src/ts",
 		"incremental": true,
 		"alwaysStrict": true,
 		"module": "ESNext"
