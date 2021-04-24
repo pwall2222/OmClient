@@ -63,7 +63,7 @@ const keyboard = {
 				},
 			},
 			{
-				key: "ContextMenu",
+				key: "ControlRight",
 				tag: "body",
 				prevent: true,
 				exec() {
