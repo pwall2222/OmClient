@@ -33,7 +33,9 @@ const eventHandler = (event: backendEvent) => {
 			break;
 		case "connected":
 			setTimeout(() => {
-				const bool = settings.autodisconnect && settings.video && !session.video && session.connected;
+				const sessionBool = !session.video && session.connected;
+				const settingBool = settings.autodisconnect && settings.video;
+				const bool = settingBool && sessionBool;
 				if (bool) {
 					disconnect();
 				}
