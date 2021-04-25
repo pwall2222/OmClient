@@ -3,7 +3,10 @@ const setTheme = (theme: themes) => {
 };
 
 const loadTheme = () => {
-	const theme = JSON.parse(localStorage.getItem("settings")).theme;
+	const theme = JSON.parse(localStorage.getItem("settings"))?.theme;
+	if (theme == null) {
+		return;
+	}
 	setTheme(theme);
 };
 
