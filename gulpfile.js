@@ -39,6 +39,7 @@ const serveFiles = () => {
 		server: {
 			baseDir: "./server/",
 		},
+		open: false,
 		ui: false,
 		notify: false,
 		ghostMode: false,
