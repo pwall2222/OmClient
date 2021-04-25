@@ -102,7 +102,7 @@ const commandExecuter = (command: UserCommand) => {
 			alias: ["social", "sendSocial"],
 			description: "Sends one social to stranger",
 			exec() {
-				if (command.arguments[0]) {
+				if (command.arguments[0] && settings.socials[command.arguments[0]] !== undefined) {
 					sendMessage(`${command.arguments[0]}: ${settings.socials[command.arguments[0]]}`);
 				}
 			},
