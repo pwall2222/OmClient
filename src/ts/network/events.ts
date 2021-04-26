@@ -59,6 +59,12 @@ const eventHandler = (event: backendEvent) => {
 				skip();
 			}
 			break;
+		case "error":
+			if (event.data.includes("banned")) {
+				settings.autoskip = false;
+			}
+			console.log(event);
+			break;
 		default:
 			console.log(event);
 			break;
