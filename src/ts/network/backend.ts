@@ -62,15 +62,17 @@ class Backend {
 	}
 
 	async subscribe() {
-		const response = await this.sendIdentifiedPOST("events");
-		if (response.status == 200) {
-			const events = await response.json();
-			if (events != null) {
-				this.eventParser(events);
-				await this.subscribe();
+		while (true) {
+			const response = await this.sendIdentifiedPOST("events");
+			if (response.status !== 200) {
+				console.log({ responseCode: response.status, responseText: response.statusText });
+				break;
 			}
-		} else {
-			console.log({ responseCode: response.status, responseText: response.statusText });
+			const events = await response.json();
+			if (events == null) {
+				break;
+			}
+			this.eventParser(events);
 		}
 	}
 
