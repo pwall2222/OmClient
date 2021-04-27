@@ -90,9 +90,16 @@ const blockUnload = () => (window.onbeforeunload = () => "");
 
 const allowUnload = () => (window.onbeforeunload = null);
 
+const addToGlobalThis = (obj: object) => {
+	for (const [key, value] of Object.entries(obj)) {
+		globalThis[key] = value;
+	}
+};
+
 export { clearAllElements, clearChilds };
 export { clearArray, getRandomItem, setFirstByIndex, setFirst };
 export { createElement, createChild, createChildBefore };
 export { hash };
 export { encodeObject };
 export { allowUnload, blockUnload };
+export { addToGlobalThis };
