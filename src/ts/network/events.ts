@@ -3,7 +3,8 @@ import { session } from "index.js";
 import { blockUnload } from "modules/functions.js";
 import { settings } from "storage/settings.js";
 import { addMessage, addStatus, chatNode, clearAdd } from "ui/chat.js";
-import { disconnect, skip, userDisconect } from "ux/disconnect.js";
+import { disconnect, userDisconect } from "ux/disconnect.js";
+import { twiceSkipping } from "ux/twiceSkip.js";
 import { webRTC } from "./webrtc.js";
 
 const history: string[] = [];
@@ -53,11 +54,7 @@ const eventHandler = (event: backendEvent) => {
 			clearAdd("Waiting");
 			break;
 		case "identDigests":
-			if (!history.some((id: string) => id == event.data)) {
-				history.push(event.data);
-			} else if (settings.twiceskip) {
-				skip();
-			}
+			twiceSkipping(event.data);
 			break;
 		case "error":
 			if (event.data.includes("banned")) {
