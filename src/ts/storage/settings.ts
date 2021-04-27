@@ -18,6 +18,9 @@ const settings = {
 const settingManager = {
 	load() {
 		const item = JSON.parse(localStorage.getItem("settings"));
+		if (item == null) {
+			return;
+		}
 		for (const key in item) {
 			settings[key] = item[key];
 		}

@@ -9,6 +9,9 @@ const saveLocal = () => localStorage.setItem("idHistory", JSON.stringify(idHisto
 
 const loadLocal = () => {
 	const parsed = JSON.parse(localStorage.getItem("idHistory"));
+	if (parsed == null) {
+		return;
+	}
 	idHistory.push(...parsed);
 };
 
