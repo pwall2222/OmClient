@@ -2,7 +2,7 @@ import { media } from "extra/video.js";
 import { rateLimit, rateLimited } from "modules/ratelimit.js";
 import { Backend } from "network/backend.js";
 import { eventHandler } from "network/events.js";
-import { PeerConnection } from "network/webrtc.js";
+import { createPC } from "network/webrtc.js";
 import { Session } from "storage/session.js";
 import { settingManager, settings } from "storage/settings.js";
 import { chatNode, clearAdd } from "ui/chat.js";
@@ -31,13 +31,7 @@ const newChat = async () => {
 	videoNode.addSpinner();
 	videoNode.addMedia(await media);
 
-	try {
-		session.pc = new PeerConnection();
-		session.pc.addVideo(await media);
-	} catch (error) {
-		errorHandler(error);
-		return;
-	}
+	createPC(await media);
 
 	clearAdd("Conneting to server...");
 

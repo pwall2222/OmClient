@@ -1,5 +1,6 @@
 import { backend, session } from "index.js";
 import { clearArray } from "modules/functions.js";
+import { settings } from "storage/settings.js";
 import { videoNode } from "ui/nodes.js";
 
 const WEB = {
@@ -81,4 +82,12 @@ const webRTC = {
 	},
 };
 
-export { webRTC, PeerConnection };
+const createPC = (media: MediaStream) => {
+	if (!settings.video) {
+		return;
+	}
+	session.pc = new PeerConnection();
+	session.pc.addVideo(media);
+};
+
+export { webRTC, PeerConnection, createPC };
