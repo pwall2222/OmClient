@@ -100,11 +100,11 @@ const clearAdd = (text: string) => {
 	addStatus(text);
 };
 
-const autoClear = () => {
+const autoClearChat = () => {
 	if (settings.autoclearchat) {
 		chatNode.typebox.value = "";
 	}
 };
 
 export { chatNode };
-export { addMessage, addStatus, addCustomStatus, addCommand, clearAdd, autoClear };
+export { addMessage, addStatus, addCustomStatus, addCommand, clearAdd, autoClearChat };

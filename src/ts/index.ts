@@ -6,7 +6,7 @@ import { eventHandler } from "network/events.js";
 import { createPC } from "network/webrtc.js";
 import { Session } from "storage/session.js";
 import { settings } from "storage/settings.js";
-import { autoClear, clearAdd } from "ui/chat.js";
+import { autoClearChat, clearAdd } from "ui/chat.js";
 import { errorHandler } from "ui/errorHandler.js";
 import { disconnectNode, videoNode } from "ui/nodes.js";
 
@@ -21,9 +21,9 @@ const newChat = async () => {
 
 	disconnectNode.set("stop");
 
-	clearAdd("Getting access to camera...");
+	autoClearChat();
 
-	autoClear();
+	clearAdd("Getting access to camera...");
 
 	videoNode.addSpinner();
 	videoNode.addMedia(await media);
