@@ -7,8 +7,6 @@ import { disconnect, userDisconect } from "ux/disconnect.js";
 import { twiceSkipping } from "ux/twiceSkip.js";
 import { webRTC } from "./webrtc.js";
 
-const history: string[] = [];
-
 const eventHandler = (event: backendEvent) => {
 	if (!session.started) {
 		return;
