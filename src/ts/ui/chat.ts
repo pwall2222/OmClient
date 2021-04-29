@@ -106,7 +106,5 @@ const autoClear = () => {
 	}
 };
 
-chatNode.sendbtn.addEventListener("click", chatNode.handleInput);
-
 export { chatNode };
 export { addMessage, addStatus, addCustomStatus, addCommand, clearAdd, autoClear };
