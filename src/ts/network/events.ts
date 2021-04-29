@@ -34,8 +34,7 @@ const eventHandler = (event: backendEvent) => {
 			setTimeout(() => {
 				const sessionBool = !session.video && session.connected;
 				const settingBool = settings.autodisconnect && settings.video;
-				const bool = settingBool && sessionBool;
-				if (bool) {
+				if (settingBool && sessionBool) {
 					disconnect();
 				}
 			}, settings.autodisconnect_delay);
