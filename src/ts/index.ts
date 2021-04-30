@@ -1,5 +1,5 @@
 import { loadAll } from "extra/loader.js";
-import { media } from "extra/video.js";
+import { media } from "extra/media.js";
 import { rateLimit, rateLimited } from "modules/ratelimit.js";
 import { Backend } from "network/backend.js";
 import { eventHandler } from "network/events.js";
