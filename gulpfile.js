@@ -3,10 +3,11 @@ const changed = require("gulp-changed");
 const replace = require("gulp-replace");
 const ts = require("gulp-typescript");
 const browserSync = require("browser-sync").create();
+const args = require("yargs").argv;
 
 const tsProject = ts.createProject("tsconfig.json");
 
-const url = "/";
+const url = args.url ?? "/";
 const pathRegEx = /(import { [a-zA-Z, ]* } from ")([^.][a-zA-Z/.]*)(";)/g;
 
 const logTask = (message, task, colorNum) => {
