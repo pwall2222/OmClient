@@ -186,6 +186,15 @@ const commandExecuter = (command: UserCommand) => {
 				setTheme(theme);
 			},
 		},
+		{
+			name: "Likes",
+			alias: ["likes", "set_likes"],
+			description: "Sets likes",
+			exec() {
+				const likes = command.arguments.join(" ").split(",");
+				settings.likes = likes;
+			},
+		},
 	];
 	commands.find((obj: command) => obj.alias.some((alias: string) => alias === command.name))?.exec();
 };
