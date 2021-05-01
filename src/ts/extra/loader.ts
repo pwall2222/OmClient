@@ -13,8 +13,8 @@ const loadAll = () => {
 
 const addEventListeners = () => {
 	chatNode.sendbtn.addEventListener("click", chatNode.handleInput);
-	videoNode.othervideo.addEventListener("play", videoNode.playEvent);
 	disconnectNode.btn.addEventListener("click", disconnectNode.handler);
+	videoNode.othervideo.addEventListener("play", videoNode.playEvent);
 	document.body.addEventListener("keydown", keyboardHandler);
 };
 
