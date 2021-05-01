@@ -10,7 +10,7 @@ const settings = {
 	likes: <string[]>[],
 	likes_enabled: false,
 	lang: "en",
-	theme: <themes>"dark",
+	theme: <themes>"light",
 	video: true,
 	socials: {},
 };
