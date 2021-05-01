@@ -19,7 +19,7 @@
 		"camelcase": [
 			"warn",
 			{
-				"allow": ["autoskip_delay", "cmd_history", "likes_enabled", "autodisconnect_delay", "block_unload"]
+				"allow": ["autoskip_delay", "cmd_history", "likes_enabled", "autodisconnect_delay", "block_unload", "skip_with_esc"]
 			}
 		]
 	}
