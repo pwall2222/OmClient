@@ -8,10 +8,11 @@ import { twiceSkipping } from "ux/twiceSkip.js";
 import { webRTC } from "./webrtc.js";
 
 const eventHandler = (event: backendEvent) => {
+	const { name, data } = event;
 	if (!session.started) {
 		return;
 	}
-	switch (event.name) {
+	switch (name) {
 		case "rtccall":
 		case "rtcpeerdescription":
 		case "icecandidate":
@@ -19,7 +20,7 @@ const eventHandler = (event: backendEvent) => {
 			break;
 		case "gotMessage":
 			chatNode.typing(false);
-			addMessage(event.data, "stranger");
+			addMessage(data, "stranger");
 			break;
 		case "typing":
 			chatNode.typing(true);
@@ -28,7 +29,7 @@ const eventHandler = (event: backendEvent) => {
 			chatNode.typing(false);
 			break;
 		case "commonLikes":
-			addStatus(getLikeString(event.data));
+			addStatus(getLikeString(data));
 			break;
 		case "connected":
 			setTimeout(() => {
@@ -51,13 +52,13 @@ const eventHandler = (event: backendEvent) => {
 			clearAdd("Waiting");
 			break;
 		case "identDigests":
-			twiceSkipping(event.data);
+			twiceSkipping(data);
 			break;
 		case "serverMessage":
-			addStatus(event.data);
+			addStatus(data);
 			break;
 		case "error":
-			if (event.data.includes("banned")) {
+			if (data.includes("banned")) {
 				settings.autoskip = false;
 			}
 			console.log(event);
