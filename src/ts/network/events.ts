@@ -53,6 +53,9 @@ const eventHandler = (event: backendEvent) => {
 		case "identDigests":
 			twiceSkipping(event.data);
 			break;
+		case "serverMessage":
+			addStatus(event.data);
+			break;
 		case "error":
 			if (event.data.includes("banned")) {
 				settings.autoskip = false;
