@@ -1,6 +1,6 @@
 import { sendMessage } from "extra/frontFunctions.js";
 import { session } from "index.js";
-import { clearChilds, createChild, createChildBefore } from "modules/functions.js";
+import { clearChilds, createChild, createChildBefore } from "modules/dom.js";
 import { settings } from "storage/settings.js";
 import { commandHandler } from "ux/commandHandler.js";
 import { disconnectNode } from "./nodes.js";

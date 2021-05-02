@@ -1,5 +1,5 @@
 import { backend, session } from "index.js";
-import { clearArray } from "modules/functions.js";
+import { clearArray } from "modules/array.js";
 import { settings } from "storage/settings.js";
 import { videoNode } from "ui/nodes.js";
 

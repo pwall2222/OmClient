@@ -1,6 +1,6 @@
 import { sendMessage } from "extra/frontFunctions.js";
 import { backend, newChat, session } from "index.js";
-import { createChild } from "modules/functions.js";
+import { createChild } from "modules/dom.js";
 import { settingManager, settings } from "storage/settings.js";
 import { addCommand } from "ui/chat.js";
 import { videoNode } from "ui/nodes.js";

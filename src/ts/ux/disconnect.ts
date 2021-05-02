@@ -1,5 +1,6 @@
 import { backend, newChat, session } from "index.js";
-import { allowUnload, clearAllElements } from "modules/functions.js";
+import { clearAllElements } from "modules/dom.js";
+import { allowUnload } from "modules/functions.js";
 import { rateLimited } from "modules/ratelimit.js";
 import { settings } from "storage/settings.js";
 import { addStatus } from "ui/chat.js";

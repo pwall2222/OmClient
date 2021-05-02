@@ -1,5 +1,5 @@
 import { newChat, session } from "index.js";
-import { clearAllElements, createChild } from "modules/functions.js";
+import { clearAllElements, createChild } from "modules/dom.js";
 import { disconnect } from "ux/disconnect.js";
 
 const disconnectNode = {
