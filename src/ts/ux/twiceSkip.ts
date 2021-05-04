@@ -18,7 +18,7 @@ const loadLocal = () => {
 const twiceSkipping = (id: string) => {
 	if (checkId(id) && settings.twiceskip) {
 		skip();
-		return;
+		return true;
 	}
 	idHistory.push(id);
 	saveLocal();

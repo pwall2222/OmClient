@@ -52,8 +52,7 @@ const eventHandler = (event: backendEvent) => {
 			clearAdd("Waiting");
 			break;
 		case "identDigests":
-			twiceSkipping(data);
-			break;
+			return twiceSkipping(data);
 		case "serverMessage":
 			addStatus(data);
 			break;

@@ -102,7 +102,10 @@ class Backend {
 				name: element[0],
 				data: element[1],
 			};
-			this.executer(event);
+			const doBreak = this.executer(event);
+			if (doBreak) {
+				break;
+			}
 		}
 	}
 }
