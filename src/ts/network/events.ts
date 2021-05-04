@@ -5,7 +5,7 @@ import { settings } from "storage/settings.js";
 import { addMessage, addStatus, chatNode, clearAdd } from "ui/chat.js";
 import { disconnect, userDisconect } from "ux/disconnect.js";
 import { twiceSkipping } from "ux/twiceSkip.js";
-import { webRTC } from "./webrtc.js";
+import { eventHandlerRTC } from "./webrtc.js";
 
 const eventHandler = (event: backendEvent) => {
 	const { name, data } = event;
@@ -16,7 +16,7 @@ const eventHandler = (event: backendEvent) => {
 		case "rtccall":
 		case "rtcpeerdescription":
 		case "icecandidate":
-			webRTC.eventHandler(event);
+			eventHandlerRTC(event);
 			break;
 		case "gotMessage":
 			chatNode.typing(false);

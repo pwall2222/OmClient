@@ -43,41 +43,41 @@ class PeerConnection extends RTCPeerConnection {
 	}
 }
 
-const webRTC = {
-	async eventHandler(event: backendEvent) {
-		const { pc, rtc } = session;
-		switch (event.name) {
-			case "rtccall":
-				rtc.call = true;
-				this.descriptionHandler("Offer");
-				break;
-			case "rtcpeerdescription":
-				const answer = new RTCSessionDescription(event.data);
-				await pc.setRemoteDescription(answer);
-				rtc.peer = true;
-				for (let i = 0; i < rtc.candidates.length; i++) {
-					const signal = rtc.candidates[i];
-					await pc.addIceCandidate(new RTCIceCandidate(signal));
-				}
-				rtc.candidates.splice(0, rtc.candidates.length);
-				if (!rtc.call) {
-					this.descriptionHandler("Answer");
-				}
-				break;
-			case "icecandidate":
-				if (!rtc.peer) {
-					rtc.candidates.push(event.data);
-				} else {
-					pc.addIceCandidate(new RTCIceCandidate(event.data));
-				}
-				break;
-		}
-	},
-	async descriptionHandler(option: descriptionOption) {
-		const videoSession = await session.pc[`create${option}`](WEB.constrains);
-		await session.pc.setLocalDescription(videoSession);
-		backend.sendIdentifiedPOST("rtcpeerdescription", { desc: videoSession });
-	},
+const eventHandlerRTC = async (event: backendEvent) => {
+	const { pc, rtc } = session;
+	switch (event.name) {
+		case "rtccall":
+			rtc.call = true;
+			const videoSession = await session.pc.createOffer(WEB.constrains);
+			await setDescription(videoSession);
+			break;
+		case "rtcpeerdescription":
+			const answer = new RTCSessionDescription(event.data);
+			await pc.setRemoteDescription(answer);
+			rtc.peer = true;
+			for (let i = 0; i < rtc.candidates.length; i++) {
+				const signal = rtc.candidates[i];
+				await pc.addIceCandidate(new RTCIceCandidate(signal));
+			}
+			rtc.candidates.splice(0, rtc.candidates.length);
+			if (!rtc.call) {
+				const videoSession = await session.pc.createAnswer(WEB.constrains);
+				await setDescription(videoSession);
+			}
+			break;
+		case "icecandidate":
+			if (!rtc.peer) {
+				rtc.candidates.push(event.data);
+			} else {
+				pc.addIceCandidate(new RTCIceCandidate(event.data));
+			}
+			break;
+	}
+};
+
+const setDescription = async (videoSession: RTCSessionDescriptionInit) => {
+	await session.pc.setLocalDescription(videoSession);
+	backend.sendIdentifiedPOST("rtcpeerdescription", { desc: videoSession });
 };
 
 const createPC = (media: MediaStream) => {
@@ -89,4 +89,4 @@ const createPC = (media: MediaStream) => {
 	Object.freeze(session.pc);
 };
 
-export { webRTC, PeerConnection, createPC };
+export { eventHandlerRTC, PeerConnection, createPC };
