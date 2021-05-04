@@ -15,10 +15,8 @@ const WEB = {
 		],
 	},
 	constrains: {
-		mandatory: {
-			OfferToReceiveAudio: true,
-			OfferToReceiveVideo: true,
-		},
+		offerToReceiveAudio: true,
+		offerToReceiveVideo: true,
 	},
 };
 
@@ -88,6 +86,7 @@ const createPC = (media: MediaStream) => {
 	}
 	session.pc = new PeerConnection();
 	session.pc.addVideo(media);
+	Object.freeze(session.pc);
 };
 
 export { webRTC, PeerConnection, createPC };
