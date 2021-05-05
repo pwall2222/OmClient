@@ -1,6 +1,13 @@
 import { getRandomItem, setFirst } from "modules/array.js";
 import { encodeObject } from "modules/functions.js";
 
+interface setting {
+	likes: string[];
+	likes_enabled: boolean;
+	lang: string;
+	video: boolean;
+}
+
 class Backend {
 	executer: Function;
 	errorHandler: (error: any) => void;
