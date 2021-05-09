@@ -24,6 +24,4 @@ const twiceSkipping = (id: string) => {
 	saveLocal();
 };
 
-loadLocal();
-
-export { twiceSkipping };
+export { twiceSkipping, loadLocal };

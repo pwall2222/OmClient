@@ -4,6 +4,7 @@ import { chatNode } from "ui/chat.js";
 import { disconnectNode, videoNode } from "ui/nodes.js";
 import { cmd } from "ux/commands.js";
 import { keyboardHandler } from "ux/keyboard.js";
+import * as twiceSkip from "ux/twiceSkip.js";
 
 const loadAll = () => {
 	addEventListeners();
@@ -21,6 +22,7 @@ const addEventListeners = () => {
 const loadFromStroage = () => {
 	cmd.load();
 	settingManager.load();
+	twiceSkip.loadLocal();
 };
 
 export { loadAll };
