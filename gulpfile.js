@@ -8,7 +8,7 @@ const args = require("yargs").argv;
 const tsProject = ts.createProject("tsconfig.json");
 
 const url = args.url ?? "/";
-const pathRegEx = /(import { [a-zA-Z, ]* } from ")([^.][a-zA-Z/.]*)(";)/g;
+const pathRegEx = /(?<=import (?:(?:{ [a-zA-Z, ]* })|(?:\* as [a-zA-Z]*)) from ")([^.][a-zA-Z/.]*)(?=";)|(?<=import\(")([a-zA-Z/.])(?="\))/g;
 
 const logTask = (message, task, colorNum) => {
 	const white = "\x1b[0m";
@@ -20,7 +20,7 @@ const compile = () => {
 	return new Promise((resolve) => {
 		src("src/ts/**")
 			.pipe(tsProject())
-			.pipe(replace(pathRegEx, `$1${url}$2$3`))
+			.pipe(replace(pathRegEx, `${url}$&`))
 			.pipe(changed("server", { hasChanged: changed.compareContents }))
 			.pipe(dest("server"))
 			.on("end", resolve);
