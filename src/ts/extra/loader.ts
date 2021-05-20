@@ -9,6 +9,7 @@ import * as twiceSkip from "ux/twiceSkip.js";
 const loadAll = () => {
 	addEventListeners();
 	loadFromStroage();
+	setObjProperties();
 	backend.serverFinder();
 };
 
@@ -23,6 +24,10 @@ const loadFromStroage = () => {
 	cmd.load();
 	settingManager.load();
 	twiceSkip.loadLocal();
+};
+
+const setObjProperties = () => {
+	videoNode.selfvideo.muted = true;
 };
 
 export { loadAll };
