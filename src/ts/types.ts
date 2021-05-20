@@ -54,5 +54,4 @@ interface keyEvents {
 
 type disconnectStatus = "stop" | "rlly" | "new";
 type messageAuthor = "you" | "stranger";
-type descriptionOption = "Offer" | "Answer";
 type themes = "dark" | "light";
