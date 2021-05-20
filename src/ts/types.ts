@@ -1,19 +1,7 @@
-interface backendEvent {
-	name: string;
-	data?: any;
-}
-
 interface domObject {
 	tag: string;
 	args?: domObjectArguments;
 	child?: domObject;
-}
-
-interface command {
-	name: string;
-	alias: string[];
-	description: string;
-	exec: () => void;
 }
 
 interface domObjectArguments {
@@ -45,10 +33,22 @@ interface domObjectArguments {
 	/* [key: string]: unknown */
 }
 
+interface backendEvent {
+	name: string;
+	data?: any;
+}
+
 interface keyEvents {
 	key: string;
 	tag: string;
 	prevent: boolean;
+	exec: () => void;
+}
+
+interface command {
+	name: string;
+	alias: string[];
+	description: string;
 	exec: () => void;
 }
 
