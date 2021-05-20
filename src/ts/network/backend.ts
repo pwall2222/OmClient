@@ -8,14 +8,25 @@ interface setting {
 	video: boolean;
 }
 
+interface backendArguments {
+	eventHandler: Executer;
+	errorHandler: ErrorHandler;
+	settings: setting;
+}
+
+type Executer = (event: { name: string; data?: EventData }) => void | boolean;
+type ErrorHandler = (error: string | Error) => void;
+type EventData = string | Record<string, unknown>;
+type Event = [string, EventData];
+
 class Backend {
-	executer: Function;
-	errorHandler: (error: any) => void;
+	executer: Executer;
+	errorHandler: ErrorHandler;
 	settings: setting;
 	server: string;
 	id: string;
 
-	constructor({ eventHandler, settings, errorHandler }: { eventHandler: Function; settings: setting; errorHandler: (error: any) => void }) {
+	constructor({ eventHandler, settings, errorHandler }: backendArguments) {
 		this.executer = eventHandler;
 		this.settings = settings;
 		this.errorHandler = errorHandler;
@@ -34,7 +45,7 @@ class Backend {
 		return response;
 	}
 
-	sendIdentifiedPOST = (path: string, data?: object) => this.sendPOST(path, encodeObject({ id: this.id, ...(data || {}) }));
+	sendIdentifiedPOST = (path: string, data?: Record<string, unknown>) => this.sendPOST(path, encodeObject({ id: this.id, ...(data || {}) }));
 
 	disconnect = () => this.sendIdentifiedPOST("disconnect");
 
@@ -102,8 +113,8 @@ class Backend {
 		this.server = getRandomItem(info.servers);
 	}
 
-	eventParser(events: object[]) {
-		setFirst(events, (element: string[]) => element[0] === "identDigests");
+	eventParser(events: Event[]) {
+		setFirst(events, (element: EventData[]) => element[0] === "identDigests");
 		for (const element of events) {
 			const event = {
 				name: element[0],

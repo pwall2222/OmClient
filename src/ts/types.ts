@@ -13,7 +13,7 @@ interface command {
 	name: string;
 	alias: string[];
 	description: string;
-	exec: Function;
+	exec: () => void;
 }
 
 interface domObjectArguments {
@@ -49,7 +49,7 @@ interface keyEvents {
 	key: string;
 	tag: string;
 	prevent: boolean;
-	exec: Function;
+	exec: () => void;
 }
 
 type disconnectStatus = "stop" | "rlly" | "new";

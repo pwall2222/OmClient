@@ -3,7 +3,7 @@ import { clearAllElements } from "modules/dom.js";
 import { addStatus, chatNode } from "./chat.js";
 import { disconnectNode } from "./nodes.js";
 
-const errorHandler = (error: any) => {
+const errorHandler = (error: string | Error) => {
 	chatNode.clear();
 	if (typeof error == "string") {
 		addStatus(error);

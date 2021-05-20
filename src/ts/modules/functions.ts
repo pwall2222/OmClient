@@ -10,7 +10,7 @@ const hash = (string: string) => {
 	return hash;
 };
 
-const encodeObject = (data: object) => {
+const encodeObject = (data: Record<string, unknown>) => {
 	const formData: string[] = [];
 	const append = (key: string, value: string) => {
 		formData.push(key + "=" + encodeURIComponent(value));
@@ -37,7 +37,7 @@ const blockUnload = () => (window.onbeforeunload = () => "");
 
 const allowUnload = () => (window.onbeforeunload = null);
 
-const addToGlobalThis = (obj: object) => {
+const addToGlobalThis = (obj: Record<string, unknown>) => {
 	for (const [key, value] of Object.entries(obj)) {
 		globalThis[key] = value;
 	}
