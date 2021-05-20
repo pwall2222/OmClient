@@ -20,6 +20,7 @@ const compile = () => {
 	return new Promise((resolve) => {
 		src("src/ts/**")
 			.pipe(tsProject())
+			.on("error", () => {})
 			.pipe(replace(pathRegEx, `${url}$&`))
 			.pipe(changed("server", { hasChanged: changed.compareContents }))
 			.pipe(dest("server"))
