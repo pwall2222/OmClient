@@ -48,7 +48,7 @@ const eventHandlerRTC = async (event: backendEvent) => {
 	switch (event.name) {
 		case "rtccall":
 			rtc.call = true;
-			const videoSession = await session.pc.createOffer(WEB.constrains);
+			const videoSession = await pc.createOffer(WEB.constrains);
 			await setDescription(videoSession);
 			break;
 		case "rtcpeerdescription":
@@ -61,7 +61,7 @@ const eventHandlerRTC = async (event: backendEvent) => {
 			}
 			rtc.candidates.splice(0, rtc.candidates.length);
 			if (!rtc.call) {
-				const videoSession = await session.pc.createAnswer(WEB.constrains);
+				const videoSession = await pc.createAnswer(WEB.constrains);
 				await setDescription(videoSession);
 			}
 			break;
