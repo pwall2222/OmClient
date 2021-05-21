@@ -82,9 +82,9 @@ const eventHandlerRTC = async (event: backendEvent) => {
 		case "icecandidate":
 			if (!rtc.peer) {
 				rtc.candidates.push(event.data);
-			} else {
-				pc.addIceCandidate(new RTCIceCandidate(event.data));
+				break;
 			}
+			pc.addIceCandidate(new RTCIceCandidate(event.data));
 			break;
 	}
 };
