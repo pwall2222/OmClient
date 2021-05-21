@@ -41,6 +41,23 @@ class PeerConnection extends RTCPeerConnection {
 			this.addTrack(track, media);
 		});
 	}
+
+	async offer(options?: RTCOfferOptions) {
+		const videoSession = await this.createOffer(options);
+		await this.setLocalDescription(videoSession);
+		return videoSession;
+	}
+
+	async answer(options?: RTCOfferOptions) {
+		const videoSession = await this.createAnswer(options);
+		await this.setLocalDescription(videoSession);
+		return videoSession;
+	}
+
+	async setRemote(description: RTCSessionDescriptionInit) {
+		const answer = new RTCSessionDescription(description);
+		await this.setRemoteDescription(answer);
+	}
 }
 
 const eventHandlerRTC = async (event: backendEvent) => {
@@ -48,12 +65,10 @@ const eventHandlerRTC = async (event: backendEvent) => {
 	switch (event.name) {
 		case "rtccall":
 			rtc.call = true;
-			const videoSession = await pc.createOffer(WEB.constrains);
-			await setDescription(videoSession);
+			descriptionHandler("offer");
 			break;
 		case "rtcpeerdescription":
-			const answer = new RTCSessionDescription(event.data);
-			await pc.setRemoteDescription(answer);
+			pc.setRemote(event.data);
 			rtc.peer = true;
 			for (let i = 0; i < rtc.candidates.length; i++) {
 				const signal = rtc.candidates[i];
@@ -61,8 +76,7 @@ const eventHandlerRTC = async (event: backendEvent) => {
 			}
 			rtc.candidates.splice(0, rtc.candidates.length);
 			if (!rtc.call) {
-				const videoSession = await pc.createAnswer(WEB.constrains);
-				await setDescription(videoSession);
+				descriptionHandler("answer");
 			}
 			break;
 		case "icecandidate":
@@ -75,8 +89,8 @@ const eventHandlerRTC = async (event: backendEvent) => {
 	}
 };
 
-const setDescription = async (videoSession: RTCSessionDescriptionInit) => {
-	await session.pc.setLocalDescription(videoSession);
+const descriptionHandler = async (option: "answer" | "offer") => {
+	const videoSession = await session.pc[option](WEB.constrains);
 	backend.sendIdentifiedPOST("rtcpeerdescription", { desc: videoSession });
 };
 
