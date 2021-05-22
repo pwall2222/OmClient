@@ -8,15 +8,20 @@
 		"es6": true,
 		"browser": true
 	},
+	"extends": ["eslint:recommended"],
 	"rules": {
-		"prefer-const":			"error",
-		"no-var": 				"error",
-		"no-nested-ternary": 	"error",
-		"camelcase": 			"warn",
-		"no-useless-return": 	"warn",
-		"curly": 				"warn",
-		"arrow-parens": 		"warn",
-		"no-return-await": 		"warn",
-		"default-case": 		"off"
+		"max-nested-callbacks": ["error", { "max": 2 }],
+		"max-depth": ["error", { "max": 2 }],
+		"max-params": ["error", { "max": 3 }],
+		"max-statements": ["error", { "max": 15 }],
+		"prefer-const": "error",
+		"no-var": "error",
+		"no-nested-ternary": "error",
+		"camelcase": "warn",
+		"no-useless-return": "warn",
+		"curly": "warn",
+		"arrow-parens": "warn",
+		"no-return-await": "warn",
+		"default-case": "off"
 	}
 }

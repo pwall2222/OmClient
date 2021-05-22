@@ -2,10 +2,12 @@
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
 		"ecmaVersion": 2021,
-		"sourceType": "script"
+		"sourceType": "module"
 	},
 
 	"plugins": ["@typescript-eslint"],
+
+	"extends": ["plugin:@typescript-eslint/recommended"],
 
 	"rules": {
 		"@typescript-eslint/typedef": [
@@ -16,11 +18,26 @@
 				"parameter": true
 			}
 		],
-		"camelcase": [
-			"warn",
-			{
-				"allow": ["autoskip_delay", "cmd_history", "likes_enabled", "autodisconnect_delay", "block_unload", "skip_with_esc"]
+		"@typescript-eslint/explicit-module-boundary-types": "off"
+	},
+	"overrides": [
+		{
+			"files": ["types.ts"],
+			"rules": {
+				"@typescript-eslint/no-unused-vars": "off"
 			}
-		]
-	}
+		},
+		{
+			"files": ["backend.ts"],
+			"rules": {
+				"no-constant-condition": "off"
+			}
+		},
+		{
+			"files": ["settings.ts"],
+			"rules": {
+				"camelcase": "off"
+			}
+		}
+	]
 }
