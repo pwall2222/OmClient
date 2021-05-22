@@ -1,19 +1,13 @@
 import { getRandomItem, setFirst } from "modules/array.js";
 import { encodeObject } from "modules/functions.js";
 
-interface setting {
-	likes: string[];
-	likes_enabled: boolean;
-	lang: string;
-	video: boolean;
-}
-
 interface backendArguments {
 	eventHandler: Executer;
 	errorHandler: ErrorHandler;
-	settings: setting;
+	connectionArgs: ConnectionArgs;
 }
 
+type ConnectionArgs = () => Record<string, unknown>;
 type Executer = (event: { name: string; data?: EventData }) => void | boolean;
 type ErrorHandler = (error: string | Error) => void;
 type EventData = string | Record<string, unknown>;
@@ -22,13 +16,13 @@ type Event = [string, EventData];
 class Backend {
 	executer: Executer;
 	errorHandler: ErrorHandler;
-	settings: setting;
+	connectionArgs: ConnectionArgs;
 	server: string;
 	id: string;
 
-	constructor({ eventHandler, settings, errorHandler }: backendArguments) {
+	constructor({ eventHandler, connectionArgs, errorHandler }: backendArguments) {
 		this.executer = eventHandler;
-		this.settings = settings;
+		this.connectionArgs = connectionArgs;
 		this.errorHandler = errorHandler;
 	}
 
@@ -50,7 +44,7 @@ class Backend {
 	disconnect = () => this.sendIdentifiedPOST("disconnect");
 
 	async connect() {
-		const args = encodeObject(this.connectSettings());
+		const args = encodeObject(this.connectionArgs());
 		const url = `https://${this.server}.omegle.com/start?${args}`;
 		const responsePromise = fetch(url, {
 			method: "POST",
@@ -59,25 +53,6 @@ class Backend {
 		responsePromise.catch(this.errorHandler);
 		const response = await responsePromise;
 		return response.json();
-	}
-
-	connectSettings() {
-		const { video, likes_enabled, likes, lang } = this.settings;
-		const arg = {
-			webrtc: true,
-			firstevents: false,
-			lang: lang,
-			topics: likes,
-		};
-
-		if (!likes_enabled) {
-			delete arg.topics;
-		}
-
-		if (!video) {
-			delete arg.webrtc;
-		}
-		return arg;
 	}
 
 	async subscribe() {
