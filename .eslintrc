@@ -23,5 +23,14 @@
 		"arrow-parens": "warn",
 		"no-return-await": "warn",
 		"default-case": "off"
-	}
+	},
+	"overrides": [
+		{
+			"files": ["gulpfile.js"],
+			"env": {
+				"browser": false,
+				"node": true
+			}
+		}
+	]
 }
