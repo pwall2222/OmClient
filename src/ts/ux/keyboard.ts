@@ -40,10 +40,10 @@ const keyboardHandler = (keyEvent: KeyboardEvent) => {
 			tag: "body",
 			prevent: true,
 			exec() {
-				if ((keyEvent.shiftKey && session.connected) || settings.skip_with_esc) {
-					skip();
-				} else if (keyEvent.ctrlKey) {
+				if (keyEvent.ctrlKey) {
 					disconnect(false);
+				} else if ((keyEvent.shiftKey && session.connected) || settings.skip_with_esc) {
+					skip();
 				} else {
 					disconnectNode.handler();
 				}
