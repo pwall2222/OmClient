@@ -4,8 +4,8 @@ import { createChild } from "modules/dom.js";
 import { settingManager, settings } from "storage/settings.js";
 import { addCommand } from "ui/chat.js";
 import { videoNode } from "ui/nodes.js";
-import { cmd } from "./commands.js";
-import { disconnect, skip } from "./disconnect.js";
+import { disconnect, skip } from "ux/disconnect.js";
+import { cmd } from "./interface.js";
 
 const commandHandler = (contents: string) => {
 	const command = new UserCommand(contents);
