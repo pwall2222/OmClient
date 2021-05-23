@@ -95,7 +95,7 @@ const commands: command[] = [
 		name: "Clear Command History",
 		alias: ["clear_history"],
 		description: "Clears the command history",
-		exec: functions.clear,
+		exec: functions.clearCmd,
 	},
 	{
 		name: "Theme",
@@ -108,6 +108,12 @@ const commands: command[] = [
 		alias: ["likes", "set_likes"],
 		description: "Sets likes",
 		exec: functions.likes,
+	},
+	{
+		name: "Clear",
+		alias: ["clear"],
+		description: "Clears chat",
+		exec: functions.clearChat,
 	},
 ];
 
