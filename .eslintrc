@@ -8,7 +8,7 @@
 		"es6": true,
 		"browser": true
 	},
-	"extends": ["eslint:recommended"],
+	"extends": ["eslint:recommended", "prettier"],
 	"rules": {
 		"max-nested-callbacks": ["error", { "max": 2 }],
 		"max-depth": ["error", { "max": 2 }],
