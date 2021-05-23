@@ -1,5 +1,5 @@
 import { loadAll } from "extra/loader.js";
-import { media } from "extra/media.js";
+import { media, setMedia } from "extra/media.js";
 import { rateLimit, rateLimited } from "modules/ratelimit.js";
 import { connectionArgs } from "network/arguments.js";
 import { Backend } from "network/backend.js";
@@ -24,6 +24,8 @@ const newChat = async () => {
 	autoClearChat();
 
 	clearAdd("Getting access to camera...");
+
+	setMedia();
 
 	videoNode.addSpinner();
 	videoNode.addMedia(await media);

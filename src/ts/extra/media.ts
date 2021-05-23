@@ -7,7 +7,14 @@ const constrains = {
 		noiseSuppression: true,
 	},
 };
-const media = navigator.mediaDevices.getUserMedia(constrains);
-media.catch(errorHandler);
 
-export { media };
+let media: Promise<MediaStream>;
+const setMedia = () => {
+	if (media) {
+		return;
+	}
+	media = navigator.mediaDevices.getUserMedia(constrains);
+	media.catch(errorHandler);
+};
+
+export { media, setMedia };
