@@ -8,7 +8,7 @@ const args = require("yargs").argv;
 const tsProject = ts.createProject("tsconfig.json");
 
 const url = args.url ?? "/";
-const pathRegEx = /(?<=import(?:(?: (?:{[a-zA-Z, ]*}|\* as [a-zA-Z]*) from )|\()["'])[^.][a-zA-Z/.]*(?=["']\)?)/g;
+const pathRegEx = /(?<=(import|export)(?:.* from |\(| )["'])[^.].*(?=["']\)?)/g;
 
 const logTask = (message, task, colorNum) => {
 	const white = "\x1b[0m";
