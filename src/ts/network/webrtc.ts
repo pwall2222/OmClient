@@ -60,7 +60,7 @@ class PeerConnection extends RTCPeerConnection {
 }
 
 const eventHandlerRTC = async (event: backendEvent) => {
-	const { pc, rtc } = session;
+	const { rtc } = session;
 	switch (event.name) {
 		case "rtccall":
 			rtc.call = true;
@@ -92,9 +92,11 @@ const createPC = (media: MediaStream) => {
 	if (!settings.video) {
 		return;
 	}
-	session.pc = new PeerConnection();
-	session.pc.addVideo(media);
-	Object.freeze(session.pc);
+	pc = new PeerConnection();
+	pc.addVideo(media);
+	Object.freeze(pc);
 };
 
-export { eventHandlerRTC, PeerConnection, createPC };
+let pc: PeerConnection;
+
+export { eventHandlerRTC, createPC };
