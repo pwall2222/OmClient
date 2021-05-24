@@ -38,6 +38,12 @@ const commands: command[] = [
 		exec: functions.text,
 	},
 	{
+		name: "Video",
+		alias: ["video"],
+		description: "Passes mode to video and makes a new chat",
+		exec: functions.video,
+	},
+	{
 		name: "Socials",
 		alias: ["socials"],
 		description: "Sends socials to stranger",
