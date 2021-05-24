@@ -3,6 +3,7 @@ import { sendMessage } from "extra/frontFunctions.js";
 import { newChat, session } from "index.js";
 import { createChild } from "modules/dom.js";
 import { settings } from "storage/settings.js";
+import { text as enableText } from "ui/modes.js";
 
 const help = () => {
 	const instructions = commands.reduce((val: string, element: command) => `${val}<b>${element.name}</b>:<br>${element.description}<br>`, "");
@@ -24,6 +25,7 @@ const theme = () => {
 const text = () => {
 	if (!session.started) {
 		settings.video = false;
+		enableText();
 		newChat();
 	}
 };
