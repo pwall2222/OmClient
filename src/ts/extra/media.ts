@@ -9,6 +9,7 @@ const constrains = {
 };
 
 let media: Promise<MediaStream>;
+
 const setMedia = () => {
 	if (media) {
 		return;
