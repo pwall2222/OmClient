@@ -6,6 +6,7 @@ import { Backend } from "network/backend.js";
 import { eventHandler } from "network/events.js";
 import { createPC } from "network/webrtc.js";
 import { Session } from "storage/session.js";
+import { settings } from "storage/settings.js";
 import { clearAdd } from "ui/chat/add.js";
 import { autoClearChat } from "ui/chat/manager.js";
 import { errorHandler } from "ui/errorHandler.js";
@@ -24,6 +25,18 @@ const newChat = async () => {
 
 	autoClearChat();
 
+	await videoChat();
+
+	clearAdd("Conneting to server...");
+
+	backend.newConnection();
+};
+
+const videoChat = async () => {
+	if (!settings.video) {
+		return;
+	}
+
 	clearAdd("Getting access to camera...");
 
 	setMedia();
@@ -32,10 +45,6 @@ const newChat = async () => {
 	videoNode.addMedia(await media);
 
 	createPC(await media);
-
-	clearAdd("Conneting to server...");
-
-	backend.newConnection();
 };
 
 const backend = new Backend({ eventHandler, errorHandler, connectionArgs });

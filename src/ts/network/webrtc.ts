@@ -1,6 +1,5 @@
 import { backend, session } from "index.js";
 import { clearArray } from "modules/array.js";
-import { settings } from "storage/settings.js";
 import { videoNode } from "ui/nodes.js";
 
 const WEB = {
@@ -89,9 +88,6 @@ const eventHandlerRTC = async (event: backendEvent) => {
 };
 
 const createPC = (media: MediaStream) => {
-	if (!settings.video) {
-		return;
-	}
 	pc = new PeerConnection();
 	pc.addVideo(media);
 	Object.freeze(pc);
