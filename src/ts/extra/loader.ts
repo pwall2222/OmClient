@@ -1,7 +1,7 @@
 import { cmd } from "commands/interface.js";
 import { backend } from "index.js";
 import { settingManager } from "storage/settings.js";
-import { chatNode } from "ui/chat.js";
+import * as chatNode from "ui/chat.js";
 import { disconnectNode, videoNode } from "ui/nodes.js";
 import { keyboardHandler } from "ux/keyboard.js";
 import * as twiceSkip from "ux/twiceSkip.js";

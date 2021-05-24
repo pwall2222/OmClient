@@ -2,7 +2,7 @@ import { getLikeString } from "extra/frontFunctions.js";
 import { session } from "index.js";
 import { blockUnload } from "modules/functions.js";
 import { settings } from "storage/settings.js";
-import { addMessage, addStatus, chatNode, clearAdd } from "ui/chat.js";
+import { addMessage, addStatus, clearAdd, setTyping } from "ui/chat.js";
 import { disconnect, userDisconect } from "ux/disconnect.js";
 import { twiceSkipping } from "ux/twiceSkip.js";
 import { eventHandlerRTC } from "./webrtc.js";
@@ -19,14 +19,14 @@ const eventHandler = (event: backendEvent) => {
 			eventHandlerRTC(event);
 			break;
 		case "gotMessage":
-			chatNode.typing(false);
+			setTyping(false);
 			addMessage(data, "stranger");
 			break;
 		case "typing":
-			chatNode.typing(true);
+			setTyping(true);
 			break;
 		case "stoppedTyping":
-			chatNode.typing(false);
+			setTyping(false);
 			break;
 		case "commonLikes":
 			addStatus(getLikeString(data));

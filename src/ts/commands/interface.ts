@@ -1,4 +1,4 @@
-import { chatNode } from "ui/chat.js";
+import * as chatNode from "ui/chat.js";
 
 const cmd = {
 	commandHistory: [],
