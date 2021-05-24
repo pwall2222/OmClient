@@ -3,7 +3,7 @@ import { clearAllElements } from "modules/dom.js";
 import { allowUnload } from "modules/functions.js";
 import { rateLimited } from "modules/ratelimit.js";
 import { settings } from "storage/settings.js";
-import { addStatus } from "ui/chat.js";
+import { addStatus } from "ui/chat/chat.js";
 import { disconnectNode, videoNode } from "ui/nodes.js";
 
 const disconnect = (autoskip: boolean = true) => {

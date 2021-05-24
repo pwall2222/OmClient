@@ -1,6 +1,6 @@
 import { session } from "index.js";
 import { clearAllElements } from "modules/dom.js";
-import * as chatNode from "./chat.js";
+import * as chatNode from "ui/chat/chat.js";
 import { disconnectNode } from "./nodes.js";
 
 const errorHandler = (error: string | Error) => {
