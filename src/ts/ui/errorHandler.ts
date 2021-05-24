@@ -1,14 +1,15 @@
 import { session } from "index.js";
 import { clearAllElements } from "modules/dom.js";
-import * as chatNode from "ui/chat/chat.js";
+import * as chatNode from "ui/chat/manager.js";
+import { addStatus } from "./chat/add.js";
 import { disconnectNode } from "./nodes.js";
 
 const errorHandler = (error: string | Error) => {
 	chatNode.clear();
 	if (typeof error == "string") {
-		chatNode.addStatus(error);
+		addStatus(error);
 	} else {
-		chatNode.addStatus(error?.message);
+		addStatus(error?.message);
 	}
 	disconnectNode.set("new");
 	session.started = false;

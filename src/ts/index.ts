@@ -6,7 +6,8 @@ import { Backend } from "network/backend.js";
 import { eventHandler } from "network/events.js";
 import { createPC } from "network/webrtc.js";
 import { Session } from "storage/session.js";
-import { autoClearChat, clearAdd } from "ui/chat/chat.js";
+import { clearAdd } from "ui/chat/add.js";
+import { autoClearChat } from "ui/chat/manager.js";
 import { errorHandler } from "ui/errorHandler.js";
 import { disconnectNode, videoNode } from "ui/nodes.js";
 

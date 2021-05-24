@@ -1,7 +1,7 @@
 import { sendMessage } from "extra/frontFunctions.js";
 import { session } from "index.js";
 import { settings } from "storage/settings.js";
-import { addCommand } from "ui/chat/chat.js";
+import { addCommand } from "ui/chat/add.js";
 import { videoNode } from "ui/nodes.js";
 
 const likes = function () {
