@@ -30,9 +30,7 @@ const clearChilds = (nodeName: string) => {
 
 const clearAllElements = (nodeName: string) => {
 	const nodes = document.querySelectorAll(nodeName);
-	nodes.forEach((element: Element) => {
-		element.remove();
-	});
+	nodes.forEach((element: Element) => element.remove());
 };
 
 export { clearAllElements, clearChilds };
