@@ -154,6 +154,7 @@ img {
 	margin-left: 8px;
 	margin-bottom: 8px;
 	margin-top: 16px;
+	height: calc(100% - 89px - 8px);
 }
 
 .chatmsg {
@@ -283,6 +284,10 @@ img {
 
 :is(.new, .rlly) .dscnttxt {
 	font-weight: 700;
+}
+
+*:not(.chat) > * > * > .dscntbtn {
+	border-bottom-left-radius: 0.5em;
 }
 
 .sendbtnwrapper {
