@@ -17,4 +17,10 @@ const setMedia = () => {
 	media.catch(errorHandler);
 };
 
-export { media, setMedia };
+const releaseMedia = async () => {
+	const mediaData = await media;
+	const tracks = mediaData.getTracks();
+	tracks.forEach((track: MediaStreamTrack) => track.stop());
+};
+
+export { media, setMedia, releaseMedia };
