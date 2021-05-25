@@ -2,7 +2,7 @@ import { sendMessage } from "extra/frontFunctions.js";
 import { session } from "index.js";
 import { settings } from "storage/settings.js";
 import { addCommand } from "ui/chat/add.js";
-import { videoNode } from "ui/video.js";
+import { setVolume } from "ui/video.js";
 
 const likes = function () {
 	const likes = this.command.arguments.join(" ").split(",");
@@ -33,7 +33,7 @@ const send = function () {
 const volume = function () {
 	const num = Number(this.command.arguments[0]);
 	if (num >= 0 && num <= 100) {
-		videoNode.setVolume(num);
+		setVolume(num);
 	}
 };
 

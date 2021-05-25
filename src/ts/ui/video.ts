@@ -1,21 +1,26 @@
 import { session } from "index.js";
 import { clearAllElements, createChild } from "modules/dom.js";
 
-const videoNode = {
-	othervideo: document.querySelector<HTMLVideoElement>("#othervideo"),
-	selfvideo: document.querySelector<HTMLVideoElement>("#selfvideo"),
-	setVolume(volume: number) {
-		videoNode.othervideo.volume = volume / 100;
-	},
-	playEvent() {
-		session.video = true;
-		clearAllElements(".spinner");
-	},
-	addSpinner() {
-		createChild("#videowrapper", { tag: "div", args: { className: "spinner" } });
-	},
-	addMedia(media: MediaStream) {
-		videoNode.selfvideo.srcObject ??= media;
-	},
+const othervideo = document.querySelector<HTMLVideoElement>("#othervideo");
+
+const selfvideo = document.querySelector<HTMLVideoElement>("#selfvideo");
+
+const setVolume = (volume: number) => {
+	othervideo.volume = volume / 100;
 };
-export { videoNode };
+
+const playEvent = () => {
+	session.video = true;
+	clearAllElements(".spinner");
+};
+
+const addSpinner = () => {
+	createChild("#videowrapper", { tag: "div", args: { className: "spinner" } });
+};
+
+const addMedia = (media: MediaStream) => {
+	selfvideo.srcObject ??= media;
+};
+
+export { othervideo, selfvideo };
+export { setVolume, playEvent, addSpinner, addMedia };

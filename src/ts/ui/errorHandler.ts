@@ -2,7 +2,7 @@ import { session } from "index.js";
 import { clearAllElements } from "modules/dom.js";
 import * as chatNode from "ui/chat/manager.js";
 import { addStatus } from "./chat/add.js";
-import { disconnectNode } from "./disconnect.js";
+import { newDC } from "./disconnect.js";
 
 const errorHandler = (error: string | Error) => {
 	chatNode.clear();
@@ -11,7 +11,7 @@ const errorHandler = (error: string | Error) => {
 	} else {
 		addStatus(error?.message);
 	}
-	disconnectNode.set("new");
+	newDC();
 	session.started = false;
 	clearAllElements(".spinner");
 };

@@ -2,7 +2,7 @@ import { cmd } from "commands/interface.js";
 import { session } from "index.js";
 import { settings } from "storage/settings.js";
 import * as chatNode from "ui/chat/manager.js";
-import { disconnectNode } from "ui/disconnect.js";
+import { dchandler } from "ui/disconnect.js";
 import { disconnect, skip } from "./disconnect.js";
 
 const keyboardHandler = (keyEvent: KeyboardEvent) => {
@@ -45,7 +45,7 @@ const keyboardHandler = (keyEvent: KeyboardEvent) => {
 				} else if ((keyEvent.shiftKey && session.connected) || settings.skip_with_esc) {
 					skip();
 				} else {
-					disconnectNode.handler();
+					dchandler();
 				}
 			},
 		},

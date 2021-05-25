@@ -1,6 +1,6 @@
 import { backend, session } from "index.js";
 import { clearArray } from "modules/array.js";
-import { videoNode } from "ui/video.js";
+import { othervideo } from "ui/video.js";
 
 const WEB = {
 	config: {
@@ -31,7 +31,7 @@ class PeerConnection extends RTCPeerConnection {
 		};
 
 		this.ontrack = (event: RTCTrackEvent) => {
-			videoNode.othervideo.srcObject = event.streams[0];
+			othervideo.srcObject = event.streams[0];
 		};
 	}
 

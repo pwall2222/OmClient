@@ -2,8 +2,8 @@ import { cmd } from "commands/interface.js";
 import { backend } from "index.js";
 import { settingManager } from "storage/settings.js";
 import * as chatNode from "ui/chat/manager.js";
-import { disconnectNode } from "ui/disconnect.js";
-import { videoNode } from "ui/video.js";
+import * as disconnectNode from "ui/disconnect.js";
+import * as videoNode from "ui/video.js";
 import { keyboardHandler } from "ux/keyboard.js";
 import * as twiceSkip from "ux/twiceSkip.js";
 
@@ -16,7 +16,7 @@ const loadAll = () => {
 
 const addEventListeners = () => {
 	chatNode.sendbtn.addEventListener("click", chatNode.handleInput);
-	disconnectNode.btn.addEventListener("click", disconnectNode.handler);
+	disconnectNode.dcbtn.addEventListener("click", disconnectNode.dchandler);
 	videoNode.othervideo.addEventListener("play", videoNode.playEvent);
 	document.body.addEventListener("keydown", keyboardHandler);
 };

@@ -4,8 +4,8 @@ import { allowUnload } from "modules/functions.js";
 import { rateLimited } from "modules/ratelimit.js";
 import { settings } from "storage/settings.js";
 import { addStatus } from "ui/chat/add.js";
-import { disconnectNode } from "ui/disconnect.js";
-import { videoNode } from "ui/video.js";
+import { newDC } from "ui/disconnect.js";
+import { othervideo } from "ui/video.js";
 
 const disconnect = (autoskip: boolean = true) => {
 	if (!session.started) {
@@ -54,7 +54,7 @@ const execAutoskip = () => {
 
 const disconnectUI = (user: string) => {
 	document.querySelector(".typing")?.remove();
-	disconnectNode.set("new");
+	newDC();
 	addStatus(`${user} Disconnected`);
 };
 
@@ -63,7 +63,7 @@ const disconnectVideo = () => {
 		return;
 	}
 	clearAllElements(".spinner");
-	videoNode.othervideo.srcObject = null;
+	othervideo.srcObject = null;
 };
 
 export { userDisconect, skip, disconnect };
