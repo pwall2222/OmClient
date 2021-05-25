@@ -22,18 +22,18 @@ const WEB = {
 class PeerConnection extends RTCPeerConnection {
 	constructor() {
 		super(WEB.config);
-
-		this.onicecandidate = async (event: RTCPeerConnectionIceEvent) => {
-			if (this.iceGatheringState !== "complete") {
-				await backend.sendIdentifiedPOST("icecandidate", { candidate: event.candidate });
-				clearArray(session.rtc.candidates);
-			}
-		};
-
-		this.ontrack = (event: RTCTrackEvent) => {
-			othervideo.srcObject = event.streams[0];
-		};
 	}
+
+	ontrack = (event: RTCTrackEvent) => {
+		othervideo.srcObject = event.streams[0];
+	};
+
+	onicecandidate = async (event: RTCPeerConnectionIceEvent) => {
+		if (this.iceGatheringState !== "complete") {
+			await backend.sendIdentifiedPOST("icecandidate", { candidate: event.candidate });
+			clearArray(session.rtc.candidates);
+		}
+	};
 
 	addVideo(media: MediaStream) {
 		const tracks = media.getTracks();
