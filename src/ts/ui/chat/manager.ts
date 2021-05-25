@@ -3,7 +3,7 @@ import { sendMessage } from "extra/frontFunctions.js";
 import { session } from "index.js";
 import { clearChilds, createChild } from "modules/dom.js";
 import { settings } from "storage/settings.js";
-import { stopDC } from "ui/disconnect.js";
+import { stopDC } from "ui/nodes/disconnect.js";
 
 const logbox = document.querySelector(".logbox");
 

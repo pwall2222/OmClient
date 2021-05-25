@@ -1,6 +1,6 @@
 import { backend, session } from "index.js";
 import { clearArray } from "modules/array.js";
-import { othervideo } from "ui/video.js";
+import { othervideo } from "ui/nodes/video.js";
 
 const WEB = {
 	config: {

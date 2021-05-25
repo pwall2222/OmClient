@@ -9,9 +9,9 @@ import { Session } from "storage/session.js";
 import { settings } from "storage/settings.js";
 import { clearAdd } from "ui/chat/add.js";
 import { autoClearChat } from "ui/chat/manager.js";
-import { stopDC } from "ui/disconnect.js";
 import { errorHandler } from "ui/errorHandler.js";
-import { addMedia, addSpinner } from "ui/video.js";
+import { stopDC } from "ui/nodes/disconnect.js";
+import { addMedia, addSpinner } from "ui/nodes/video.js";
 
 const newChat = async () => {
 	if (rateLimited) {
