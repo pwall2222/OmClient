@@ -2,7 +2,7 @@ import { sendMessage } from "extra/frontFunctions.js";
 import { session } from "index.js";
 import { settings } from "storage/settings.js";
 import { addCommand } from "ui/chat/add.js";
-import { videoNode } from "ui/nodes.js";
+import { videoNode } from "ui/video.js";
 
 const likes = function () {
 	const likes = this.command.arguments.join(" ").split(",");

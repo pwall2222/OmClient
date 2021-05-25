@@ -2,7 +2,7 @@ import { cmd } from "commands/interface.js";
 import { session } from "index.js";
 import { settings } from "storage/settings.js";
 import * as chatNode from "ui/chat/manager.js";
-import { disconnectNode } from "ui/nodes.js";
+import { disconnectNode } from "ui/disconnect.js";
 import { disconnect, skip } from "./disconnect.js";
 
 const keyboardHandler = (keyEvent: KeyboardEvent) => {

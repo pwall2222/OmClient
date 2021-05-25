@@ -9,8 +9,9 @@ import { Session } from "storage/session.js";
 import { settings } from "storage/settings.js";
 import { clearAdd } from "ui/chat/add.js";
 import { autoClearChat } from "ui/chat/manager.js";
+import { disconnectNode } from "ui/disconnect.js";
 import { errorHandler } from "ui/errorHandler.js";
-import { disconnectNode, videoNode } from "ui/nodes.js";
+import { videoNode } from "ui/video.js";
 
 const newChat = async () => {
 	if (rateLimited) {

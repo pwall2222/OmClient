@@ -4,7 +4,8 @@ import { allowUnload } from "modules/functions.js";
 import { rateLimited } from "modules/ratelimit.js";
 import { settings } from "storage/settings.js";
 import { addStatus } from "ui/chat/add.js";
-import { disconnectNode, videoNode } from "ui/nodes.js";
+import { disconnectNode } from "ui/disconnect.js";
+import { videoNode } from "ui/video.js";
 
 const disconnect = (autoskip: boolean = true) => {
 	if (!session.started) {
