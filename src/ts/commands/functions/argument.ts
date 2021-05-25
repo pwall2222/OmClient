@@ -10,15 +10,17 @@ const likes = function () {
 };
 
 const social = function () {
-	if (this.command.arguments[0] && settings.socials[this.command.arguments[0]] !== undefined) {
-		sendMessage(`${this.command.arguments[0]}: ${settings.socials[this.command.arguments[0]]}`);
+	const arg = this.command.arguments[0];
+	if (arg && settings.socials[arg] !== undefined) {
+		sendMessage(`${arg}: ${settings.socials[arg]}`);
 	}
 };
 
 const set = function () {
 	const parsedArgs = JSON.parse(this.command.arguments[1]);
-	if (typeof settings[this.command.arguments[0]] === typeof parsedArgs) {
-		settings[this.command.arguments[0]] = parsedArgs;
+	const arg = this.command.arguments[0];
+	if (typeof settings[arg] === typeof parsedArgs) {
+		settings[arg] = parsedArgs;
 	} else {
 		addCommand("Type doesn't match or property doesn't exist.");
 	}
