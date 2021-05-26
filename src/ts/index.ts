@@ -10,7 +10,7 @@ import { settings } from "storage/settings.js";
 import { clearAdd } from "ui/chat/add.js";
 import { autoClearChat } from "ui/chat/manager.js";
 import { errorHandler } from "ui/errorHandler.js";
-import { stopDC } from "ui/nodes/disconnect.js";
+import { setDC } from "ui/nodes/disconnect.js";
 import { addMedia, addSpinner } from "ui/nodes/video.js";
 
 const newChat = async () => {
@@ -22,7 +22,7 @@ const newChat = async () => {
 	session = new Session();
 	session.started = true;
 
-	stopDC();
+	setDC("stop");
 
 	autoClearChat();
 

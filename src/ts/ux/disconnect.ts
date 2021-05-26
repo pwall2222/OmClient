@@ -4,7 +4,7 @@ import { allowUnload } from "modules/functions.js";
 import { rateLimited } from "modules/ratelimit.js";
 import { settings } from "storage/settings.js";
 import { addStatus } from "ui/chat/add.js";
-import { newDC } from "ui/nodes/disconnect.js";
+import { setDC } from "ui/nodes/disconnect.js";
 import { othervideo } from "ui/nodes/video.js";
 
 const disconnect = (autoskip: boolean = true) => {
@@ -54,7 +54,7 @@ const execAutoskip = () => {
 
 const disconnectUI = (user: string) => {
 	document.querySelector(".typing")?.remove();
-	newDC();
+	setDC("new");
 	addStatus(`${user} Disconnected`);
 };
 

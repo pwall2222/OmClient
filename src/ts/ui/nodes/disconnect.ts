@@ -4,34 +4,29 @@ import { disconnect } from "ux/disconnect.js";
 const dctxt = document.querySelector(".dscnttxt");
 const dcbtn = document.querySelector(".dscntbtn");
 
-const stopDC = () => {
-	dcbtn.className = "dscntbtn stop";
-	dctxt.textContent = "Stop";
-};
-
-const rllyDC = () => {
-	dcbtn.className = "dscntbtn rlly";
-	dctxt.textContent = "Really?";
-};
-
-const newDC = () => {
-	dcbtn.className = "dscntbtn new";
-	dctxt.textContent = "New";
+const setDC = (className: "new" | "rlly" | "stop") => {
+	const content = {
+		new: "New",
+		rlly: "Really?",
+		stop: "Stop",
+	};
+	dcbtn.className = `dscntbtn ${className}`;
+	dctxt.textContent = content[className];
 };
 
 const dchandler = () => {
 	switch (dcbtn.classList[1]) {
 		case "stop":
-			rllyDC();
+			setDC("rlly");
 			break;
 
 		case "rlly":
-			newDC();
+			setDC("new");
 			disconnect();
 			break;
 
 		case "new":
-			stopDC();
+			setDC("stop");
 			if (!session.started) {
 				newChat();
 			}
@@ -39,5 +34,4 @@ const dchandler = () => {
 	}
 };
 
-export { dchandler, dcbtn };
-export { newDC, rllyDC, stopDC };
+export { setDC, dchandler, dcbtn };
