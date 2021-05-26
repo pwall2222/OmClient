@@ -1,8 +1,8 @@
 import { newChat, session } from "index.js";
 import { disconnect } from "ux/disconnect.js";
 
-const dctxt = document.querySelector(".dscnttxt");
-const dcbtn = document.querySelector(".dscntbtn");
+const dctxt = document.querySelector("#dscnttxt");
+const dcbtn = document.querySelector("#dscntbtn");
 
 const setDC = (className: "new" | "rlly" | "stop") => {
 	const content = {
@@ -10,12 +10,12 @@ const setDC = (className: "new" | "rlly" | "stop") => {
 		rlly: "Really?",
 		stop: "Stop",
 	};
-	dcbtn.className = `dscntbtn ${className}`;
+	dcbtn.className = className;
 	dctxt.textContent = content[className];
 };
 
 const dchandler = () => {
-	switch (dcbtn.classList[1]) {
+	switch (dcbtn.className) {
 		case "stop":
 			setDC("rlly");
 			break;

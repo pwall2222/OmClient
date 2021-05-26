@@ -69,7 +69,7 @@ const keyboardHandler = (keyEvent: KeyboardEvent) => {
 		},
 	];
 
-	const filter = (element: keyEvents) => element.key === keyEvent.code && (element.tag === target.className || element.tag === "body");
+	const filter = (element: keyEvents) => element.key === keyEvent.code && (element.tag === target.id || element.tag === "body");
 	const command = events.find(filter);
 	if (command?.prevent) {
 		keyEvent.preventDefault();

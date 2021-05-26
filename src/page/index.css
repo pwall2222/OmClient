@@ -145,7 +145,7 @@ img {
 * 4. Chat
 */
 
-.chat .logwrapper {
+#chat #logwrapper {
 	border-top-left-radius: 0;
 }
 
@@ -157,7 +157,7 @@ img {
 	height: calc(100% - 89px - 8px);
 }
 
-.chatmsg {
+#chatmsg {
 	resize: none;
 	width: 100%;
 	font-size: 1em;
@@ -173,7 +173,7 @@ img {
 	background: var(--chat);
 }
 
-.chatmsgwrapper {
+#chatmsgwrapper {
 	flex-grow: 1;
 	height: 4.5em;
 	padding: 0.25em;
@@ -181,7 +181,7 @@ img {
 	background: var(--chat);
 }
 
-.logwrapper {
+#logwrapper {
 	flex-grow: 1;
 	margin-bottom: 8px;
 	overflow-y: auto;
@@ -191,13 +191,13 @@ img {
 	background: var(--chat);
 }
 
-.logbox {
+#logbox {
 	display: inline-block;
 	padding: 8px;
 	overflow: auto;
 }
 
-.logbox p {
+#logbox p {
 	margin-bottom: 0.55em;
 	margin-top: 0;
 }
@@ -253,7 +253,7 @@ img {
 	flex-direction: row;
 }
 
-.dscntkey {
+#dscntkey {
 	font-size: 0.8em;
 	color: #9cf;
 	font-weight: 700;
@@ -262,12 +262,12 @@ img {
 	overflow: show;
 }
 
-.dscnttxt {
+#dscnttxt {
 	margin: 0;
 	margin-top: 6px;
 }
 
-.dscntbtn {
+#dscntbtn {
 	width: 7.1em;
 	font-size: 1em;
 	margin-right: 8px;
@@ -276,28 +276,28 @@ img {
 	color: var(--text);
 }
 
-.dscntbtn.new {
+#dscntbtn.new {
 	color: #ffffff;
 	background: #409ffe;
 	background-image: linear-gradient(top, #80c0ff 0, #017ffe 100%);
 }
 
-:is(.new, .rlly) .dscnttxt {
+:is(.new, .rlly) #dscnttxt {
 	font-weight: 700;
 }
 
-*:not(.chat) > * > * > .dscntbtn {
+*:not(.chat) > * > * > #dscntbtn {
 	border-bottom-left-radius: 0.5em;
 }
 
-.sendbtnwrapper {
+#sendbtnwrapper {
 	overflow: hidden;
 	margin-left: 0.5em;
 	border-bottom-right-radius: 0.5em;
 	border: 1px solid var(--border);
 }
 
-.sendbtn {
+#sendbtn {
 	font-size: 1em;
 	width: 7em;
 	height: 5em;
@@ -313,7 +313,7 @@ textarea:focus {
 	outline: 0;
 }
 
-.btnkbshortcut {
+#btnkbshortcut {
 	font-size: 0.8em;
 	color: #9cf;
 	font-weight: 700;
@@ -322,8 +322,8 @@ textarea:focus {
 	overflow: show;
 }
 
-:disabled .btnkbshortcut,
-[disabled] .btnkbshortcut {
+:disabled #btnkbshortcut,
+[disabled] #btnkbshortcut {
 	color: #a1c3e6;
 }
 

@@ -4,7 +4,7 @@ import { clear } from "./manager.js";
 const addMessage = (message: string, sender: messageAuthor) => {
 	const pclass = `${sender}msg`;
 	const user = sender === "you" ? "You" : "Stranger";
-	createChildBefore(".logbox", ".typing", {
+	createChildBefore("#logbox", ".typing", {
 		tag: "p",
 		args: {
 			className: pclass,
@@ -21,7 +21,7 @@ const addMessage = (message: string, sender: messageAuthor) => {
 };
 
 const addStatus = (text: string) => {
-	createChildBefore(".logbox", ".typing", {
+	createChildBefore("#logbox", ".typing", {
 		tag: "p",
 		args: {
 			className: "statuslog",
@@ -32,12 +32,12 @@ const addStatus = (text: string) => {
 };
 
 const addCustomStatus = (domObject: domObject) => {
-	createChildBefore(".logbox", ".typing", domObject);
+	createChildBefore("#logbox", ".typing", domObject);
 	scroll();
 };
 
 const addCommand = (text: string) => {
-	createChildBefore(".logbox", ".typing", {
+	createChildBefore("#logbox", ".typing", {
 		tag: "pre",
 		args: {
 			className: "command",

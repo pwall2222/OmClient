@@ -5,13 +5,13 @@ import { clearChilds, createChild } from "modules/dom.js";
 import { settings } from "storage/settings.js";
 import { setDC } from "ui/nodes/disconnect.js";
 
-const logbox = document.querySelector(".logbox");
+const logbox = document.querySelector("#logbox");
 
-const typebox = document.querySelector<HTMLTextAreaElement>(".chatmsg");
+const typebox = document.querySelector<HTMLTextAreaElement>("#chatmsg");
 
-const sendbtn = document.querySelector<HTMLButtonElement>(".sendbtn");
+const sendbtn = document.querySelector<HTMLButtonElement>("#sendbtn");
 
-const clear = () => clearChilds(".logbox");
+const clear = () => clearChilds("#logbox");
 
 const scroll = () => logbox.lastElementChild.scrollIntoView();
 
@@ -24,7 +24,7 @@ const autoClearChat = () => {
 const setTyping = (state: boolean) => {
 	session.typing = state;
 	if (state) {
-		createChild(".logbox", {
+		createChild("#logbox", {
 			tag: "div",
 			args: {
 				className: "logitem typing",
