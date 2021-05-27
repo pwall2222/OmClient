@@ -1,6 +1,5 @@
 import { loadAll } from "extra/loader.js";
 import { media, setMedia } from "extra/media.js";
-import { rateLimit, rateLimited } from "modules/ratelimit.js";
 import { connectionArgs } from "network/arguments.js";
 import { Backend } from "network/backend.js";
 import { eventHandler } from "network/events.js";
@@ -14,11 +13,6 @@ import { setDC } from "ui/nodes/disconnect.js";
 import { addMedia, addSpinner } from "ui/nodes/video.js";
 
 const newChat = async () => {
-	if (rateLimited) {
-		return;
-	}
-	rateLimit();
-
 	session = new Session();
 	session.started = true;
 
