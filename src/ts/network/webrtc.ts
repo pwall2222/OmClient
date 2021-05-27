@@ -29,10 +29,11 @@ class PeerConnection extends RTCPeerConnection {
 	};
 
 	onicecandidate = async (event: RTCPeerConnectionIceEvent) => {
-		if (this.iceGatheringState !== "complete") {
-			await backend.sendIdentifiedPOST("icecandidate", { candidate: event.candidate });
-			clearArray(session.rtc.candidates);
+		if (this.iceGatheringState === "complete") {
+			return;
 		}
+		await backend.sendIdentifiedPOST("icecandidate", { candidate: event.candidate });
+		clearArray(session.rtc.candidates);
 	};
 
 	addVideo(media: MediaStream) {
