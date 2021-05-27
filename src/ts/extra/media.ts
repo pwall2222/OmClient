@@ -19,6 +19,9 @@ const setMedia = () => {
 };
 
 const releaseMedia = async () => {
+	if (!media) {
+		return;
+	}
 	const mediaData = await media;
 	const tracks = mediaData.getTracks();
 	tracks.forEach((track: MediaStreamTrack) => track.stop());
