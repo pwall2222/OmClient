@@ -38,11 +38,7 @@ const skip = () => {
 		return;
 	}
 	rateLimit();
-
-	if (session.started) {
-		backend.disconnect();
-		disconnectVideo();
-	}
+	skipUI();
 	newChat();
 };
 
@@ -61,6 +57,14 @@ const disconnectUI = (user: string) => {
 	document.querySelector(".typing")?.remove();
 	setDC("new");
 	addStatus(`${user} Disconnected`);
+};
+
+const skipUI = () => {
+	if (!session.started) {
+		return;
+	}
+	backend.disconnect();
+	disconnectVideo();
 };
 
 const disconnectVideo = () => {
