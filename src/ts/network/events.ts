@@ -33,18 +33,7 @@ const eventHandler = (event: backendEvent) => {
 			addStatus(getLikeString(data));
 			break;
 		case "connected":
-			setTimeout(() => {
-				const sessionBool = !session.video && session.connected;
-				const settingBool = settings.autodisconnect && settings.video;
-				if (settingBool && sessionBool) {
-					disconnect();
-				}
-			}, settings.autodisconnect_delay);
-			clearAdd("You're now chatting with a random stranger.");
-			if (settings.block_unload) {
-				blockUnload();
-			}
-			session.connected = true;
+			connected();
 			break;
 		case "strangerDisconnected":
 			userDisconect("Stranger");
@@ -67,6 +56,21 @@ const eventHandler = (event: backendEvent) => {
 			console.log(event);
 			break;
 	}
+};
+
+const connected = () => {
+	setTimeout(() => {
+		const sessionBool = !session.video && session.connected;
+		const settingBool = settings.autodisconnect && settings.video;
+		if (settingBool && sessionBool) {
+			disconnect();
+		}
+	}, settings.autodisconnect_delay);
+	clearAdd("You're now chatting with a random stranger.");
+	if (settings.block_unload) {
+		blockUnload();
+	}
+	session.connected = true;
 };
 
 export { eventHandler };
