@@ -92,7 +92,7 @@ img {
 }
 
 .video {
-	width: 566px;
+	width: 30%;
 	min-width: 400px;
 	margin-left: 8px;
 }
@@ -185,10 +185,13 @@ img {
 	flex-grow: 1;
 	margin-bottom: 8px;
 	overflow-y: auto;
-	border-top-left-radius: 0.5em;
 	border-top-right-radius: 0.5em;
 	border: 1px solid var(--border);
 	background: var(--chat);
+}
+
+*:not(.chat) > * > #logwrapper {
+	border-top-left-radius: 0.5em;
 }
 
 #logbox {
@@ -271,7 +274,7 @@ img {
 	width: 7.1em;
 	font-size: 1em;
 	margin-right: 8px;
-	border: 1px solid var(--chat);
+	border: 1px solid var(--border);
 	background: var(--chat);
 	color: var(--text);
 }
