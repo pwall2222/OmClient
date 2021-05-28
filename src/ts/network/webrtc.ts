@@ -94,6 +94,13 @@ const createPC = (media: MediaStream) => {
 	Object.freeze(pc);
 };
 
+const deletePC = () => {
+	pc.close();
+	delete pc.ontrack;
+	delete pc.onicecandidate;
+	pc = null;
+};
+
 let pc: PeerConnection;
 
-export { eventHandlerRTC, createPC };
+export { eventHandlerRTC, createPC, deletePC };
