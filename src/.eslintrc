@@ -10,6 +10,12 @@
 	"extends": ["plugin:@typescript-eslint/recommended"],
 
 	"rules": {
+		"@typescript-eslint/no-inferrable-types": [
+			"error",
+			{
+				"ignoreParameters": true
+			}
+		],
 		"@typescript-eslint/typedef": [
 			"warn",
 			{
@@ -18,8 +24,7 @@
 				"parameter": true
 			}
 		],
-		"@typescript-eslint/explicit-module-boundary-types": "off",
-		"@typescript-eslint/no-inferrable-types": "off"
+		"@typescript-eslint/explicit-module-boundary-types": "off"
 	},
 	"overrides": [
 		{
