@@ -14,6 +14,7 @@ const createElement = (domObject: domObject) => {
 const createChild = (parent: string, domObject: domObject) => {
 	const child = createElement(domObject);
 	document.querySelector(parent).appendChild(child);
+	return child;
 };
 
 const createChildBefore = (parent: string, reference: string, domObject: domObject) => {
@@ -21,6 +22,7 @@ const createChildBefore = (parent: string, reference: string, domObject: domObje
 	const parentNode = document.querySelector(parent);
 	const referenceNode = parentNode.querySelector(reference);
 	parentNode.insertBefore(child, referenceNode);
+	return child;
 };
 
 const clearChilds = (nodeName: string) => {
