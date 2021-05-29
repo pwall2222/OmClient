@@ -1,10 +1,15 @@
 import { createChildBefore } from "modules/dom.js";
 import { clear } from "./manager.js";
 
+const addChild = (domObject: domObject) => {
+	createChildBefore("#logbox", ".typing", domObject);
+	scroll();
+};
+
 const addMessage = (message: string, sender: messageAuthor) => {
 	const pclass = `${sender}msg`;
 	const user = sender === "you" ? "You" : "Stranger";
-	createChildBefore("#logbox", ".typing", {
+	addChild({
 		tag: "p",
 		args: {
 			className: pclass,
@@ -17,34 +22,26 @@ const addMessage = (message: string, sender: messageAuthor) => {
 			},
 		},
 	});
-	scroll();
 };
 
 const addStatus = (text: string) => {
-	createChildBefore("#logbox", ".typing", {
+	addChild({
 		tag: "p",
 		args: {
 			className: "statuslog",
 			textContent: text,
 		},
 	});
-	scroll();
-};
-
-const addCustomStatus = (domObject: domObject) => {
-	createChildBefore("#logbox", ".typing", domObject);
-	scroll();
 };
 
 const addCommand = (text: string) => {
-	createChildBefore("#logbox", ".typing", {
+	addChild({
 		tag: "pre",
 		args: {
 			className: "command",
 			textContent: text,
 		},
 	});
-	scroll();
 };
 
 const clearAdd = (text: string) => {
@@ -52,4 +49,4 @@ const clearAdd = (text: string) => {
 	addStatus(text);
 };
 
-export { addMessage, addStatus, addCustomStatus, addCommand, clearAdd };
+export { addMessage, addStatus, addChild, addCommand, clearAdd };
