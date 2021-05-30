@@ -4,11 +4,10 @@ Omegle Tweaks is a full-blown writte up of Omegle wich injects into the code and
 
 ## Developing
 
-Run this to get the folder structure prepared:
+Run this to get the dev dependencies installed:
 
 ```bash
 npm i --include=dev
-gulp init
 ```
 
 And run this to get a webserver (in port 3000) and autocompiling from typescript on save.
