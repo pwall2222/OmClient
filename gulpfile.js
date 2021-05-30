@@ -1,4 +1,4 @@
-const { src, task, watch, symlink, dest } = require("gulp");
+const { src, task, watch, dest } = require("gulp");
 const changed = require("gulp-changed");
 const replace = require("gulp-replace");
 const ts = require("gulp-typescript");
@@ -9,6 +9,7 @@ const tsProject = ts.createProject("tsconfig.json");
 
 const url = args.url ?? "/";
 const pathRegEx = /(?<=(import|export)(?:.* from |\(| )["'])[^.].*(?=["']\)?)/g;
+const pathHTML = /(?<=(src|href)=['"]).*(?=['"])/g;
 
 const logTask = (message, task, colorNum) => {
 	const white = "\x1b[0m";
@@ -16,7 +17,22 @@ const logTask = (message, task, colorNum) => {
 	console.log(`[${color}${task}${white}]${message}`);
 };
 
-const compile = () => {
+const markdown = () => {
+	return new Promise((resolve) => {
+		src("src/page/**/*")
+			.pipe(replace(pathHTML, `${url}$&`))
+			.pipe(changed("server", { hasChanged: changed.compareContents }))
+			.pipe(dest("server"))
+			.on("end", resolve);
+	});
+};
+
+const compile = async () => {
+	markdown();
+	compileTS();
+};
+
+const compileTS = () => {
 	return new Promise((resolve) => {
 		src("src/ts/**")
 			.pipe(tsProject())
@@ -28,12 +44,21 @@ const compile = () => {
 	});
 };
 
-const compileWatch = () => watch("src/ts/**/*").on("change", compileLog);
+const compileWatch = () => {
+	watch("src/ts/**/*").on("change", compileLog);
+	watch("src/page/**/*").on("change", markdownLog);
+};
 
 const compileLog = async () => {
 	logTask("Compiling files", "TypeScript", "36");
-	await compile();
+	await compileTS();
 	logTask("Compiling finished", "TypeScript", "36");
+};
+
+const markdownLog = async () => {
+	logTask("Copying markdown files", "MarkDown", "36");
+	await markdown();
+	logTask("Copying finished", "MarkDown", "36");
 };
 
 const serveFiles = () => {
@@ -51,19 +76,16 @@ const serveFiles = () => {
 };
 
 const compileSync = () => {
-	compile();
+	compileTS();
+	markdown();
 	compileWatch();
 	serveFiles();
 };
-
-const init = () => src("src/page/*").pipe(symlink("server/"));
 
 task("serve", serveFiles);
 
 task("compile", compile);
 
 task("compile-watch", compileWatch);
-
-task("init", init);
 
 task("default", compileSync);
