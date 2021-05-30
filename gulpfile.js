@@ -28,8 +28,8 @@ const markdown = () => {
 };
 
 const compile = async () => {
-	markdown();
-	compileTS();
+	await markdown();
+	await compileTS();
 };
 
 const compileTS = () => {
