@@ -8,6 +8,7 @@ const args = require("yargs").argv;
 const tsProject = ts.createProject("tsconfig.json");
 
 const url = args.url ?? "/";
+const output = args.output ?? "server";
 const pathRegEx = /(?<=(import|export)(?:.* from |\(| )["'])[^.].*(?=["']\)?)/g;
 const pathHTML = /(?<=(src|href)=['"]).*(?=['"])/g;
 
@@ -21,8 +22,8 @@ const markdown = () => {
 	return new Promise((resolve) => {
 		src("src/page/**/*")
 			.pipe(replace(pathHTML, `${url}$&`))
-			.pipe(changed("server", { hasChanged: changed.compareContents }))
-			.pipe(dest("server"))
+			.pipe(changed(output, { hasChanged: changed.compareContents }))
+			.pipe(dest(output))
 			.on("end", resolve);
 	});
 };
@@ -38,8 +39,8 @@ const compileTS = () => {
 			.pipe(tsProject())
 			.on("error", () => {})
 			.pipe(replace(pathRegEx, `${url}$&`))
-			.pipe(changed("server", { hasChanged: changed.compareContents }))
-			.pipe(dest("server"))
+			.pipe(changed(output, { hasChanged: changed.compareContents }))
+			.pipe(dest(output))
 			.on("end", resolve);
 	});
 };
