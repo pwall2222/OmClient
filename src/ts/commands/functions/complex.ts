@@ -1,13 +1,13 @@
 import { commands } from "commands/list.js";
 import { sendMessage } from "extra/frontFunctions.js";
 import { newChat, session } from "index.js";
-import { createChild } from "modules/dom.js";
 import { settings } from "storage/settings.js";
+import { addChild } from "ui/chat/add.js";
 import { text as enableText, video as enableVideo } from "ui/modes.js";
 
 const help = () => {
 	const instructions = commands.reduce((val: string, element: command) => `${val}<b>${element.name}</b>:<br>${element.description}<br>`, "");
-	createChild("#logbox", {
+	addChild({
 		tag: "p",
 		args: {
 			innerHTML: instructions,
