@@ -58,11 +58,11 @@ class Backend {
 	async subscribe() {
 		while (true) {
 			const response = await this.sendIdentifiedPOST("events");
-			if (response.status !== 200) {
-				console.log({ responseCode: response.status, responseText: response.statusText });
+			if (!response.ok) {
 				break;
 			}
-			const events = await response.json();
+			const dataPromise = response.json().catch(() => []);
+			const events = await dataPromise;
 			if (events == null) {
 				break;
 			}
