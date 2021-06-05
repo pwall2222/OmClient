@@ -1,5 +1,5 @@
 import { createChildBefore } from "modules/dom.js";
-import { clear } from "./manager.js";
+import { clear, scroll } from "./manager.js";
 
 const addChild = (domObject: domObject) => {
 	createChildBefore("#logbox", ".typing", domObject);
