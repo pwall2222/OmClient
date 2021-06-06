@@ -64,6 +64,7 @@ class Backend {
 			const dataPromise = response.json().catch(() => []);
 			const events = await dataPromise;
 			if (events == null) {
+				this.executer({ name: "nullRequest" });
 				break;
 			}
 			this.eventParser(events);

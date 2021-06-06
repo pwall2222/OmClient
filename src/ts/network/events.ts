@@ -38,6 +38,11 @@ const eventHandler = (event: backendEvent) => {
 		case "strangerDisconnected":
 			userDisconect("Stranger");
 			break;
+		case "nullRequest":
+			if (session.connected) {
+				userDisconect("Stranger");
+			}
+			break;
 		case "waiting":
 			clearAdd("Waiting");
 			break;
