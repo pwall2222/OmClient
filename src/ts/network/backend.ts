@@ -11,7 +11,7 @@ type ConnectionArgs = () => Record<string, unknown>;
 type Executer = (event: { name: string; data?: EventData }) => void | boolean;
 type ErrorHandler = (error: string | Error) => void;
 type EventData = string | Record<string, unknown>;
-type Event = [string, EventData];
+type Event = [string, EventData?];
 
 class Backend {
 	executer: Executer;
