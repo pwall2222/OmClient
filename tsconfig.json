@@ -7,6 +7,7 @@
 		"baseUrl": "./src/ts",
 		"incremental": true,
 		"alwaysStrict": true,
+		"sourceMap": true,
 		"module": "ESNext"
 	}
 }
