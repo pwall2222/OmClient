@@ -35,4 +35,4 @@ class UserCommand {
 	}
 }
 
-export { commandHandler };
+export { commandHandler, UserCommand };
