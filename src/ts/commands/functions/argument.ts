@@ -5,8 +5,7 @@ import { addCommand } from "ui/chat/add.js";
 import { setVolume } from "ui/nodes/video.js";
 
 const likes = function () {
-	const likes = this.arguments.join(" ").split(",");
-	settings.likes = likes;
+	settings.likes = this.list;
 };
 
 const social = function () {

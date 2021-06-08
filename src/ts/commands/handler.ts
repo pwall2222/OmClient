@@ -25,11 +25,13 @@ class UserCommand {
 	full: string[];
 	name: string;
 	arguments: string[];
+	list: string[];
 	constructor(content: string) {
 		this.raw = content.slice(1);
 		this.full = this.raw.split(" ");
 		this.name = this.full[0];
 		this.arguments = this.full.slice(1, this.full.length);
+		this.list = this.arguments.join(" ").split(",");
 	}
 }
 
