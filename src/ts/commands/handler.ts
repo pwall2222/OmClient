@@ -16,7 +16,7 @@ const commandHandler = (contents: string) => {
 const commandExecuter = (command: UserCommand) => {
 	const finder = (obj: command) => obj.alias.some((alias: string) => alias === command.name);
 	const commandFunction = commands.find(finder).exec;
-	const bindedFunction = commandFunction.bind({ command });
+	const bindedFunction = commandFunction.bind({ ...command });
 	bindedFunction();
 };
 
