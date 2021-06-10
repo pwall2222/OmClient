@@ -74,6 +74,7 @@ class Backend {
 	async newConnection() {
 		if (!this.server) {
 			this.serverFinder();
+			this.errorHandler("NoServer");
 			return;
 		}
 		const info = await this.connect();
