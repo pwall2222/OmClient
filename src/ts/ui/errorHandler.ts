@@ -1,16 +1,11 @@
 import { session } from "index.js";
 import { clearAllElements } from "modules/dom.js";
-import * as chatNode from "ui/chat/manager.js";
-import { addStatus } from "./chat/add.js";
+import { clearAdd } from "./chat/add.js";
 import { setDC } from "./nodes/disconnect.js";
 
 const errorHandler = (error: string | Error) => {
-	chatNode.clear();
-	if (typeof error == "string") {
-		addStatus(error);
-	} else {
-		addStatus(error?.message);
-	}
+	const message = error["message"] ?? error;
+	clearAdd(message);
 	setDC("new");
 	session.started = false;
 	clearAllElements(".spinner");
