@@ -74,7 +74,7 @@ class Backend {
 	async newConnection() {
 		if (!this.server) {
 			this.serverFinder();
-			this.errorHandler("No server");
+			return;
 		}
 		const info = await this.connect();
 		this.id = info.clientID;
