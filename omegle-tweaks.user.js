@@ -14,7 +14,7 @@
 	const doc = await fetch("").then((response) => response.text());
 	const item = document.createElement("iframe");
 	item.srcdoc = doc;
-	item.style = "position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none;";
+	item.style = "position:fixed; inset:0; width:100%; height:100%; border:none;";
 	document.body.appendChild(item);
 	item.focus();
 })();
