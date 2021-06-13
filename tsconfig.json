@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"target": "ESNext",
-		"lib": ["DOM","ESNext"],
+		"lib": ["DOM", "ESNext"],
 		"rootDir": "./src/ts",
 		"outDir": "./output",
 		"baseUrl": "./src/ts",
