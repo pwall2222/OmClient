@@ -1,15 +1,15 @@
-const clearArray = <Type>(array: Type[]) => array.splice(0, array.length);
+const clearArray = <T>(array: T[]) => array.splice(0, array.length);
 
-const getRandomItem = <Type>(array: Type[]) => array[Math.floor(Math.random() * array.length)];
+const getRandomItem = <T>(array: T[]) => array[Math.floor(Math.random() * array.length)];
 
-const setFirstByIndex = <Type>(array: Type[], index: number) => {
+const setFirstByIndex = <T>(array: T[], index: number) => {
 	if (index > -1) {
 		const identy = array.splice(index, 1);
 		array.unshift(identy[0]);
 	}
 };
 
-const setFirst = <Type>(array: Type[], find: (value: Type, index: number, obj: Type[]) => unknown) => {
+const setFirst = <T>(array: T[], find: (value: T, index: number, obj: T[]) => unknown) => {
 	const index = array.findIndex(find);
 	setFirstByIndex(array, index);
 };
