@@ -1,9 +1,10 @@
 import { commandHandler } from "commands/handler.js";
 import { sendMessage } from "extra/frontFunctions.js";
 import { session } from "index.js";
-import { clearChilds, createChild } from "modules/dom.js";
+import { clearChilds } from "modules/dom.js";
 import { settings } from "storage/settings.js";
 import { setDC } from "ui/nodes/disconnect.js";
+import { addChild } from "./add.js";
 
 const logbox = document.querySelector("#logbox");
 
@@ -25,24 +26,23 @@ const autoClearChat = () => {
 
 const setTyping = (state: boolean) => {
 	session.typing = state;
-	if (state) {
-		createChild("#logbox", {
-			tag: "div",
-			args: {
-				className: "logitem typing",
-			},
-			child: {
-				tag: "p",
-				args: {
-					className: "statuslog",
-					innerText: "Stranger is typing...",
-				},
-			},
-		});
-		scroll();
-	} else {
+	if (!state) {
 		document.querySelector(".typing")?.remove();
+		return;
 	}
+	addChild({
+		tag: "div",
+		args: {
+			className: "logitem typing",
+		},
+		child: {
+			tag: "p",
+			args: {
+				className: "statuslog",
+				innerText: "Stranger is typing...",
+			},
+		},
+	});
 };
 
 const handleInput = () => {
