@@ -6,7 +6,8 @@ import { dchandler } from "ui/nodes/disconnect.js";
 import { disconnect, skip } from "./disconnect.js";
 
 const keyboardHandler = (keyEvent: KeyboardEvent) => {
-	const target = keyEvent.target as HTMLElement;
+	const targetElement = keyEvent.target as HTMLElement;
+	const target = targetElement.id || targetElement.tagName.toLowerCase();
 
 	const events: keyEvents[] = [
 		{
@@ -69,7 +70,7 @@ const keyboardHandler = (keyEvent: KeyboardEvent) => {
 		},
 	];
 
-	const filter = (element: keyEvents) => element.key === keyEvent.code && (element.tag === target.id || element.tag === "body");
+	const filter = (element: keyEvents) => element.key === keyEvent.code && element.tag === target;
 	const command = events.find(filter);
 	if (command?.prevent) {
 		keyEvent.preventDefault();
