@@ -1,10 +1,10 @@
 import { cmd } from "commands/interface.js";
 import { backend } from "index.js";
+import { keyboardHandler } from "keyboard/handler.js";
 import { settingManager } from "storage/settings.js";
 import * as chatNode from "ui/chat/manager.js";
 import * as disconnectNode from "ui/nodes/disconnect.js";
 import * as videoNode from "ui/nodes/video.js";
-import { keyboardHandler } from "ux/keyboard.js";
 import * as twiceSkip from "ux/twiceSkip.js";
 
 const loadAll = () => {
