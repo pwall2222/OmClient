@@ -92,15 +92,14 @@ img {
 }
 
 .video {
-	width: 30%;
-	min-width: 400px;
+	width: 33em;
+	max-width: 33em;
 	margin-left: 8px;
+	flex-shrink: 0;
 }
 
 .chat {
 	height: 100%;
-	width: 0;
-	max-width: 70.5%;
 	margin-left: 8px;
 	margin-right: 8px;
 	flex-grow: 1;
