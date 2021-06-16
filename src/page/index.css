@@ -121,7 +121,7 @@ img {
 #othervideo {
 	flex-grow: 1;
 	object-fit: cover;
-	height: calc((100% - 89px) / 2);
+	height: calc(50% - 4px);
 	background: var(--video);
 }
 
