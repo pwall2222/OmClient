@@ -4,21 +4,18 @@ const events: keyEvents[] = [
 	{
 		key: "Enter",
 		tag: "chatmsg",
-		global: false,
 		prevent: true,
 		exec: functions.send,
 	},
 	{
 		key: "ArrowUp",
 		tag: "chatmsg",
-		global: false,
 		prevent: true,
 		exec: functions.up,
 	},
 	{
 		key: "ArrowDown",
 		tag: "chatmsg",
-		global: false,
 		prevent: true,
 		exec: functions.down,
 	},

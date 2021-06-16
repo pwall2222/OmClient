@@ -3,12 +3,12 @@ import { events } from "./list.js";
 const getCommand = (keyEvent: KeyboardEvent) => {
 	const codeFilter = ({ key }: keyEvents) => key === keyEvent.code;
 	const command = events.find(codeFilter);
-	if (command.global) {
+	if (command["global"]) {
 		return command;
 	}
 	const targetElement = keyEvent.target as HTMLElement;
 	const target = targetElement.id || targetElement.tagName.toLowerCase();
-	if (command.tag === target) {
+	if (command["tag"] === target) {
 		return command;
 	}
 };

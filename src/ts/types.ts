@@ -38,13 +38,21 @@ interface backendEvent {
 	data?: any;
 }
 
-interface keyEvents {
+interface keyEvent {
 	key: string;
-	tag?: string;
-	global: boolean;
 	prevent: boolean;
 	exec: () => void;
 }
+
+interface globalKey extends keyEvent {
+	global: true;
+}
+
+interface tagKey extends keyEvent {
+	tag: string;
+}
+
+type keyEvents = globalKey | tagKey;
 
 interface command {
 	name: string;
