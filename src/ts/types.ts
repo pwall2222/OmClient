@@ -40,7 +40,8 @@ interface backendEvent {
 
 interface keyEvents {
 	key: string;
-	tag: string;
+	tag?: string;
+	global: boolean;
 	prevent: boolean;
 	exec: () => void;
 }

@@ -1,12 +1,20 @@
 import { events } from "./list.js";
 
-const keyboardHandler = (keyEvent: KeyboardEvent) => {
+const getCommand = (keyEvent: KeyboardEvent) => {
+	const codeFilter = ({ key }: keyEvents) => key === keyEvent.code;
+	const command = events.find(codeFilter);
+	if (command.global) {
+		return command;
+	}
 	const targetElement = keyEvent.target as HTMLElement;
 	const target = targetElement.id || targetElement.tagName.toLowerCase();
+	if (command.tag === target) {
+		return command;
+	}
+};
 
-	const filter = ({ key, tag }: keyEvents) => key === keyEvent.code && tag === target;
-	const command = events.find(filter);
-
+const keyboardHandler = (keyEvent: KeyboardEvent) => {
+	const command = getCommand(keyEvent);
 	if (!command) {
 		return;
 	}
