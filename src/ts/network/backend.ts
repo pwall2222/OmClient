@@ -31,7 +31,7 @@ class Backend {
 			method: "POST",
 			body: data,
 			headers: {
-				"content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+				"content-type": "application/x-www-form-urlencoded",
 			},
 			referrerPolicy: "no-referrer",
 		});
