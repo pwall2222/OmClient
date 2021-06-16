@@ -7,13 +7,15 @@ import { setDC } from "ui/nodes/disconnect.js";
 
 const logbox = document.querySelector("#logbox");
 
+const logwrapper = document.querySelector("#logwrapper");
+
 const typebox = document.querySelector<HTMLTextAreaElement>("#chatmsg");
 
 const sendbtn = document.querySelector<HTMLButtonElement>("#sendbtn");
 
 const clear = () => clearChilds("#logbox");
 
-const scroll = () => logbox.lastElementChild.scrollIntoView();
+const scroll = () => logwrapper.scrollTo({ top: logwrapper.scrollHeight });
 
 const autoClearChat = () => {
 	if (settings.autoclearchat) {
