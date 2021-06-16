@@ -7,7 +7,11 @@ const keyboardHandler = (keyEvent: KeyboardEvent) => {
 	const filter = (element: keyEvents) => element.key === keyEvent.code && element.tag === target;
 	const command = events.find(filter);
 
-	if (command?.prevent) {
+	if (!command) {
+		return;
+	}
+
+	if (command.prevent) {
 		keyEvent.preventDefault();
 	}
 	const bindedFunction = command.exec.bind(keyEvent);
