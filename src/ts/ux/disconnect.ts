@@ -48,9 +48,10 @@ const execAutoskip = () => {
 		return;
 	}
 	setTimeout(() => {
-		if (!session.started) {
-			newChat();
+		if (session.started) {
+			return;
 		}
+		newChat();
 	}, settings.autoskip_delay);
 };
 

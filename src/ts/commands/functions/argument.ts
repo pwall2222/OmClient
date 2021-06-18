@@ -21,15 +21,16 @@ const set = function (this: UserCommand) {
 	const arg = this.arguments[0];
 	if (typeof settings[arg] === typeof parsedArgs) {
 		settings[arg] = parsedArgs;
-	} else {
-		addCommand("Type doesn't match or property doesn't exist.");
+		return;
 	}
+	addCommand("Type doesn't match or property doesn't exist.");
 };
 
 const send = function (this: UserCommand) {
-	if (session.connected) {
-		sendMessage(this.arguments.join(" "));
+	if (!session.connected) {
+		return;
 	}
+	sendMessage(this.arguments.join(" "));
 };
 
 const volume = function (this: UserCommand) {

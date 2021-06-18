@@ -23,29 +23,32 @@ const theme = () => {
 };
 
 const text = () => {
-	if (!session.started) {
-		settings.video = false;
-		enableText();
-		newChat();
+	if (session.started) {
+		return;
 	}
+	settings.video = false;
+	enableText();
+	newChat();
 };
 
 const video = () => {
-	if (!session.started) {
-		settings.video = true;
-		enableVideo();
-		newChat();
+	if (session.started) {
+		return;
 	}
+	settings.video = true;
+	enableVideo();
+	newChat();
 };
 
 const socials = () => {
 	if (session.connected) {
-		let msg = "";
-		for (const key in settings.socials) {
-			msg += `${key}: ${settings.socials[key]}\n`;
-		}
-		sendMessage(msg);
+		return;
 	}
+	let msg = "";
+	for (const key in settings.socials) {
+		msg += `${key}: ${settings.socials[key]}\n`;
+	}
+	sendMessage(msg);
 };
 
 export { help, theme, text, video, socials };

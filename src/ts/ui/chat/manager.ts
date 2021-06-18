@@ -19,9 +19,10 @@ const clear = () => clearChilds("#logbox");
 const scroll = () => logwrapper.scrollTo({ top: logwrapper.scrollHeight });
 
 const autoClearChat = () => {
-	if (settings.autoclearchat) {
-		typebox.value = "";
+	if (!settings.autoclearchat) {
+		return;
 	}
+	typebox.value = "";
 };
 
 const setTyping = (state: boolean) => {

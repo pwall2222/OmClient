@@ -7,9 +7,10 @@ import { dchandler } from "ui/nodes/disconnect.js";
 import { disconnect, skip } from "ux/disconnect.js";
 
 const send = function (this: KeyboardEvent) {
-	if (!this.shiftKey) {
-		handleInput();
+	if (this.shiftKey) {
+		return;
 	}
+	handleInput();
 };
 
 const escape = function (this: KeyboardEvent) {
@@ -23,9 +24,10 @@ const escape = function (this: KeyboardEvent) {
 };
 
 const slash = () => {
-	if (chatNode.typebox.value === "") {
-		chatNode.typebox.focus();
+	if (chatNode.typebox.value !== "") {
+		return;
 	}
+	chatNode.typebox.focus();
 };
 
 const up = () => cmd.next();
