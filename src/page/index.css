@@ -11,6 +11,7 @@
 * 1. Global
 */
 :root {
+	--height: calc(100% - 97px);
 	--background: #fff7ee;
 	--header: #ffffff;
 	--chat: #ffffff;
@@ -87,7 +88,7 @@ img {
 #flex-tape {
 	display: flex;
 	flex-direction: row;
-	height: calc(100% - 89px - 8px);
+	height: var(--height);
 	margin-bottom: 8px;
 }
 
@@ -154,7 +155,7 @@ img {
 	margin-left: 8px;
 	margin-bottom: 8px;
 	margin-top: 16px;
-	height: calc(100% - 89px - 8px);
+	height: var(--height);
 }
 
 #chatmsg {
