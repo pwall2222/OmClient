@@ -61,7 +61,7 @@ class Backend {
 			if (!response.ok) {
 				break;
 			}
-			const dataPromise = response.json().catch(() => []);
+			const dataPromise = response.json().catch(() => [["keepAlive"]]);
 			const events = await dataPromise;
 			if (events == null) {
 				this.executer({ name: "nullRequest" });
