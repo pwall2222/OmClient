@@ -15,7 +15,10 @@ const setMedia = () => {
 		return;
 	}
 	media = navigator.mediaDevices.getUserMedia(constrains);
-	media.catch(errorHandler);
+	media.catch((error: Error) => {
+		errorHandler(error);
+		media = null;
+	});
 };
 
 const releaseMedia = async () => {
