@@ -1,4 +1,4 @@
-import { cmd } from "./interface.js";
+import * as cmd from "./interface.js";
 import { commands } from "./list.js";
 
 const commandHandler = (contents: string) => {

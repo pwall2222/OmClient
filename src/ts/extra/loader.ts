@@ -1,4 +1,4 @@
-import { cmd } from "commands/interface.js";
+import * as cmd from "commands/interface.js";
 import { backend } from "index.js";
 import { keyboardHandler } from "keyboard/handler.js";
 import { settingManager } from "storage/settings.js";

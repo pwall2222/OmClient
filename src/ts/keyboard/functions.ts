@@ -1,4 +1,4 @@
-import { cmd } from "commands/interface.js";
+import * as cmd from "commands/interface.js";
 import { session } from "index.js";
 import { settings } from "storage/settings.js";
 import * as chatNode from "ui/chat/manager.js";

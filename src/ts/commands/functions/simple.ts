@@ -1,4 +1,4 @@
-import { cmd } from "commands/interface.js";
+import * as cmd from "commands/interface.js";
 import { sendMessage } from "extra/frontFunctions.js";
 import { backend } from "index.js";
 import { settingManager, settings } from "storage/settings.js";
