@@ -2,7 +2,7 @@ import { settings } from "storage/settings.js";
 import * as chatNode from "ui/chat/manager.js";
 
 const cmd = {
-	commandHistory: [],
+	history: [],
 	position: -1,
 	current: "",
 	next() {
@@ -22,12 +22,12 @@ const cmd = {
 		cmd.changeVal(newPosition);
 	},
 	changeVal(newPosition: number) {
-		if (cmd.commandHistory.length <= 0) {
+		if (cmd.history.length <= 0) {
 			return;
 		}
-		if (cmd.commandHistory.length > newPosition) {
+		if (cmd.history.length > newPosition) {
 			cmd.position = newPosition;
-			chatNode.typebox.value = cmd.commandHistory[newPosition];
+			chatNode.typebox.value = cmd.history[newPosition];
 		}
 	},
 	handleHistory(command: string) {
@@ -35,24 +35,24 @@ const cmd = {
 		cmd.addToHistory(command);
 	},
 	addToHistory(command: string) {
-		if (command === cmd.commandHistory[0]) {
+		if (command === cmd.history[0]) {
 			return;
 		}
-		cmd.commandHistory.unshift(command);
-		cmd.commandHistory.splice(settings.cmd_history, 1);
+		cmd.history.unshift(command);
+		cmd.history.splice(settings.cmd_history, 1);
 		cmd.save();
 	},
 	load() {
 		const item = JSON.parse(localStorage.getItem("history"));
 		if (Array.isArray(item)) {
-			cmd.commandHistory = item;
+			cmd.history = item;
 		}
 	},
 	save() {
-		localStorage.setItem("history", JSON.stringify(cmd.commandHistory));
+		localStorage.setItem("history", JSON.stringify(cmd.history));
 	},
 	clear() {
-		cmd.commandHistory = [];
+		cmd.history = [];
 		cmd.save();
 	},
 };
