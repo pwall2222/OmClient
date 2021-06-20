@@ -31,12 +31,16 @@ const cmd = {
 		}
 	},
 	handleHistory(command: string) {
-		if (command !== cmd.commandHistory[0]) {
-			cmd.commandHistory.unshift(command);
-			cmd.commandHistory.splice(settings.cmd_history, 1);
-			cmd.save();
-		}
 		cmd.position = -1;
+		cmd.addToHistory(command);
+	},
+	addToHistory(command: string) {
+		if (command === cmd.commandHistory[0]) {
+			return;
+		}
+		cmd.commandHistory.unshift(command);
+		cmd.commandHistory.splice(settings.cmd_history, 1);
+		cmd.save();
 	},
 	load() {
 		const item = JSON.parse(localStorage.getItem("history"));
