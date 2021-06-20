@@ -26,13 +26,11 @@ const previous = () => {
 };
 
 const changeVal = (newPosition: number) => {
-	if (cmd.history.length <= 0) {
+	if (cmd.history.length <= newPosition) {
 		return;
 	}
-	if (cmd.history.length > newPosition) {
-		cmd.position = newPosition;
-		chatNode.typebox.value = cmd.history[newPosition];
-	}
+	cmd.position = newPosition;
+	chatNode.typebox.value = cmd.history[newPosition];
 };
 
 const handleHistory = (command: string) => {
