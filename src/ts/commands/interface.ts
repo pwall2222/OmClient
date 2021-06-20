@@ -1,3 +1,4 @@
+import { settings } from "storage/settings.js";
 import * as chatNode from "ui/chat/manager.js";
 
 const cmd = {
@@ -28,6 +29,14 @@ const cmd = {
 			cmd.position = newPosition;
 			chatNode.typebox.value = cmd.commandHistory[newPosition];
 		}
+	},
+	handleHistory(command: string) {
+		if (command !== cmd.commandHistory[0]) {
+			cmd.commandHistory.unshift(command);
+			cmd.commandHistory.splice(settings.cmd_history, 1);
+			cmd.save();
+		}
+		cmd.position = -1;
 	},
 	load() {
 		const item = JSON.parse(localStorage.getItem("history"));

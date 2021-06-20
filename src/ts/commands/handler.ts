@@ -1,16 +1,10 @@
-import { settings } from "storage/settings.js";
 import { cmd } from "./interface.js";
 import { commands } from "./list.js";
 
 const commandHandler = (contents: string) => {
 	const command = new UserCommand(contents);
 	commandExecuter(command);
-	if (contents !== cmd.commandHistory[0]) {
-		cmd.commandHistory.unshift(contents);
-		cmd.commandHistory.splice(settings.cmd_history, 1);
-		cmd.save();
-	}
-	cmd.position = -1;
+	cmd.handleHistory(contents);
 };
 
 const commandExecuter = (command: UserCommand) => {
