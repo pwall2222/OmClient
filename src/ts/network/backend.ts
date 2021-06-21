@@ -61,7 +61,7 @@ class Backend {
 			if (!response.ok) {
 				break;
 			}
-			const dataPromise = response.json().catch(() => [["keepAlive"]]);
+			const dataPromise = response.json().catch(() => []);
 			const events = await dataPromise;
 			if (events == null) {
 				this.executer({ name: "nullRequest" });
@@ -92,8 +92,9 @@ class Backend {
 	}
 
 	eventParser(events: Event[]) {
-		setFirst(events, (element: EventData[]) => element[0] === "identDigests");
-		for (const element of events) {
+		const data = events.length ? events : [["keepAlive"]];
+		setFirst(data, (element: EventData[]) => element[0] === "identDigests");
+		for (const element of data) {
 			const event = {
 				name: element[0],
 				data: element[1],
