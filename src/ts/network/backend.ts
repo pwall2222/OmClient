@@ -39,7 +39,12 @@ class Backend {
 		return response;
 	}
 
-	sendIdentifiedPOST = (path: string, data?: Record<string, unknown>) => this.sendPOST(path, encodeObject({ id: this.id, ...(data || {}) }));
+	sendIdentifiedPOST = (path: string, data?: Record<string, unknown>) => {
+		const sendData = data || {};
+		const plainObject = { id: this.id, ...sendData };
+		const encodedData = encodeObject(plainObject);
+		return this.sendPOST(path, encodedData);
+	}
 
 	disconnect = () => this.sendIdentifiedPOST("disconnect");
 
