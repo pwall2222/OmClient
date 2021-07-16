@@ -38,7 +38,9 @@ class PeerConnection extends RTCPeerConnection {
 
 	addVideo(media: MediaStream) {
 		const tracks = media.getTracks();
-		tracks.forEach((track: MediaStreamTrack) => this.addTrack(track, media));
+		for (const track of tracks) {
+			this.addTrack(track, media);
+		}
 	}
 
 	async offer(options?: RTCOfferOptions) {
