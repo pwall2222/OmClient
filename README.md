@@ -2,6 +2,16 @@
 
 Omegle Tweaks is a full-blown writte up of Omegle wich injects into the code and substitudes it giving it some new features and customization.
 
+## Installing
+
+To install this client you will need a user-script extension such as:
+
+- [ViolentMonkey](https://violentmonkey.github.io/)
+- [TamperMonkey](https://www.tampermonkey.net/index.php)
+- [GreasyMonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/)
+
+And just install the latest release from this [link](https://github.com/pwall2222/OmClient/raw/release/javascript/omclient.user.js)
+
 ## Developing
 
 Run this to get the dev dependencies installed:
