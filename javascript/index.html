@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Omegle - Local</title>
+		<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/index.css" />
+		<link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/favicon.png" />
+		<script defer type="module" src="https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/index.js"></script>
+		<script defer src="https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/ui/modeLoad.js"></script>
+		<script src="https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/ui/theme.js"></script>
+	</head>
+
+	<body>
+		<div id="header">
+			<img id="logo" src="https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/logo.png" alt="logo" width="236" height="57" />
+		</div>
+		<div id="flex-tape">
+			<div class="video">
+				<div id="videowrapper">
+					<video id="othervideo" autoplay></video>
+					<video id="selfvideo" autoplay></video>
+				</div>
+			</div>
+			<div class="chat">
+				<div id="chatbox">
+					<div id="logwrapper">
+						<div id="logbox"></div>
+					</div>
+					<div id="controllbox">
+						<button id="dscntbtn" class="new">
+							<p id="dscnttxt">New</p>
+							<p id="dscntkey">Esc</p>
+						</button>
+						<div id="chatmsgwrapper">
+							<textarea id="chatmsg"></textarea>
+						</div>
+						<div id="sendbtnwrapper">
+							<button id="sendbtn">
+								Send
+								<div id="btnkbshortcut">Enter</div>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

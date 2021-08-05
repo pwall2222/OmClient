@@ -1,0 +1,355 @@
+/*
+  1. Global
+  2. Layout
+  3. Video
+  4. Chat
+  5. Controll Box
+  6. Loading
+*/
+
+/*
+* 1. Global
+*/
+:root {
+	--height: calc(100% - 97px);
+	--background: #fff7ee;
+	--header: #ffffff;
+	--chat: #ffffff;
+	--video: #555555;
+	--border: #cccccc;
+	--text: #000000;
+	--log: #555555;
+	--fonts: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+[data-theme="dark"] {
+	--background: #121212;
+	--header: #181818;
+	--chat: #282828;
+	--video: #3c3c3c;
+	--text: #ffffff;
+	--log: #b3b3b3;
+	--border: var(--chat);
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	font-family: var(--fonts);
+	color: var(--text);
+	background: var(--background);
+}
+
+img {
+	border: 0 none;
+}
+
+/*
+* 2. Layout
+*/
+
+#header {
+	height: 57px;
+	padding: 8px;
+	margin-bottom: 16px;
+	background-color: var(--header);
+	box-shadow: 0 0.25em 0.75em #ccc;
+}
+
+[data-theme="dark"] #header {
+	box-shadow: none;
+}
+
+#logo {
+	margin: 0;
+	padding: 0;
+	float: left;
+	font-size: 1em;
+	margin-left: 0.5em;
+	margin-right: 5em;
+}
+
+#onlinecount {
+	font-size: 1.5em;
+	text-align: right;
+	color: #9cf;
+}
+
+#onlinecount strong {
+	font-size: 1.3333333333333333333333em;
+	color: #6cb5ff;
+}
+
+#flex-tape {
+	display: flex;
+	flex-direction: row;
+	height: var(--height);
+	margin-bottom: 8px;
+}
+
+.video {
+	position: relative;
+	width: 33em;
+	max-width: 33em;
+	margin-left: 8px;
+	flex-shrink: 0;
+}
+
+.chat {
+	height: 100%;
+	margin-left: 8px;
+	margin-right: 8px;
+	flex-grow: 1;
+}
+
+/*
+* 3. Video
+*/
+
+#videowrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	height: 100%;
+}
+
+#selfvideo,
+#othervideo {
+	flex-grow: 1;
+	object-fit: cover;
+	height: calc(50% - 4px);
+	background: var(--video);
+}
+
+#othervideo {
+	margin-bottom: 4px;
+	border-top-left-radius: 0.5em;
+}
+
+#selfvideo {
+	margin-top: 4px;
+	border-bottom-left-radius: 0.5em;
+}
+
+#chatbox {
+	height: inherit;
+	display: flex;
+	flex-direction: column;
+}
+
+/*
+* 4. Chat
+*/
+
+#chat #logwrapper {
+	border-top-left-radius: 0;
+}
+
+*:not(.chat) > #chatbox {
+	margin-right: 8px;
+	margin-left: 8px;
+	margin-bottom: 8px;
+	margin-top: 16px;
+	height: var(--height);
+}
+
+#chatmsg {
+	resize: none;
+	width: 100%;
+	font-size: 1em;
+	border: 0 none;
+	padding: 0;
+	margin: 0;
+	height: 4.5em;
+	font-size: 1em;
+	overflow: auto;
+	border-radius: 0;
+	color: var(--text);
+	font-family: var(--fonts);
+	background: var(--chat);
+}
+
+#chatmsgwrapper {
+	flex-grow: 1;
+	height: 4.5em;
+	padding: 0.25em;
+	border: 1px solid var(--border);
+	background: var(--chat);
+}
+
+#logwrapper {
+	flex-grow: 1;
+	margin-bottom: 8px;
+	overflow-y: auto;
+	border-top-right-radius: 0.5em;
+	border: 1px solid var(--border);
+	background: var(--chat);
+}
+
+*:not(.chat) > * > #logwrapper {
+	border-top-left-radius: 0.5em;
+}
+
+#logbox {
+	display: inline-block;
+	padding: 8px;
+	overflow: auto;
+}
+
+#logbox p {
+	margin-bottom: 0.55em;
+	margin-top: 0;
+}
+
+@keyframes msgfade {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+.statuslog {
+	font-size: 0.9em;
+	font-weight: 700;
+	margin: 0;
+	padding: 0;
+	animation: msgfade 0.25s ease-out forwards;
+	color: var(--log);
+}
+
+.youmsg,
+.strangermsg,
+.command {
+	margin: 0;
+	padding: 0;
+	animation: msgfade 0.25s ease-out forwards;
+}
+
+.youmsg .msgsource {
+	color: #017ffe;
+	font-weight: 700;
+}
+
+.strangermsg .msgsource {
+	color: red;
+	font-weight: 700;
+}
+
+.command {
+	font-family: Lucida Console, Lucida Sans Typewriter, monaco, Bitstream Vera Sans Mono, monospace;
+	font-size: 1rem;
+}
+
+/*
+* 5. Controll Box
+*/
+
+#controllbox {
+	display: flex;
+	flex-direction: row;
+}
+
+#dscntkey {
+	font-size: 0.8em;
+	color: #9cf;
+	font-weight: 700;
+	margin-top: 0.25em;
+	height: 0;
+	overflow: show;
+}
+
+#dscnttxt {
+	margin: 0;
+	margin-top: 6px;
+}
+
+#dscntbtn {
+	width: 7.1em;
+	font-size: 1em;
+	margin-right: 8px;
+	border: 1px solid var(--border);
+	background: var(--chat);
+	color: var(--text);
+}
+
+#dscntbtn.new {
+	color: #ffffff;
+	background: #409ffe;
+	background-image: linear-gradient(top, #80c0ff 0, #017ffe 100%);
+}
+
+:is(.new, .rlly) #dscnttxt {
+	font-weight: 700;
+}
+
+*:not(.chat) > * > * > #dscntbtn {
+	border-bottom-left-radius: 0.5em;
+}
+
+#sendbtnwrapper {
+	overflow: hidden;
+	margin-left: 0.5em;
+	border-bottom-right-radius: 0.5em;
+	border: 1px solid var(--border);
+}
+
+#sendbtn {
+	font-size: 1em;
+	width: 7em;
+	height: 5em;
+	padding: 0;
+	margin: 0;
+	border: 0 none;
+	border-bottom-right-radius: 0.5em;
+	background: var(--chat);
+	color: var(--text);
+}
+
+textarea:focus {
+	outline: 0;
+}
+
+#btnkbshortcut {
+	font-size: 0.8em;
+	color: #9cf;
+	font-weight: 700;
+	margin-top: 0.25em;
+	height: 0;
+	overflow: show;
+}
+
+:disabled #btnkbshortcut,
+[disabled] #btnkbshortcut {
+	color: #a1c3e6;
+}
+
+/*
+* 6. Loading
+*/
+
+.spinner {
+	position: absolute;
+	top: 25%;
+	left: 50%;
+	margin: -50px 0 0 -50px;
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	border-right: 8px solid transparent;
+	border-top: 8px solid #ccc;
+	animation: spinner 0.6s linear infinite;
+}
+
+@keyframes spinner {
+	to {
+		transform: rotate(360deg);
+	}
+}
