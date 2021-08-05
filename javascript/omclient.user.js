@@ -9,14 +9,16 @@
 // ==/UserScript==
 
 (async () => {
-	document.documentElement.innerHTML = "<head><title>Omegle</title></head><body></body>";
+	document.documentElement.innerHTML =
+		"<head><title>Omegle</title></head><body></body>";
 	window.stop();
 	const doc = await fetch(
-		"https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/index.html"
+		"https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.1/javascript/index.html"
 	).then((response) => response.text());
 	const item = document.createElement("iframe");
 	item.srcdoc = doc;
-	item.style = "position:fixed; inset:0; width:100%; height:100%; border:none;";
+	item.style =
+		"position:fixed; inset:0; width:100%; height:100%; border:none;";
 	document.body.appendChild(item);
 	item.focus();
 })();
