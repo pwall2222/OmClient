@@ -1,5 +1,5 @@
-import { backend } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/index.js";
-import { addMessage } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/ui/chat/add.js";
+import { backend } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/index.js";
+import { addMessage } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/ui/chat/add.js";
 const sendMessage = (msg) => {
     backend.sendIdentifiedPOST("send", { msg });
     addMessage(msg, "you");

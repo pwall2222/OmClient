@@ -1,5 +1,5 @@
-import { newChat, session } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/index.js";
-import { disconnect } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/ux/disconnect.js";
+import { newChat, session } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/index.js";
+import { disconnect } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/ux/disconnect.js";
 const dctxt = document.querySelector("#dscnttxt");
 const dcbtn = document.querySelector("#dscntbtn");
 const setDC = (className) => {

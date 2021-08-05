@@ -1,4 +1,4 @@
-import { releaseMedia } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/extra/media.js";
+import { releaseMedia } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/extra/media.js";
 const flexTape = document.querySelector("#flex-tape");
 const chat = document.querySelector(".chat");
 const chatBox = document.querySelector("#chatbox");

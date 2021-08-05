@@ -11,11 +11,6 @@ const commandExecuter = (command) => {
     commandFunction.call({ ...command });
 };
 class UserCommand {
-    raw;
-    full;
-    name;
-    arguments;
-    list;
     constructor(content) {
         this.raw = content.slice(1);
         this.full = this.raw.split(" ");

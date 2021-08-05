@@ -1,4 +1,4 @@
-import { errorHandler } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/ui/errorHandler.js";
+import { errorHandler } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/ui/errorHandler.js";
 const constrains = {
     video: true,
     audio: {

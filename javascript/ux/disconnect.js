@@ -1,12 +1,12 @@
-import { backend, newChat, session } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/index.js";
-import { clearAllElements } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/modules/dom.js";
-import { allowUnload } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/modules/functions.js";
-import { rateLimit, rateLimited } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/modules/ratelimit.js";
-import { deletePC } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/network/webrtc.js";
-import { settings } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/storage/settings.js";
-import { addStatus } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/ui/chat/add.js";
-import { setDC } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/ui/nodes/disconnect.js";
-import { othervideo } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/ui/nodes/video.js";
+import { backend, newChat, session } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/index.js";
+import { clearAllElements } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/modules/dom.js";
+import { allowUnload } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/modules/functions.js";
+import { rateLimit, rateLimited } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/modules/ratelimit.js";
+import { deletePC } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/network/webrtc.js";
+import { settings } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/storage/settings.js";
+import { addStatus } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/ui/chat/add.js";
+import { setDC } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/ui/nodes/disconnect.js";
+import { othervideo } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/ui/nodes/video.js";
 const disconnect = (autoskip = true) => {
     if (!session.started) {
         return;

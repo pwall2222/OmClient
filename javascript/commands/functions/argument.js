@@ -1,8 +1,8 @@
-import { sendMessage } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/extra/frontFunctions.js";
-import { session } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/index.js";
-import { settings } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/storage/settings.js";
-import { addCommand } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/ui/chat/add.js";
-import { setVolume } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/ui/nodes/video.js";
+import { sendMessage } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/extra/frontFunctions.js";
+import { session } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/index.js";
+import { settings } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/storage/settings.js";
+import { addCommand } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/ui/chat/add.js";
+import { setVolume } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/ui/nodes/video.js";
 const likes = function () {
     settings.likes = this.list;
 };

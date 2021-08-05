@@ -1,9 +1,9 @@
-import { commandHandler } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/commands/handler.js";
-import { sendMessage } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/extra/frontFunctions.js";
-import { session } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/index.js";
-import { clearChilds } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/modules/dom.js";
-import { settings } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/storage/settings.js";
-import { setDC } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/ui/nodes/disconnect.js";
+import { commandHandler } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/commands/handler.js";
+import { sendMessage } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/extra/frontFunctions.js";
+import { session } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/index.js";
+import { clearChilds } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/modules/dom.js";
+import { settings } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/storage/settings.js";
+import { setDC } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/ui/nodes/disconnect.js";
 import { addChild } from "./add.js";
 const logbox = document.querySelector("#logbox");
 const logwrapper = document.querySelector("#logwrapper");

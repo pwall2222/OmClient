@@ -1,4 +1,4 @@
-import { settings } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/storage/settings.js";
+import { settings } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/storage/settings.js";
 const connectionArgs = () => {
     const { video, likes, lang } = settings;
     const arg = {

@@ -1,11 +1,11 @@
-import * as cmd from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/commands/interface.js";
-import { backend } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/index.js";
-import { keyboardHandler } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/keyboard/handler.js";
-import { settingManager } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/storage/settings.js";
-import * as chatNode from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/ui/chat/manager.js";
-import * as disconnectNode from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/ui/nodes/disconnect.js";
-import * as videoNode from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/ui/nodes/video.js";
-import * as twiceSkip from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/ux/twiceSkip.js";
+import * as cmd from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/commands/interface.js";
+import { backend } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/index.js";
+import { keyboardHandler } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/keyboard/handler.js";
+import { settingManager } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/storage/settings.js";
+import * as chatNode from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/ui/chat/manager.js";
+import * as disconnectNode from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/ui/nodes/disconnect.js";
+import * as videoNode from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/ui/nodes/video.js";
+import * as twiceSkip from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/ux/twiceSkip.js";
 const loadAll = () => {
     addEventListeners();
     loadFromStroage();

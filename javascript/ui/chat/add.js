@@ -1,4 +1,4 @@
-import { createChildBefore } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/modules/dom.js";
+import { createChildBefore } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/modules/dom.js";
 import { clear, scroll } from "./manager.js";
 const addChild = (domObject) => {
     createChildBefore("#logbox", ".typing", domObject);

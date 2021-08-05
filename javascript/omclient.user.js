@@ -12,7 +12,7 @@
 	document.documentElement.innerHTML = "<head><title>Omegle</title></head><body></body>";
 	window.stop();
 	const doc = await fetch(
-		"https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/index.html"
+		"https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/index.html"
 	).then((response) => response.text());
 	const item = document.createElement("iframe");
 	item.srcdoc = doc;

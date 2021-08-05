@@ -1,5 +1,5 @@
-import { session } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/index.js";
-import { clearAllElements } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/modules/dom.js";
+import { session } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/index.js";
+import { clearAllElements } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/modules/dom.js";
 import { clearAdd } from "./chat/add.js";
 import { setDC } from "./nodes/disconnect.js";
 const errorHandler = (error) => {

@@ -1,6 +1,6 @@
-import { backend, session } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/index.js";
-import { clearArray } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/modules/array.js";
-import { othervideo } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/ui/nodes/video.js";
+import { backend, session } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/index.js";
+import { clearArray } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/modules/array.js";
+import { othervideo } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/ui/nodes/video.js";
 const WEB = {
     config: {
         iceServers: [
@@ -20,17 +20,17 @@ const WEB = {
 class PeerConnection extends RTCPeerConnection {
     constructor() {
         super(WEB.config);
+        this.ontrack = (event) => {
+            othervideo.srcObject = event.streams[0];
+        };
+        this.onicecandidate = async (event) => {
+            if (this.iceGatheringState === "complete") {
+                return;
+            }
+            await backend.sendIdentifiedPOST("icecandidate", { candidate: event.candidate });
+            clearArray(session.rtc.candidates);
+        };
     }
-    ontrack = (event) => {
-        othervideo.srcObject = event.streams[0];
-    };
-    onicecandidate = async (event) => {
-        if (this.iceGatheringState === "complete") {
-            return;
-        }
-        await backend.sendIdentifiedPOST("icecandidate", { candidate: event.candidate });
-        clearArray(session.rtc.candidates);
-    };
     addVideo(media) {
         const tracks = media.getTracks();
         for (const track of tracks) {

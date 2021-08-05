@@ -1,12 +1,14 @@
-import { getRandomItem, setFirst } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/modules/array.js";
-import { encodeObject } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/modules/functions.js";
+import { getRandomItem, setFirst } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/modules/array.js";
+import { encodeObject } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/modules/functions.js";
 class Backend {
-    executer;
-    errorHandler;
-    connectionArgs;
-    server;
-    id;
     constructor({ eventHandler, connectionArgs, errorHandler }) {
+        this.sendIdentifiedPOST = (path, data) => {
+            const sendData = data || {};
+            const plainObject = { id: this.id, ...sendData };
+            const encodedData = encodeObject(plainObject);
+            return this.sendPOST(path, encodedData);
+        };
+        this.disconnect = () => this.sendIdentifiedPOST("disconnect");
         this.executer = eventHandler;
         this.connectionArgs = connectionArgs;
         this.errorHandler = errorHandler;
@@ -23,13 +25,6 @@ class Backend {
         response.catch(this.errorHandler);
         return response;
     }
-    sendIdentifiedPOST = (path, data) => {
-        const sendData = data || {};
-        const plainObject = { id: this.id, ...sendData };
-        const encodedData = encodeObject(plainObject);
-        return this.sendPOST(path, encodedData);
-    };
-    disconnect = () => this.sendIdentifiedPOST("disconnect");
     async connect() {
         const args = encodeObject(this.connectionArgs());
         const url = `https://${this.server}.omegle.com/start?${args}`;

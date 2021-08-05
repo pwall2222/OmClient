@@ -1,11 +1,11 @@
-import { getLikeString } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/extra/frontFunctions.js";
-import { session } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/index.js";
-import { blockUnload } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/modules/functions.js";
-import { settings } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/storage/settings.js";
-import { addMessage, addStatus, clearAdd } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/ui/chat/add.js";
-import { setTyping } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/ui/chat/manager.js";
-import { disconnect, userDisconect } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/ux/disconnect.js";
-import { twiceSkipping } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0/javascript/ux/twiceSkip.js";
+import { getLikeString } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/extra/frontFunctions.js";
+import { session } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/index.js";
+import { blockUnload } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/modules/functions.js";
+import { settings } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/storage/settings.js";
+import { addMessage, addStatus, clearAdd } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/ui/chat/add.js";
+import { setTyping } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/ui/chat/manager.js";
+import { disconnect, userDisconect } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/ux/disconnect.js";
+import { twiceSkipping } from "https://cdn.jsdelivr.net/gh/pwall2222/OmClient@1.0.0/javascript/ux/twiceSkip.js";
 import { eventHandlerRTC } from "./webrtc.js";
 const eventHandler = (event) => {
     const { name, data } = event;
