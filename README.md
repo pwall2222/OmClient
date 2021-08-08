@@ -1,4 +1,4 @@
-# Omegle Tweaks
+# OmClient
 
 Omegle Tweaks is a full-blown writte up of Omegle wich injects into the code and substitudes it giving it some new features and customization.
 

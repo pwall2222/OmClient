@@ -1,5 +1,5 @@
 //==UserScript==
-//@name         Omegle-Tweaks
+//@name         OmClient
 //@version      1.0
 //@author       PWall
 //@include      https://omegle.com/*
