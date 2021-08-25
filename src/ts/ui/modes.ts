@@ -12,7 +12,7 @@ const text = () => {
 };
 
 const video = () => {
-	flexTape.style.display = "flex";
+	flexTape.style.display = "";
 	chat.appendChild(chatBox);
 };
 
