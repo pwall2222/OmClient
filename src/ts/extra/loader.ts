@@ -6,6 +6,7 @@ import * as chatNode from "ui/chat/manager.js";
 import * as disconnectNode from "ui/nodes/disconnect.js";
 import * as videoNode from "ui/nodes/video.js";
 import * as twiceSkip from "ux/twiceSkip.js";
+import { typingHanlder } from "ux/typing.js";
 
 const loadAll = () => {
 	addEventListeners();
@@ -15,6 +16,7 @@ const loadAll = () => {
 };
 
 const addEventListeners = () => {
+	chatNode.typebox.addEventListener("input", typingHanlder);
 	chatNode.sendbtn.addEventListener("click", chatNode.handleInput);
 	disconnectNode.dcbtn.addEventListener("click", disconnectNode.dchandler);
 	videoNode.othervideo.addEventListener("play", videoNode.playEvent);
