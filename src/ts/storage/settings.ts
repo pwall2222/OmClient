@@ -7,6 +7,7 @@ const settings = {
 	autodisconnect: false,
 	autodisconnect_delay: 10000,
 	autoclearchat: true,
+	silent_typing: false,
 	cmd_history: 25,
 	likes: <string[]>[],
 	likes_enabled: false,

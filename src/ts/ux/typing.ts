@@ -1,4 +1,5 @@
 import { backend, session } from "index.js";
+import { settings } from "storage/settings.js";
 import { typebox } from "ui/chat/manager.js";
 
 let timeout = -1;
@@ -20,7 +21,7 @@ const stopTyping = () => {
 };
 
 const typingHanlder = () => {
-	if (!session.connected) {
+	if (!session.connected || settings.silent_typing) {
 		return;
 	}
 	if (typebox.value.trim() === "") {
