@@ -1,9 +1,10 @@
-import { backend } from "index.js";
+import { backend, session } from "index.js";
 import { addMessage } from "ui/chat/add.js";
 
 const sendMessage = (msg: string) => {
 	backend.sendIdentifiedPOST("send", { msg });
 	addMessage(msg, "you");
+	session.typing = false;
 };
 
 const getLikeString = (likes: string[]) => {
