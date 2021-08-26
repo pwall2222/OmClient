@@ -12,7 +12,7 @@ const stop = () => disconnect(false);
 
 const server = () => backend.serverFinder();
 
-const project = () => sendMessage("https://github.com/PWall2222/Omegle-Tweak");
+const project = () => sendMessage("https://github.com/PWall2222/OmClient");
 
 const setting = () => addCommand(JSON.stringify(settings, null, 4));
 
