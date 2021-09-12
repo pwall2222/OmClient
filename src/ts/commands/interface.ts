@@ -34,6 +34,9 @@ const changeVal = (newPosition: number) => {
 };
 
 const handleHistory = (command: string) => {
+	if (command[1] == " ") {
+		return;
+	}
 	cmd.position = -1;
 	addToHistory(command);
 };
