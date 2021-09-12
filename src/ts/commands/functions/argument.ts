@@ -1,5 +1,6 @@
 import { UserCommand } from "commands/handler.js";
 import { sendMessage } from "extra/frontFunctions.js";
+import { muteCam, muteMic } from "extra/media.js";
 import { session } from "index.js";
 import { bindKey } from "keyboard/bindings.js";
 import { settings } from "storage/settings.js";
@@ -47,4 +48,18 @@ const bind = function (this: UserCommand) {
 	bindKey(command);
 };
 
-export { set, social, send, volume, likes, bind };
+const mute = function (this: UserCommand) {
+	const arg = this.arguments[0];
+	if (arg == "cam") {
+		muteCam();
+		return;
+	}
+	if (arg == "mic") {
+		muteMic();
+		return;
+	}
+	muteCam();
+	muteMic();
+};
+
+export { set, social, send, volume, likes, bind, mute };

@@ -127,6 +127,12 @@ const commands: command[] = [
 		description: "Bind a key",
 		exec: functions.bind,
 	},
+	{
+		name: "Mute",
+		alias: ["mute"],
+		description: "Gives you the hability to mute the video, audio or both",
+		exec: functions.mute,
+	},
 ];
 
 export { commands };
