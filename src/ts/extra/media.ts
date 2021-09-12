@@ -30,4 +30,16 @@ const releaseMedia = async () => {
 	tracks.forEach((track: MediaStreamTrack) => track.stop());
 };
 
-export { media, setMedia, releaseMedia };
+const muteAny = (track: MediaStreamTrack) => (track.enabled = !track.enabled);
+
+const muteMic = async () => {
+	const mediaObj = await media;
+	mediaObj.getAudioTracks().forEach(muteAny);
+};
+
+const muteCam = async () => {
+	const mediaObj = await media;
+	mediaObj.getVideoTracks().forEach(muteAny);
+};
+
+export { media, setMedia, releaseMedia, muteCam, muteMic };
