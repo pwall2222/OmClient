@@ -25,8 +25,7 @@ const keyboardHandler = (keyEvent: KeyboardEvent) => {
 	if (command.prevent) {
 		keyEvent.preventDefault();
 	}
-	const bindedFunction = command.exec.bind(keyEvent);
-	bindedFunction();
+	command.exec.apply(keyEvent);
 };
 
 export { keyboardHandler };
