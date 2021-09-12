@@ -1,6 +1,7 @@
 import { UserCommand } from "commands/handler.js";
 import { sendMessage } from "extra/frontFunctions.js";
 import { session } from "index.js";
+import { bindKey } from "keyboard/bindings.js";
 import { settings } from "storage/settings.js";
 import { addCommand } from "ui/chat/add.js";
 import { setVolume } from "ui/nodes/video.js";
@@ -40,4 +41,10 @@ const volume = function (this: UserCommand) {
 	}
 };
 
-export { set, social, send, volume, likes };
+const bind = function (this: UserCommand) {
+	const args = this.arguments.join(" ");
+	const command = args.replace(/%%/g, "&&");
+	bindKey(command);
+};
+
+export { set, social, send, volume, likes, bind };

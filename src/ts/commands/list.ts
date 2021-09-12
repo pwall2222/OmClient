@@ -121,6 +121,12 @@ const commands: command[] = [
 		description: "Clears chat",
 		exec: functions.clearChat,
 	},
+	{
+		name: "Bind",
+		alias: ["bind"],
+		description: "Bind a key",
+		exec: functions.bind,
+	},
 ];
 
 export { commands };

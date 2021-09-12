@@ -54,6 +54,12 @@ interface tagKey extends keyEvent {
 
 type keyEvents = globalKey | tagKey;
 
+interface keyBind {
+	mode: number;
+	code: string;
+	command: string;
+}
+
 interface command {
 	name: string;
 	alias: string[];
@@ -64,3 +70,5 @@ interface command {
 type disconnectStatus = "stop" | "rlly" | "new";
 type messageAuthor = "you" | "stranger";
 type themes = "dark" | "light";
+
+type boolObj = { [key: string]: boolean };

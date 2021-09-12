@@ -15,6 +15,7 @@ const settings = {
 	theme: <themes>"light",
 	video: true,
 	socials: {},
+	bindings: <keyBind[]>[],
 };
 
 const settingManager = {

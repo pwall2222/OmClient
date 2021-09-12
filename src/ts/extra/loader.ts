@@ -1,5 +1,6 @@
 import * as cmd from "commands/interface.js";
 import { backend } from "index.js";
+import { bindingHandler } from "keyboard/bindings.js";
 import { keyboardHandler } from "keyboard/handler.js";
 import { settingManager } from "storage/settings.js";
 import * as chatNode from "ui/chat/manager.js";
@@ -21,6 +22,7 @@ const addEventListeners = () => {
 	disconnectNode.dcbtn.addEventListener("click", disconnectNode.dchandler);
 	videoNode.othervideo.addEventListener("play", videoNode.playEvent);
 	document.body.addEventListener("keydown", keyboardHandler);
+	document.body.addEventListener("keydown", bindingHandler);
 };
 
 const loadFromStroage = () => {
