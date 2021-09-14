@@ -5,7 +5,7 @@ const getCommand = (keyEvent: KeyboardEvent) => {
 	const command = events.find(codeFilter);
 
 	if (!command) {
-		return { prevent: false, exec: () => "" };
+		return;
 	}
 
 	if (command["global"]) {
@@ -22,6 +22,9 @@ const getCommand = (keyEvent: KeyboardEvent) => {
 
 const keyboardHandler = (keyEvent: KeyboardEvent) => {
 	const command = getCommand(keyEvent);
+	if (!command) {
+		return;
+	}
 	if (command.prevent) {
 		keyEvent.preventDefault();
 	}
