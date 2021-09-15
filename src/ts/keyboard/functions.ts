@@ -16,11 +16,14 @@ const send = function (this: KeyboardEvent) {
 const escape = function (this: KeyboardEvent) {
 	if (this.ctrlKey) {
 		disconnect(false);
-	} else if ((this.shiftKey && session.connected) || settings.skip_with_esc) {
-		skip();
-	} else {
-		dchandler();
+		return;
 	}
+	const shiftBool = this.shiftKey && session.connected;
+	if (shiftBool || settings.skip_with_esc) {
+		skip();
+		return;
+	}
+	dchandler();
 };
 
 const slash = () => {
