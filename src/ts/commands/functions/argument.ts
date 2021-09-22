@@ -62,4 +62,26 @@ const mute = function (this: UserCommand) {
 	muteMic();
 };
 
-export { set, social, send, volume, likes, bind, mute };
+const binds = function (this: UserCommand) {
+	const { bindings } = settings;
+	switch (this.arguments[0]) {
+		case "pop": {
+			settings.bindings.pop();
+			break;
+		}
+		case "shift": {
+			settings.bindings.shift();
+			break;
+		}
+		case "rm": {
+			const count = +this.arguments[1];
+			if (!count || count > bindings.length) {
+				return;
+			}
+			bindings.splice(count - 1, 1);
+			break;
+		}
+	}
+};
+
+export { set, social, send, volume, likes, bind, mute, binds };

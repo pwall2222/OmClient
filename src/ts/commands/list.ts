@@ -133,6 +133,12 @@ const commands: command[] = [
 		description: "Gives you the hability to mute the video, audio or both",
 		exec: functions.mute,
 	},
+	{
+		name: "Bindings",
+		alias: ["binds", "bindings"],
+		description: "Utility to manage your bindings",
+		exec: functions.binds,
+	},
 ];
 
 export { commands };
