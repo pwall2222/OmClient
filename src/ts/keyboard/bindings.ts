@@ -3,30 +3,29 @@ import { settings } from "storage/settings.js";
 import { typebox } from "ui/chat/manager.js";
 import { events } from "./list.js";
 
-const recordKey = () =>
-	new Promise((resolve: (key: KeyboardEvent) => void) => {
-		const handleEvent = (keyEvent: KeyboardEvent) => {
-			const filter = ({ key }: keyEvents) => key === keyEvent.code;
-			if (events.some(filter)) {
-				return;
-			}
-			resolve(keyEvent);
-			document.removeEventListener("keydown", handleEvent);
-		};
-		document.addEventListener("keydown", handleEvent);
-	});
-
-const getMode = ({ ctrlKey, altKey, shiftKey }: boolObj) => +ctrlKey * 100 + +altKey * 10 + +shiftKey;
-
-const getKey = async () => {
-	const { altKey, ctrlKey, shiftKey, code } = await recordKey();
-	const mode = getMode({ ctrlKey, altKey, shiftKey });
-	return { code, mode };
+const recordKeyPromise = (resolve: (key: { code: string; mode: number }) => void) => {
+	const handleEvent = (keyEvent: KeyboardEvent) => {
+		const { altKey, ctrlKey, shiftKey, code } = keyEvent;
+		const mode = getMode({ ctrlKey, altKey, shiftKey });
+		const filterEvents = ({ key }: keyEvents) => key === code;
+		const filterBinds = (binding: keyBind) => binding.code == code && binding.mode == mode;
+		const filters = events.some(filterEvents) || settings.bindings.some(filterBinds);
+		if (filters) {
+			return;
+		}
+		resolve({ code, mode });
+		document.removeEventListener("keydown", handleEvent);
+	};
+	document.addEventListener("keydown", handleEvent);
 };
+
+const recordKey = () => new Promise(recordKeyPromise);
+
+const getMode = (num: boolObj) => +num.ctrlKey * 100 + +num.altKey * 10 + +num.shiftKey;
 
 const bindKey = async (command: string) => {
 	typebox.blur();
-	const key = await getKey();
+	const key = await recordKey();
 	const binding = { ...key, command };
 	settings.bindings.push(binding);
 };
