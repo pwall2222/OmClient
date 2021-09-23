@@ -7,6 +7,7 @@ const settings = {
     autodisconnect: false,
     autodisconnect_delay: 10000,
     autoclearchat: true,
+    silent_typing: false,
     cmd_history: 25,
     likes: [],
     likes_enabled: false,
@@ -14,6 +15,7 @@ const settings = {
     theme: "light",
     video: true,
     socials: {},
+    bindings: [],
 };
 const settingManager = {
     load() {

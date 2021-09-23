@@ -3,7 +3,7 @@ const getCommand = (keyEvent) => {
     const codeFilter = ({ key }) => key === keyEvent.code;
     const command = events.find(codeFilter);
     if (!command) {
-        return { prevent: false, exec: () => "" };
+        return;
     }
     if (command["global"]) {
         return command;
@@ -16,11 +16,13 @@ const getCommand = (keyEvent) => {
 };
 const keyboardHandler = (keyEvent) => {
     const command = getCommand(keyEvent);
+    if (!command) {
+        return;
+    }
     if (command.prevent) {
         keyEvent.preventDefault();
     }
-    const bindedFunction = command.exec.bind(keyEvent);
-    bindedFunction();
+    command.exec.apply(keyEvent);
 };
 export { keyboardHandler };
 

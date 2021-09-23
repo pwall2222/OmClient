@@ -32,8 +32,13 @@
 	--border: var(--chat);
 }
 
+[data-mode="text"] body {
+	display: none;
+}
+
 html {
 	height: 100%;
+	background: var(--background);
 }
 
 body {

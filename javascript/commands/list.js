@@ -120,6 +120,24 @@ const commands = [
         description: "Clears chat",
         exec: functions.clearChat,
     },
+    {
+        name: "Bind",
+        alias: ["bind"],
+        description: "Bind a key",
+        exec: functions.bind,
+    },
+    {
+        name: "Mute",
+        alias: ["mute"],
+        description: "Gives you the hability to mute the video, audio or both",
+        exec: functions.mute,
+    },
+    {
+        name: "Bindings",
+        alias: ["binds", "bindings"],
+        description: "Utility to manage your bindings",
+        exec: functions.binds,
+    },
 ];
 export { commands };
 
