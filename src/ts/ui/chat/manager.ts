@@ -51,11 +51,14 @@ const handleInput = () => {
 	if (chatContents[0] === "/") {
 		commandHandler(chatContents);
 		typebox.value = "";
-	} else if (session.connected && chatContents !== "") {
-		sendMessage(typebox.value);
-		typebox.value = "";
-		setDC("stop");
+		return;
 	}
+	if (!session.connected || chatContents === "") {
+		return;
+	}
+	sendMessage(typebox.value);
+	typebox.value = "";
+	setDC("stop");
 };
 
 export { logbox, typebox, sendbtn };
