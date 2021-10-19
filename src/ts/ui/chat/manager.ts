@@ -1,7 +1,7 @@
 import { commandHandler } from "commands/handler.js";
 import { sendMessage } from "extra/frontFunctions.js";
 import { session } from "index.js";
-import { clearChilds } from "modules/dom.js";
+import { clearAllElements, clearChilds } from "modules/dom.js";
 import { settings } from "storage/settings.js";
 import { setDC } from "ui/nodes/disconnect.js";
 import { addChild } from "./add.js";
@@ -28,7 +28,14 @@ const autoClearChat = () => {
 const setTyping = (state: boolean) => {
 	session.typing = state;
 	if (!state) {
-		document.querySelector(".typing")?.remove();
+		clearAllElements(".typing");
+		return;
+	}
+	addTyping();
+};
+
+const addTyping = () => {
+	if (document.querySelector(".typing")) {
 		return;
 	}
 	addChild({
