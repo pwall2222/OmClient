@@ -7,7 +7,7 @@ const connectionArgs = () => {
 		webrtc: true,
 		firstevents: false,
 		lang: lang,
-		topics: likes,
+		topics: JSON.stringify(likes),
 	};
 
 	if (!settings.likes_enabled) {
