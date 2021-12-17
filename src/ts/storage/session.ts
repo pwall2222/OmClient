@@ -7,6 +7,8 @@ class Session {
 		call: false,
 		peer: false,
 		candidates: <RTCIceCandidate[]>[],
+		icelocal: <RTCIceCandidate[]>[],
+		wait: 0,
 	};
 }
 
