@@ -30,6 +30,11 @@ interface domObjectArguments {
 	slot?: string;
 	nodeValue?: string | null;
 	textContent?: string | null;
+	value?: string;
+	label?: string;
+	selected?: boolean;
+	text?: string;
+	multiple?: boolean | "";
 	/* [key: string]: unknown */
 }
 
