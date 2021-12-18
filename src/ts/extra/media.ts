@@ -30,6 +30,20 @@ const releaseMedia = async () => {
 	tracks.forEach((track: MediaStreamTrack) => track.stop());
 };
 
+const changeMic = async (id: string) => {
+	(await media).getAudioTracks()[0].stop();
+	const nConstrains = {
+		video: true,
+		audio: {
+			echoCancellation: true,
+			noiseSuppression: true,
+			deviceId: { exact: id },
+		},
+	};
+	media = navigator.mediaDevices.getUserMedia(nConstrains);
+	return media;
+};
+
 const muteAny = (track: MediaStreamTrack) => (track.enabled = !track.enabled);
 
 const muteMic = async () => {
@@ -42,4 +56,4 @@ const muteCam = async () => {
 	mediaObj.getVideoTracks().forEach(muteAny);
 };
 
-export { media, setMedia, releaseMedia, muteCam, muteMic };
+export { media, setMedia, releaseMedia, muteCam, muteMic, changeMic };

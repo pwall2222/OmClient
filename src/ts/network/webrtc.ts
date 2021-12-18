@@ -103,6 +103,12 @@ const createPC = (media: MediaStream) => {
 	Object.freeze(pc);
 };
 
+const replaceTrack = async (mediaTrack: MediaStreamTrack) => {
+	const senders = pc.getSenders();
+	const sender = senders.find((s) => s.track.kind == mediaTrack.kind);
+	sender.replaceTrack(mediaTrack);
+};
+
 const deletePC = () => {
 	pc.close();
 	delete pc.ontrack;
@@ -112,4 +118,4 @@ const deletePC = () => {
 
 let pc: PeerConnection;
 
-export { eventHandlerRTC, createPC, deletePC };
+export { eventHandlerRTC, createPC, deletePC, replaceTrack };
