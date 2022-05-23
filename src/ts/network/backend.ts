@@ -19,6 +19,9 @@ class Backend {
 	connectionArgs: ConnectionArgs;
 	server: string;
 	id: string;
+	host = window.location.host || window.parent.location.host;
+	domain = this.host.replace("www.", "");
+	protocol = window.location.protocol;
 
 	constructor({ eventHandler, connectionArgs, errorHandler }: backendArguments) {
 		this.executer = eventHandler;
@@ -26,8 +29,13 @@ class Backend {
 		this.errorHandler = errorHandler;
 	}
 
+	craftURL(server: string, path: string) {
+		const { protocol, domain } = this;
+		return `${protocol}//${server}.${domain}/${path}`;
+	}
+
 	async sendPOST(path: string, data: string) {
-		const response = fetch(`https://${this.server}.omegle.com/${path}`, {
+		const response = fetch(this.craftURL(this.server, path), {
 			method: "POST",
 			body: data,
 			headers: {
@@ -50,7 +58,7 @@ class Backend {
 
 	async connect() {
 		const args = encodeObject(this.connectionArgs());
-		const url = `https://${this.server}.omegle.com/start?${args}`;
+		const url = this.craftURL(this.server, `start?${args}`);
 		const responsePromise = fetch(url, {
 			method: "POST",
 			referrerPolicy: "no-referrer",
@@ -88,7 +96,7 @@ class Backend {
 	}
 
 	async serverFinder() {
-		const rawDataPromise = fetch("https://omegle.com/status");
+		const rawDataPromise = fetch(this.craftURL("chatserv", "status"));
 		rawDataPromise.catch(this.errorHandler);
 		const rawData = await rawDataPromise;
 		const info = await rawData.json();
