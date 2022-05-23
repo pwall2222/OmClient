@@ -66,9 +66,14 @@ const markdownLog = async () => {
 	logTask("Copying finished", "MarkDown", "36");
 };
 
+const getSubdomain = (host) => {
+	const portLess = host.split(":")[0];
+	const hostSplit = portLess.split(".");
+	return hostSplit[0];
+};
+
 const corsProxy = (req, res, next) => {
-	const hostarr = req.headers["host"].split(".");
-	const subdomain = hostarr[0];
+	const subdomain = getSubdomain(req.headers["host"]);
 	const excludes = ["www", "localhost"];
 	if (excludes.includes(subdomain) || !isNaN(subdomain)) {
 		next();
