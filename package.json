@@ -13,6 +13,9 @@
     "gulp-typescript": "*",
     "typescript": "4.2.4"
   },
+  "scripts": {
+    "start": "gulp"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PWall2222/Omegle-Tweak.git"

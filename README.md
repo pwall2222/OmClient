@@ -23,7 +23,7 @@ npm i --include=dev
 And run this to get a webserver (in port 3000) and autocompiling from typescript on save.
 
 ```bash
-gulp
+npm start
 ```
 
 ## Authors
