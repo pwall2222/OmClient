@@ -1,6 +1,7 @@
 const { watch } = require("gulp");
 const { compileTS } = require("./typescript.js");
 const { page } = require("./page.js");
+const { userscript } = require("./userscript.js");
 
 const logTask = (message, task, colorNum) => {
 	const white = "\x1b[0m";
@@ -9,6 +10,7 @@ const logTask = (message, task, colorNum) => {
 };
 
 const compile = async () => {
+	await userscript();
 	await pageLog();
 	await compileTSLog();
 };

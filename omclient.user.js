@@ -11,7 +11,7 @@
 (async () => {
 	document.documentElement.innerHTML = "<head><title>Omegle</title></head><body></body>";
 	window.stop();
-	const doc = await fetch("").then((response) => response.text());
+	const doc = await fetch("{magicurl}index.html").then((response) => response.text());
 	const item = document.createElement("iframe");
 	item.srcdoc = doc;
 	item.style = "position:fixed; inset:0; width:100%; height:100%; border:none;";
