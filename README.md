@@ -10,7 +10,7 @@ To install this client you will need a user-script extension such as:
 - [TamperMonkey](https://www.tampermonkey.net/index.php)
 - [GreasyMonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/)
 
-And just install the latest release from this [link](https://github.com/pwall2222/OmClient/raw/release/javascript/omclient.user.js)
+And just install the latest release from this [link](https://github.com/FlowerAce/OmClient-dist/raw/main/javascript/omclient.user.js)
 
 ## Developing
 
