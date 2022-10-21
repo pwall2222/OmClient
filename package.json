@@ -11,7 +11,8 @@
     "gulp-replace": "^1.1.1",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-typescript": "*",
-    "typescript": "4.2.4"
+    "typescript": "4.2.4",
+    "yargs": "^17.6.0"
   },
   "scripts": {
     "start": "gulp"
