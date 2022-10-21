@@ -3,7 +3,7 @@ import { settings } from "storage/settings.js";
 const connectionArgs = () => {
 	const { video, likes, lang } = settings;
 	const arg = {
-		caps: "t",
+		caps: "t2",
 		webrtc: true,
 		firstevents: false,
 		lang: lang,
