@@ -1,0 +1,44 @@
+name: Push compiled code to remote
+
+on:
+  push:
+    tags:
+      - "**"
+
+env:
+  OUTPUT: javascript
+  REMOTE: OmClient-dist
+  REMOTE_USER: FlowerAce
+  REMOTE_PATH: dist
+  CDN: https://cdn.jsdelivr.net/gh
+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install dependencies
+        run: |
+          npm install
+          npm install --global gulp
+      - uses: actions/checkout@v3
+        with:
+          repository: ${{ env.REMOTE_USER }}/${{ env.REMOTE }}
+          path: ${{ env.REMOTE_PATH }}
+      - run: gulp compile --output $REMOTE_PATH/$OUTPUT/ --url $CDN/$REMOTE_USER/$REMOTE@$TAG/$OUTPUT/
+      - name: Push to the distribution repository
+        uses: FlowerAce/git-push@main
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+        with:
+          tag-name: ${{ github.ref_name }}
+          source-directory: ${{ env.REMOTE_PATH }}
+          destination-github-username: ${{ env.REMOTE_USER }}
+          destination-repository-name: ${{ env.REMOTE }}
+          target-branch: main
