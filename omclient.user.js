@@ -1,12 +1,12 @@
-//==UserScript==
-//@name         OmClient
-//@version      1.0
-//@author       PWall
-//@include      https://omegle.com/*
-//@include      https://www.omegle.com/*
-//@run-at       document-start
-//@grant        none
-//==/UserScript==
+// ==UserScript==
+// @name         OmClient
+// @version      1.0
+// @author       PWall
+// @include      https://omegle.com/*
+// @include      https://www.omegle.com/*
+// @run-at       document-start
+// @grant        none
+// ==/UserScript==
 
 (async () => {
 	document.documentElement.innerHTML = "<head><title>Omegle</title></head><body></body>";
