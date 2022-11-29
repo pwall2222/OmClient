@@ -21,7 +21,7 @@ class Backend {
 	id: string;
 	host = window?.parent.location.host || window.location.host;
 	domain = this.host.replace("www.", "");
-	protocol = window.location.protocol;
+	protocol = window?.parent.location.protocol || window.location.protocol;
 
 	constructor({ eventHandler, connectionArgs, errorHandler }: backendArguments) {
 		this.executer = eventHandler;
