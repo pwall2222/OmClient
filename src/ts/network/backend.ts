@@ -19,7 +19,7 @@ class Backend {
 	connectionArgs: ConnectionArgs;
 	server: string;
 	id: string;
-	host = window.location.host || window.parent.location.host;
+	host = window?.parent.location.host || window.location.host;
 	domain = this.host.replace("www.", "");
 	protocol = window.location.protocol;
 
