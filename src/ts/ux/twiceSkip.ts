@@ -3,7 +3,9 @@ import { skip } from "./disconnect.js";
 
 const idHistory: string[] = [];
 
-const checkId = (id: string) => idHistory.some((functionId: string) => functionId == id);
+const hashSet: Set<string> = new Set();
+
+let browserHash = "";
 
 const saveLocal = () => localStorage.setItem("idHistory", JSON.stringify(idHistory));
 
@@ -15,12 +17,40 @@ const loadLocal = () => {
 	idHistory.push(...parsed);
 };
 
+const getPairs = (id: string) => {
+	const hashes = id.split(",");
+	const firstPair = hashes[0] + hashes[1];
+	const secondPair = hashes[2] + hashes[3];
+	return [firstPair, secondPair];
+}
+
+const getRemoteHash = (id: string) => {
+	const pairs = getPairs(id);
+	return pairs[0] === browserHash ? pairs[1] : pairs[0];
+}
+
+const setBrowserHash = (id: string) => {
+	const pairs = getPairs(id);
+	for (const pair of pairs) {
+		if (hashSet.has(pair)) {
+			browserHash = pair;
+			return;
+		}
+		hashSet.add(pair);
+	}
+}
+
 const twiceSkipping = (id: string) => {
-	if (checkId(id) && settings.twiceskip) {
+	if (!browserHash) {
+		setBrowserHash(id);
+		return;
+	}
+	const remoteHash = getRemoteHash(id);
+	if (idHistory.includes(remoteHash) && settings.twiceskip) {
 		skip();
 		return true;
 	}
-	idHistory.push(id);
+	idHistory.push(remoteHash);
 	saveLocal();
 };
 
