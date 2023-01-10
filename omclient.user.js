@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         OmClient
-// @version      1.0
+// @version      {version}
 // @author       PWall
 // @include      https://omegle.com/*
 // @include      https://www.omegle.com/*

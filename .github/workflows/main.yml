@@ -31,7 +31,7 @@ jobs:
         with:
           repository: ${{ env.REMOTE_USER }}/${{ env.REMOTE }}
           path: ${{ env.REMOTE_PATH }}
-      - run: gulp compile --output $REMOTE_PATH/$OUTPUT/ --url $CDN/$REMOTE_USER/$REMOTE@$TAG/$OUTPUT/
+      - run: gulp compile --output $REMOTE_PATH/$OUTPUT/ --url $CDN/$REMOTE_USER/$REMOTE@$TAG/$OUTPUT/ --tag $TAG
       - name: Push to the distribution repository
         uses: FlowerAce/git-push@main
         env:
