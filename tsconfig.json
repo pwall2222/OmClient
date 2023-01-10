@@ -10,5 +10,6 @@
 		"sourceMap": true,
 		"module": "ESNext",
 		"paths": {"@/*": ["*"]}
-	}
+	},
+	"paths": {"@/*": ["./src/ts/"]}
 }

@@ -1,6 +1,7 @@
 {
   "name": "omegle-tweak",
   "devDependencies": {
+    "@gulp-plugin/alias": "^2.2.2",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
     "browser-sync": "^2.26.14",
