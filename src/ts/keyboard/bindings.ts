@@ -1,6 +1,6 @@
-import { commandHandler } from "commands/handler.js";
-import { settings } from "storage/settings.js";
-import { typebox } from "ui/chat/manager.js";
+import { commandHandler } from "@/commands/handler.js";
+import { settings } from "@/storage/settings.js";
+import { typebox } from "@/ui/chat/manager.js";
 import { events } from "./list.js";
 
 const recordKeyPromise = (resolve: (key: { code: string; mode: number }) => void) => {

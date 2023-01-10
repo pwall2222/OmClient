@@ -1,5 +1,5 @@
-import { newChat, session } from "index.js";
-import { disconnect } from "ux/disconnect.js";
+import { newChat, session } from "@/index.js";
+import { disconnect } from "@/ux/disconnect.js";
 
 const dctxt = document.querySelector("#dscnttxt");
 const dcbtn = document.querySelector("#dscntbtn");

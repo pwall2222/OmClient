@@ -1,9 +1,9 @@
-import { commandHandler } from "commands/handler.js";
-import { sendMessage } from "extra/frontFunctions.js";
-import { session } from "index.js";
-import { clearAllElements, clearChilds } from "modules/dom.js";
-import { settings } from "storage/settings.js";
-import { setDC } from "ui/nodes/disconnect.js";
+import { commandHandler } from "@/commands/handler.js";
+import { sendMessage } from "@/extra/frontFunctions.js";
+import { session } from "@/index.js";
+import { clearAllElements, clearChilds } from "@/modules/dom.js";
+import { settings } from "@/storage/settings.js";
+import { setDC } from "@/ui/nodes/disconnect.js";
 import { addChild } from "./add.js";
 
 const logbox = document.querySelector("#logbox");

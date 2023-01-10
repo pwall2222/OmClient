@@ -1,4 +1,4 @@
-import { settings } from "storage/settings.js";
+import { settings } from "@/storage/settings.js";
 
 const connectionArgs = () => {
 	const { video, likes, lang } = settings;

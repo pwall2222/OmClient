@@ -8,6 +8,7 @@
 		"incremental": true,
 		"alwaysStrict": true,
 		"sourceMap": true,
-		"module": "ESNext"
+		"module": "ESNext",
+		"paths": {"@/*": ["*"]}
 	}
 }

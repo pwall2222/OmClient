@@ -1,5 +1,5 @@
-import { session } from "index.js";
-import { clearAllElements, createChild } from "modules/dom.js";
+import { session } from "@/index.js";
+import { clearAllElements, createChild } from "@/modules/dom.js";
 
 const othervideo = document.querySelector<HTMLVideoElement>("#othervideo");
 

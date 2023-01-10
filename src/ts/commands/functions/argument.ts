@@ -1,11 +1,11 @@
-import { UserCommand } from "commands/handler.js";
-import { sendMessage } from "extra/frontFunctions.js";
-import { muteCam, muteMic } from "extra/media.js";
-import { session } from "index.js";
-import { bindKey } from "keyboard/bindings.js";
-import { settings } from "storage/settings.js";
-import { addCommand } from "ui/chat/add.js";
-import { setVolume } from "ui/nodes/video.js";
+import { UserCommand } from "@/commands/handler.js";
+import { sendMessage } from "@/extra/frontFunctions.js";
+import { muteCam, muteMic } from "@/extra/media.js";
+import { session } from "@/index.js";
+import { bindKey } from "@/keyboard/bindings.js";
+import { settings } from "@/storage/settings.js";
+import { addCommand } from "@/ui/chat/add.js";
+import { setVolume } from "@/ui/nodes/video.js";
 
 const likes = function (this: UserCommand) {
 	settings.likes = this.list;

@@ -1,4 +1,4 @@
-import { releaseMedia } from "extra/media.js";
+import { releaseMedia } from "@/extra/media.js";
 
 const flexTape = document.querySelector<HTMLElement>("#flex-tape");
 const chat = document.querySelector<HTMLElement>(".chat");

@@ -1,12 +1,12 @@
-import { backend, newChat, session } from "index.js";
-import { clearAllElements } from "modules/dom.js";
-import { allowUnload } from "modules/functions.js";
-import { rateLimit, rateLimited } from "modules/ratelimit.js";
-import { deletePC } from "network/webrtc.js";
-import { settings } from "storage/settings.js";
-import { addStatus } from "ui/chat/add.js";
-import { setDC } from "ui/nodes/disconnect.js";
-import { othervideo } from "ui/nodes/video.js";
+import { backend, newChat, session } from "@/index.js";
+import { clearAllElements } from "@/modules/dom.js";
+import { allowUnload } from "@/modules/functions.js";
+import { rateLimit, rateLimited } from "@/modules/ratelimit.js";
+import { deletePC } from "@/network/webrtc.js";
+import { settings } from "@/storage/settings.js";
+import { addStatus } from "@/ui/chat/add.js";
+import { setDC } from "@/ui/nodes/disconnect.js";
+import { othervideo } from "@/ui/nodes/video.js";
 
 const disconnect = (autoskip: boolean = true) => {
 	if (!session.started) {

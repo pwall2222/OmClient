@@ -1,4 +1,4 @@
-import { settings } from "storage/settings.js";
+import { settings } from "@/storage/settings.js";
 import { skip } from "./disconnect.js";
 
 const idHistory: string[] = [];

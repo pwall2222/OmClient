@@ -1,5 +1,5 @@
-import { getRandomItem, setFirst } from "modules/array.js";
-import { encodeObject } from "modules/functions.js";
+import { getRandomItem, setFirst } from "@/modules/array.js";
+import { encodeObject } from "@/modules/functions.js";
 
 interface backendArguments {
 	eventHandler: Executer;

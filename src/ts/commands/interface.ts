@@ -1,5 +1,5 @@
-import { settings } from "storage/settings.js";
-import * as chatNode from "ui/chat/manager.js";
+import { settings } from "@/storage/settings.js";
+import * as chatNode from "@/ui/chat/manager.js";
 
 const cmd = {
 	history: [],

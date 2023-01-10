@@ -1,4 +1,4 @@
-import { createChildBefore } from "modules/dom.js";
+import { createChildBefore } from "@/modules/dom.js";
 import { clear, scroll } from "./manager.js";
 
 const addChild = (domObject: domObject) => {

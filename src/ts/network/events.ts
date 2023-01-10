@@ -1,11 +1,11 @@
-import { getLikeString } from "extra/frontFunctions.js";
-import { session } from "index.js";
-import { blockUnload } from "modules/functions.js";
-import { settings } from "storage/settings.js";
-import { addMessage, addStatus, clearAdd } from "ui/chat/add.js";
-import { setTyping } from "ui/chat/manager.js";
-import { disconnect, userDisconect } from "ux/disconnect.js";
-import { twiceSkipping } from "ux/twiceSkip.js";
+import { getLikeString } from "@/extra/frontFunctions.js";
+import { session } from "@/index.js";
+import { blockUnload } from "@/modules/functions.js";
+import { settings } from "@/storage/settings.js";
+import { addMessage, addStatus, clearAdd } from "@/ui/chat/add.js";
+import { setTyping } from "@/ui/chat/manager.js";
+import { disconnect, userDisconect } from "@/ux/disconnect.js";
+import { twiceSkipping } from "@/ux/twiceSkip.js";
 import { eventHandlerRTC } from "./webrtc.js";
 
 const eventHandler = (event: backendEvent) => {

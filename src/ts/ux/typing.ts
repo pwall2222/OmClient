@@ -1,6 +1,6 @@
-import { backend, session } from "index.js";
-import { settings } from "storage/settings.js";
-import { typebox } from "ui/chat/manager.js";
+import { backend, session } from "@/index.js";
+import { settings } from "@/storage/settings.js";
+import { typebox } from "@/ui/chat/manager.js";
 
 let timeout = -1;
 

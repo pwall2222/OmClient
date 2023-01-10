@@ -1,5 +1,5 @@
-import { backend, session } from "index.js";
-import { addMessage } from "ui/chat/add.js";
+import { backend, session } from "@/index.js";
+import { addMessage } from "@/ui/chat/add.js";
 
 const sendMessage = (msg: string) => {
 	backend.sendIdentifiedPOST("send", { msg });

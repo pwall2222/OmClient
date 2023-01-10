@@ -1,4 +1,4 @@
-import { errorHandler } from "ui/errorHandler.js";
+import { errorHandler } from "@/ui/errorHandler.js";
 
 const constrains = {
 	video: true,
