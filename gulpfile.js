@@ -3,7 +3,7 @@ const {
 	compile,
 	compileWatch,
 	serveFiles,
-} = require("./gulp/exports.js");
+} = require("./gulp");
 
 exports.compile = compile;
 
