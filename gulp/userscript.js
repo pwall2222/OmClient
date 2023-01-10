@@ -9,7 +9,7 @@ const replacePath = "{magicurl}";
 const userscript = () => {
 	return new Promise((resolve) => {
 		src("*.user.js")
-			.pipe(replace(replacePath, `${url}`))
+			.pipe(replace(replacePath, url))
 			.pipe(dest(output))
 			.on("end", resolve);
 	});
