@@ -12,7 +12,7 @@ import { typingHanlder } from "@/ux/typing.js";
 const loadAll = () => {
 	addEventListeners();
 	loadFromStroage();
-	setObjProperties();
+	muteSelfVideo();
 	backend.serverFinder();
 };
 
@@ -31,7 +31,7 @@ const loadFromStroage = () => {
 	twiceSkip.loadLocal();
 };
 
-const setObjProperties = () => {
+const muteSelfVideo = () => {
 	videoNode.selfvideo.muted = true;
 };
 
