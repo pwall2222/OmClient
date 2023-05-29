@@ -1,4 +1,4 @@
-const { watch } = require("gulp");
+const { watch, parallel } = require("gulp");
 const { compileTS } = require("./typescript.js");
 const { page } = require("./page.js");
 const { userscript } = require("./userscript.js");
@@ -7,12 +7,6 @@ const logTask = (message, task, colorNum) => {
 	const white = "\x1b[0m";
 	const color = `\x1b[${colorNum}m`;
 	console.log(`[${color}${task}${white}]${message}`);
-};
-
-const compile = async () => {
-	await userscript();
-	await pageLog();
-	await compileTSLog();
 };
 
 const compileWatch = () => {
@@ -32,5 +26,7 @@ const pageLog = async () => {
 	await page();
 	logTask("Copying finished", "Page", "36");
 };
+
+const compile = parallel(userscript, page, compileTS);
 
 module.exports = { compile, compileWatch };
