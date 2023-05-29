@@ -1,5 +1,5 @@
 const { watch, parallel } = require("gulp");
-const { compileTS } = require("./typescript.js");
+const { typescript } = require("./typescript.js");
 const { page } = require("./page.js");
 const { userscript } = require("./userscript.js");
 
@@ -17,7 +17,7 @@ const compileWatch = () => {
 
 const compileTSLog = async () => {
 	logTask("Compiling files", "TypeScript", "36");
-	await compileTS();
+	await typescript();
 	logTask("Compiling finished", "TypeScript", "36");
 };
 
@@ -27,6 +27,6 @@ const pageLog = async () => {
 	logTask("Copying finished", "Page", "36");
 };
 
-const compile = parallel(userscript, page, compileTS);
+const compile = parallel(userscript, page, typescript);
 
 module.exports = { compile, compileWatch };

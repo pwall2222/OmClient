@@ -9,7 +9,7 @@ const tsProject = ts.createProject("tsconfig.json");
 
 const output = args.output ?? "server";
 
-const compileTS = () => {
+const typescript = () => {
 	return new Promise((resolve) => {
 		src("src/ts/**")
 			.pipe(alias(tsProject))
@@ -23,4 +23,4 @@ const compileTS = () => {
 	});
 };
 
-module.exports = { compileTS };
+module.exports = { typescript };
